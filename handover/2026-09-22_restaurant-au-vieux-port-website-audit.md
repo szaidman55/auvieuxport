@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:54:11Z
+- **Generated (UTC):** 2026-09-22 22:58:18Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:54 UTC
-- **Turns:** 31 human / 271 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:58 UTC
+- **Turns:** 33 human / 273 assistant
 
 ## Files written
 
@@ -2500,3 +2500,46 @@ The French page *does* have it. So my scraper lost a whole paragraph about the c
 ### Claude
 
 Two data problems, then. Let me get the full French paragraph that's missing.
+
+### Claude
+
+You were right, and it's my bug from the original scrape — not a button, actual text stored in the bio.
+
+## What "Book a table" actually was
+
+Jens's English bio has **five** paragraphs in the database; the fifth is literally the string `Book a table`. It renders as a `<p>`, which is why it looks like a dead button sitting under his last line.
+
+It's the old site's booking button, swept into the bio when I imported the team texts. Jens is last on the page, so his block ran to the end and swallowed the page's closing call to action. My filter listed `Reserveer` and `Réserver` but nobody wrote down `Book` — so Dutch and French were caught and English walked straight through. Checked all nine bios: only this one is affected.
+
+## And a second hole, found while verifying
+
+Stijn's **French** bio is missing a paragraph. The house's own French page has five; we stored four. The missing one is his admission to The Mastercooks of Belgium — the paragraph that's present in Dutch and English. I can't reconstruct how it was dropped, so I won't invent an explanation, but I've recovered the text from their live French page rather than translating it myself.
+
+Both are fixed in the seed. The running database needs this:
+
+```sql
+update team_members
+set bio_en = regexp_replace(bio_en, E'\\s*Book a table\\s*$', '')
+where slug = 'jens-de-ridder';
+
+update team_members
+set bio_fr = bio_fr || E'\n\nEn 2026, Stijn a rejoint The Mastercooks of Belgium, parrainé par Bert Meewis et Viki Geunes. « Une reconnaissance du travail accompli, et un grand honneur de pouvoir représenter la gastronomie belge. »'
+where slug = 'stijn-havermans';
+```
+
+Run it and the change shows immediately — no hour's wait, because the revalidation hook from the last round covers the team pages.
+
+One caveat on the second statement: it appends, so running it twice would duplicate the paragraph. Run it once.
+
+### You
+
+still there
+[image attached]
+
+### You
+
+[Image: source: C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\images\2.png]
+
+### Claude
+
+Let me check whether the data actually changed, rather than guess.

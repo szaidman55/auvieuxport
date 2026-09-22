@@ -15,6 +15,7 @@ const tabs = [
   { href: '/admin/suggesties', label: 'Suggesties' },
   { href: '/admin/wines', label: 'De kelder' },
   { href: '/admin/hours', label: 'Uren' },
+  { href: '/admin/team', label: 'Het team' },
   { href: '/admin/mensen', label: 'Mensen' },
   { href: '/admin/afdrukken', label: 'Afdrukken' },
 ];

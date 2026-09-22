@@ -26,6 +26,11 @@ const cards = [
     body: 'De uren die op de site staan en die Google leest.',
   },
   {
+    href: '/admin/team',
+    title: 'Het team',
+    body: 'De chef, de maitre en de sommelier: functie en bio in drie talen.',
+  },
+  {
     href: '/admin/mensen',
     title: 'Mensen',
     body: 'Wie zich mag aanmelden, met welke naam, en wat hij mag wijzigen.',
