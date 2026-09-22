@@ -5,10 +5,12 @@
     "wine": "Carte des vins",
     "team": "Notre équipe",
     "contact": "Contact",
-    "voucher": "Bon cadeau",
     "book": "Réserver une table",
     "call": "Appelez-nous",
-    "skip": "Aller au contenu"
+    "skip": "Aller au contenu",
+    "primary": "Navigation principale",
+    "language": "Langue",
+    "legal": "Mentions légales"
   },
   "hero": {
     "tagline": "Le restaurant le plus français d'Anvers",
@@ -17,12 +19,11 @@
   },
   "hours": {
     "title": "Heures d'ouverture",
-    "lunch": "Déjeuner",
-    "dinner": "Dîner",
     "closed": "Fermé",
     "closedDays": "Fermé le samedi et le dimanche",
     "openNow": "Ouvert maintenant",
     "closedNow": "Fermé maintenant",
+    "range": "{from} - {to}",
     "days": {
       "1": "Lundi",
       "2": "Mardi",
@@ -31,21 +32,28 @@
       "5": "Vendredi",
       "6": "Samedi",
       "7": "Dimanche"
+    },
+    "short": {
+      "1": "lun",
+      "2": "mar",
+      "3": "mer",
+      "4": "jeu",
+      "5": "ven",
+      "6": "sam",
+      "7": "dim"
     }
   },
   "menu": {
     "title": "La carte",
     "intro": "Nous cuisinons ce que la saison et le marché nous offrent le matin même. N'hésitez pas à demander les suggestions du jour.",
     "dayPrice": "prix du jour",
-    "perPerson": "p.p.",
+    "perPerson": "par personne",
     "soldOut": "Épuisé",
     "preorder": "À commander à l'avance",
     "seasonal": "De saison",
     "updated": "Carte mise à jour le {date}",
     "indication": "Comptez 85 à 110 euros par personne pour trois services, hors vin.",
     "friday": "Pour le dîner du vendredi, nous vous demandons de commander au minimum deux services, la table étant réservée pour vous toute la soirée.",
-    "book": "Réserver une table",
-    "wineLink": "Voir notre carte des vins",
     "teaser": "Des classiques travaillés à ce niveau, avec ce que la saison et le marché nous donnent. De la Tarte au Boudin Basque au Canard à la Rouennaise.",
     "seeAll": "Voir toute la carte"
   },
@@ -54,7 +62,6 @@
     "intro": "Une cave aussi française que la cuisine, la Bourgogne en son cœur.",
     "count": "{count} références à la carte",
     "byGlass": "au verre",
-    "bottle": "bouteille",
     "magnum": "magnum",
     "halfBottle": "demi-bouteille",
     "nonVintage": "NV",
@@ -63,13 +70,14 @@
     "jumpTo": "Aller directement à",
     "searchLabel": "Chercher dans la cave",
     "searchPlaceholder": "Producteur, région, cépage ou millésime",
-    "found": "{count} sur la carte"
+    "found": "{count} sur la carte",
+    "link": "Voir notre carte des vins"
   },
   "book": {
     "title": "Réservations",
     "intro": "Réservez en ligne, ou appelez-nous au {phone}.",
     "note": "Au dîner, nous demandons au minimum deux services, la table vous étant réservée toute la soirée.",
-    "groups": "Pour les tables de 7 à 10 personnes, une garantie par carte de crédit est demandée. À partir de 11 personnes, réservez par courriel.",
+    "groups": "Pour les tables de 7 à 10 personnes, une garantie par carte de crédit est demandée. À partir de 11 personnes, réservez par e-mail.",
     "cancel": "Annulation gratuite jusqu'à 24 heures à l'avance.",
     "canard": "Pensez à commander le Canard à la Rouennaise lors de votre réservation."
   },
@@ -81,9 +89,7 @@
   },
   "team": {
     "title": "Notre équipe",
-    "cta": "Faites connaissance avec notre équipe",
-    "intro": "Derrière chaque assiette, chaque découpe en salle et chaque verre, il y a des femmes et des hommes de métier. Faites connaissance avec notre chef, notre maître d'hôtel et notre sommelier.",
-    "wineLink": "Voir notre carte des vins"
+    "intro": "Derrière chaque assiette, chaque découpe en salle et chaque verre, il y a des femmes et des hommes de métier. Faites connaissance avec notre chef, notre maître d'hôtel et notre sommelier."
   },
   "voucher": {
     "title": "Bon cadeau",
@@ -100,17 +106,16 @@
   },
   "contact": {
     "title": "Contact",
-    "intro": "Pour les réservations, utilisez le bouton ou appelez-nous. Pour tout le reste, écrivez-nous ici.",
+    "intro": "Pour les réservations, utilisez le bouton de réservation ou appelez-nous. Pour tout le reste, écrivez-nous ici.",
     "name": "Votre nom",
     "email": "Votre adresse e-mail",
     "message": "Votre message",
     "submit": "Envoyer",
     "success": "Merci. Nous vous recontactons.",
     "error": "L'envoi a échoué. Écrivez-nous directement.",
-    "invalidEmail": "Saisissez une adresse e-mail valide.",
-    "required": "Ce champ est obligatoire.",
     "route": "Accès",
-    "routeBody": "Tram 7 jusqu'à Londenbrug. Stationnement payant Napelsstraat et Kattendijkdok-Westkaai."
+    "routeBody": "Tram 7 jusqu'à Londenbrug. Stationnement payant Napelsstraat et Kattendijkdok-Westkaai.",
+    "directions": "Itinéraire dans Google Maps"
   },
   "footer": {
     "since": "Au Vieux Port, depuis 2007",
@@ -125,7 +130,6 @@
     "eyebrow": "La spécialité de la maison",
     "title": "Canard à la Rouennaise",
     "intro": "Préparé en partie à votre table, avec une authentique Presse à Canard. Le maître découpe le canard sous vos yeux et presse la carcasse pour la sauce.",
-    "cta": "Réserver une table",
     "preorder": "Disponible toute l'année. Uniquement sur commande pendant la saison du gibier.",
     "steps": {
       "pers": "La Presse à Canard, en salle",
@@ -142,7 +146,6 @@
     "p3": "Chaque saison apporte ses classiques : le faisan « Fine Champagne » en automne, le râble de lièvre « Arlequin » pendant la saison du gibier. Toute l'année, vous trouverez l'anguille au vert et le poulet pattes noires des Landes. Et ne repartez pas sans avoir goûté la Tarte au Boudin Basque.",
     "p4": "La carte des vins est l'œuvre de Serge Verboven, propriétaire et wine director. Notre sommelier sert une large sélection au verre et vous guide volontiers dans vos choix. La cave abrite une belle collection de bordeaux et de bourgognes ; l'Italie et l'Espagne y sont également bien représentées. En 2022, notre carte a été distinguée d'un verre par Wine Spectator, et de deux verres depuis 2023.",
     "label": "Restaurant Au Vieux Port porte fièrement le label « Fine Dining in Antwerp ».",
-    "teamLink": "Faites connaissance avec notre équipe",
-    "wineLink": "Voir notre carte des vins"
+    "teamLink": "Rencontrez notre équipe"
   }
 }

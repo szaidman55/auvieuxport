@@ -9,6 +9,8 @@ import type { OpeningHour } from '@/lib/types';
 export async function Footer({ hours }: { hours: OpeningHour[] }) {
   const t = await getTranslations('footer');
   const tn = await getTranslations('newsletter');
+  const tv = await getTranslations('nav');
+  const tc = await getTranslations('contact');
 
   return (
     <footer className="mt-24 border-t border-rule bg-paper-2">
@@ -36,7 +38,7 @@ export async function Footer({ hours }: { hours: OpeningHour[] }) {
             rel="noreferrer"
             className="mt-3 inline-flex min-h-11 items-center text-sm underline underline-offset-4"
           >
-            Route
+            {tc('directions')}
           </a>
         </div>
 
@@ -54,7 +56,7 @@ export async function Footer({ hours }: { hours: OpeningHour[] }) {
       <div className="border-t border-rule">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-xs text-ink-faint">
           <span>{t('since')}</span>
-          <nav className="flex gap-5" aria-label="Juridisch">
+          <nav className="flex gap-5" aria-label={tv('legal')}>
             <a href="/privacy" className="flex min-h-11 items-center underline underline-offset-4">
               {t('privacy')}
             </a>

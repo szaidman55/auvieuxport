@@ -49,16 +49,3 @@ export function voucherShopUrl(locale: string): string {
   return `https://shop.zenchef.com/?${params.toString()}`;
 }
 
-export const awards = [
-  { label: 'Best of Award of Excellence', issuer: 'Wine Spectator', years: '2023 - 2026' },
-  { label: 'Award of Excellence', issuer: 'Wine Spectator', years: '2022' },
-  { label: 'Star Wine List', issuer: 'Star Wine List', years: '2026' },
-  { label: 'Vermeld in de gids', issuer: 'Gault&Millau', years: null },
-  { label: 'Fine Dining in Antwerp', issuer: 'Fine Dining in Antwerp', years: null },
-] as const;
-
-export const team = [
-  { name: 'Stijn Havermans', role: { nl: 'Chef', en: 'Chef', fr: 'Chef' } },
-  { name: 'Tom Schoonbaert', role: { nl: 'Maitre', en: 'Maitre d', fr: "Maitre d'hotel" } },
-  { name: 'Serge Verboven', role: { nl: 'Eigenaar en wine director', en: 'Owner and wine director', fr: 'Proprietaire et wine director' } },
-] as const;

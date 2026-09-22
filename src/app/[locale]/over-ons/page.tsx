@@ -17,7 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [t, tb] = await Promise.all([getTranslations('about'), getTranslations('book')]);
+  const [t, tn, tw] = await Promise.all([
+    getTranslations('about'),
+    getTranslations('nav'),
+    getTranslations('wine'),
+  ]);
 
   const alt =
     locale === 'fr'
@@ -57,7 +61,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         <p className="mt-10 border-t border-rule pt-6 text-ink">{t('label')}</p>
 
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <BookButton>{tb('title')}</BookButton>
+          <BookButton>{tn('book')}</BookButton>
           <Link
             href="/ons-team"
             className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"
@@ -68,7 +72,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             href="/wijnkaart"
             className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"
           >
-            {t('wineLink')}
+            {tw('link')}
           </Link>
         </div>
       </div>

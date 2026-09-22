@@ -5,10 +5,12 @@
     "wine": "Wine list",
     "team": "Our team",
     "contact": "Contact",
-    "voucher": "Gift voucher",
     "book": "Book a table",
     "call": "Call us",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "primary": "Main navigation",
+    "language": "Language",
+    "legal": "Legal"
   },
   "hero": {
     "tagline": "Antwerp's Frenchiest restaurant",
@@ -17,12 +19,11 @@
   },
   "hours": {
     "title": "Opening hours",
-    "lunch": "Lunch",
-    "dinner": "Dinner",
     "closed": "Closed",
     "closedDays": "Closed on Saturday and Sunday",
     "openNow": "Open now",
     "closedNow": "Closed now",
+    "range": "{from} - {to}",
     "days": {
       "1": "Monday",
       "2": "Tuesday",
@@ -31,21 +32,28 @@
       "5": "Friday",
       "6": "Saturday",
       "7": "Sunday"
+    },
+    "short": {
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun"
     }
   },
   "menu": {
     "title": "The menu",
     "intro": "We cook with what the season and the market give us that morning. Do ask the floor about the daily suggestions.",
     "dayPrice": "market price",
-    "perPerson": "p.p.",
+    "perPerson": "per person",
     "soldOut": "Sold out",
     "preorder": "Order in advance",
     "seasonal": "In season",
     "updated": "Menu updated on {date}",
     "indication": "Expect 85 to 110 euro per person for three courses, excluding wine.",
     "friday": "For dinner on Friday we kindly ask you to order at least two courses, as the table is yours for the whole evening.",
-    "book": "Book a table",
-    "wineLink": "View our wine list",
     "teaser": "Classics cooked at this level, with what the season and the market give us. From the Tarte au Boudin Basque to the Canard à la Rouennaise.",
     "seeAll": "See the whole menu"
   },
@@ -54,7 +62,6 @@
     "intro": "A cellar as French as the kitchen, with Burgundy at its heart.",
     "count": "{count} references on the list",
     "byGlass": "by the glass",
-    "bottle": "bottle",
     "magnum": "magnum",
     "halfBottle": "half bottle",
     "nonVintage": "NV",
@@ -63,7 +70,8 @@
     "jumpTo": "Jump to",
     "searchLabel": "Search the cellar",
     "searchPlaceholder": "Producer, region, grape or vintage",
-    "found": "{count} on the list"
+    "found": "{count} on the list",
+    "link": "View our wine list"
   },
   "book": {
     "title": "Reservations",
@@ -71,7 +79,7 @@
     "note": "At dinner we ask for a minimum of two courses, as the table is yours for the whole evening.",
     "groups": "For tables of 7 to 10 we ask for a credit card guarantee. From 11 guests, please book by email.",
     "cancel": "Free cancellation up to 24 hours in advance.",
-    "canard": "Do order the Canard a la Rouennaise when you book."
+    "canard": "Do order the Canard à la Rouennaise when you book."
   },
   "awards": {
     "title": "Awards",
@@ -81,9 +89,7 @@
   },
   "team": {
     "title": "Our team",
-    "cta": "Meet our team",
-    "intro": "Behind every plate, every dish carved at the table and every glass are people who master their craft. Meet our chef, our maître d' and our sommelier.",
-    "wineLink": "View our wine list"
+    "intro": "Behind every plate, every dish carved at the table and every glass are people who master their craft. Meet our chef, our maître d' and our sommelier."
   },
   "voucher": {
     "title": "Gift voucher",
@@ -107,10 +113,9 @@
     "submit": "Send",
     "success": "Thank you. We will be in touch.",
     "error": "Sending failed. Please email us directly.",
-    "invalidEmail": "Please enter a valid email address.",
-    "required": "This field is required.",
     "route": "Getting here",
-    "routeBody": "Tram 7 to Londenbrug. Paid parking on Napelsstraat and Kattendijkdok-Westkaai."
+    "routeBody": "Tram 7 to Londenbrug. Paid parking on Napelsstraat and Kattendijkdok-Westkaai.",
+    "directions": "Directions in Google Maps"
   },
   "footer": {
     "since": "Au Vieux Port, since 2007",
@@ -122,10 +127,9 @@
     "intro": "The dining room, the cellar and the work at the table."
   },
   "canard": {
-    "eyebrow": "The house speciality",
+    "eyebrow": "The house specialty",
     "title": "Canard à la Rouennaise",
     "intro": "Partly prepared at your table, with an authentic Presse à Canard. The maître carves the duck in front of you and presses the carcass for the sauce.",
-    "cta": "Book a table",
     "preorder": "Available all year round. During the game season by advance order only.",
     "steps": {
       "pers": "The Presse à Canard, at the table",
@@ -142,7 +146,6 @@
     "p3": "The seasons bring their own classics: pheasant 'Fine Champagne' in autumn, saddle of hare 'Arlequin' in the game months. All year round you will find eel in green herb sauce and black-leg chicken from the Landes. And do not leave without trying the Tarte au Boudin Basque.",
     "p4": "The wine list is the work of owner and wine director Serge Verboven. Our sommelier pours a broad selection by the glass and is happy to guide you through the list. The cellar holds a serious collection of Bordeaux and Burgundy, with Italy and Spain well represented alongside them. Wine Spectator awarded the list one glass in 2022, and two glasses since 2023.",
     "label": "Restaurant Au Vieux Port proudly carries the \"Fine Dining in Antwerp\" label.",
-    "teamLink": "Meet our team",
-    "wineLink": "View our wine list"
+    "teamLink": "Meet our team"
   }
 }

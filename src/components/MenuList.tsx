@@ -73,6 +73,14 @@ export async function MenuList({
                         {t('preorder')}
                       </span>
                     )}
+                    {/* De kolom stond in de databank en in alle drie de talen
+                        klaar, maar werd nergens getoond - terwijl juist deze
+                        keuken per seizoen verandert. */}
+                    {item.seasonal && (
+                      <span className="rounded-sm bg-paper-2 px-2 py-0.5 text-xs uppercase tracking-wide text-ink-soft">
+                        {t('seasonal')}
+                      </span>
+                    )}
 
                     {/* De stippellijn is de conventie van de kaart zelf. */}
                     <span

@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { locales, type Locale } from '@/i18n/routing';
 
@@ -22,9 +22,10 @@ export function LanguageSwitcher({ className = '' }: { className?: string }) {
   const pathname = usePathname();
   const params = useParams();
   const active = useLocale() as Locale;
+  const t = useTranslations('nav');
 
   return (
-    <nav aria-label="Taal" className={`flex items-center gap-1 ${className}`}>
+    <nav aria-label={t('language')} className={`flex items-center gap-1 ${className}`}>
       {locales.map((l) =>
         l === active ? (
           <span

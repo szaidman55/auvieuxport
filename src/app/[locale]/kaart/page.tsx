@@ -18,7 +18,12 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: L
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ sections, items }, t] = await Promise.all([getMenu(), getTranslations('menu')]);
+  const [{ sections, items }, t, tn, tw] = await Promise.all([
+    getMenu(),
+    getTranslations('menu'),
+    getTranslations('nav'),
+    getTranslations('wine'),
+  ]);
 
   const updated = items.reduce<string | null>(
     (latest, i) => (!latest || i.updated_at > latest ? i.updated_at : latest),
@@ -46,12 +51,12 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: L
       )}
 
       <div className="mt-10 flex flex-wrap items-center gap-4">
-        <BookButton>{t('book')}</BookButton>
+        <BookButton>{tn('book')}</BookButton>
         <Link
           href="/wijnkaart"
           className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"
         >
-          {t('wineLink')}
+          {tw('link')}
         </Link>
       </div>
     </div>

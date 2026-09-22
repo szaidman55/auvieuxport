@@ -5,10 +5,12 @@
     "wine": "Wijnkaart",
     "team": "Ons team",
     "contact": "Contact",
-    "voucher": "Cadeaubon",
     "book": "Reserveer een tafel",
     "call": "Bel ons",
-    "skip": "Naar de inhoud"
+    "skip": "Naar de inhoud",
+    "primary": "Hoofdnavigatie",
+    "language": "Taal",
+    "legal": "Juridisch"
   },
   "hero": {
     "tagline": "Het Franste restaurant van Antwerpen",
@@ -17,12 +19,11 @@
   },
   "hours": {
     "title": "Openingsuren",
-    "lunch": "Lunch",
-    "dinner": "Diner",
     "closed": "Gesloten",
     "closedDays": "Zaterdag en zondag gesloten",
     "openNow": "Nu open",
     "closedNow": "Nu gesloten",
+    "range": "{from} - {to}",
     "days": {
       "1": "Maandag",
       "2": "Dinsdag",
@@ -31,6 +32,15 @@
       "5": "Vrijdag",
       "6": "Zaterdag",
       "7": "Zondag"
+    },
+    "short": {
+      "1": "ma",
+      "2": "di",
+      "3": "wo",
+      "4": "do",
+      "5": "vr",
+      "6": "za",
+      "7": "zo"
     }
   },
   "menu": {
@@ -44,8 +54,6 @@
     "updated": "Kaart bijgewerkt op {date}",
     "indication": "Reken op 85 tot 110 euro per persoon voor drie gangen, zonder wijn.",
     "friday": "Voor het diner op vrijdag vragen wij u vriendelijk om minstens twee gangen te bestellen, omdat de tafel de hele avond voor u is.",
-    "book": "Reserveer een tafel",
-    "wineLink": "Bekijk onze wijnkaart",
     "teaser": "Klassiekers op niveau, met dagverse en seizoensgebonden producten. Van de Tarte au Boudin Basque tot de Canard à la Rouennaise.",
     "seeAll": "Bekijk de hele kaart"
   },
@@ -54,7 +62,6 @@
     "intro": "Een kelder die even Frans is als de keuken, met Bourgogne als zwaartepunt.",
     "count": "{count} referenties op de kaart",
     "byGlass": "per glas",
-    "bottle": "fles",
     "magnum": "magnum",
     "halfBottle": "halve fles",
     "nonVintage": "NV",
@@ -63,7 +70,8 @@
     "jumpTo": "Ga meteen naar",
     "searchLabel": "Zoek in de kelder",
     "searchPlaceholder": "Producent, streek, druif of jaar",
-    "found": "{count} van de kaart"
+    "found": "{count} van de kaart",
+    "link": "Bekijk onze wijnkaart"
   },
   "book": {
     "title": "Reserveren",
@@ -71,7 +79,7 @@
     "note": "Bij het diner vragen wij minimaal twee gangen, omdat de tafel de hele avond voor u voorzien is.",
     "groups": "Voor tafels van 7 tot 10 personen vragen wij een creditcardgarantie. Vanaf 11 personen reserveert u het best per mail.",
     "cancel": "Gratis annuleren tot 24 uur vooraf.",
-    "canard": "De Canard a la Rouennaise bestelt u het best bij uw reservatie."
+    "canard": "De Canard à la Rouennaise bestelt u het best bij uw reservatie."
   },
   "awards": {
     "title": "Onderscheidingen",
@@ -81,9 +89,7 @@
   },
   "team": {
     "title": "Ons team",
-    "cta": "Maak kennis met ons team",
-    "intro": "Achter elk bord, elke versnijding aan tafel en elk glas staan mensen met vakmanschap. Maak kennis met onze chef, onze maître en onze sommelier.",
-    "wineLink": "Bekijk onze wijnkaart"
+    "intro": "Achter elk bord, elke versnijding aan tafel en elk glas staan mensen met vakmanschap. Maak kennis met onze chef, onze maître en onze sommelier."
   },
   "voucher": {
     "title": "Cadeaubon",
@@ -107,10 +113,9 @@
     "submit": "Versturen",
     "success": "Bedankt. Wij nemen contact met u op.",
     "error": "Versturen is niet gelukt. Mail ons gerust rechtstreeks.",
-    "invalidEmail": "Vul een geldig e-mailadres in.",
-    "required": "Dit veld is verplicht.",
     "route": "Bereikbaarheid",
-    "routeBody": "Tram 7 tot Londenbrug. Betalend parkeren in de Napelsstraat en op de Kattendijkdok-Westkaai."
+    "routeBody": "Tram 7 tot Londenbrug. Betalend parkeren in de Napelsstraat en op de Kattendijkdok-Westkaai.",
+    "directions": "Route in Google Maps"
   },
   "footer": {
     "since": "Au Vieux Port, sinds 2007",
@@ -125,7 +130,6 @@
     "eyebrow": "De specialiteit van het huis",
     "title": "Canard à la Rouennaise",
     "intro": "Deels aan tafel bereid, met een authentieke Presse à Canard. De maître versnijdt de eend voor uw ogen en perst het karkas voor de saus.",
-    "cta": "Reserveer een tafel",
     "preorder": "Het hele jaar verkrijgbaar. Tijdens het wildseizoen enkel op bestelling.",
     "steps": {
       "pers": "De Presse à Canard, aan tafel",
@@ -142,7 +146,6 @@
     "p3": "Elk seizoen brengt zijn eigen klassiekers: fazant 'Fine Champagne' in het najaar, hazenrug 'Arlequin' tijdens het wildseizoen. Het hele jaar door vindt u paling in 't groen en een zwartpootkip uit de Landes. En ga niet weg zonder de Tarte au Boudin Basque geproefd te hebben.",
     "p4": "De wijnkaart is het werk van eigenaar en wine director Serge Verboven. Onze sommelier schenkt verschillende wijnen per glas en begeleidt u bij uw keuze. In de kelder vindt u een mooie selectie Bordeaux en Bourgogne, met Italië en Spanje goed vertegenwoordigd. In 2022 bekroonde Wine Spectator de kaart met één glas, sinds 2023 met twee.",
     "label": "Restaurant Au Vieux Port draagt met trots het label \"Fine Dining in Antwerp\".",
-    "teamLink": "Maak kennis met ons team",
-    "wineLink": "Bekijk onze wijnkaart"
+    "teamLink": "Maak kennis met ons team"
   }
 }

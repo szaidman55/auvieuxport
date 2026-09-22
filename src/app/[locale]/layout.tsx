@@ -26,13 +26,13 @@ export async function generateMetadata({
   const titles: Record<string, string> = {
     nl: 'Klassiek Frans restaurant op het Eilandje, Antwerpen',
     en: 'Classic French restaurant on the Eilandje, Antwerp',
-    fr: 'Restaurant francais classique sur l Eilandje, Anvers',
+    fr: "Restaurant français classique sur l'Eilandje, Anvers",
   };
 
   const descriptions: Record<string, string> = {
-    nl: 'Klassiek Frans restaurant op het Eilandje in Antwerpen, sinds 2007. Canard a la Rouennaise aan tafel, bekroonde wijnkaart. Reserveer online.',
-    en: 'Classic French restaurant on Antwerp Eilandje, since 2007. Canard a la Rouennaise carved at your table, award-winning wine list. Book online.',
-    fr: 'Restaurant francais classique sur l Eilandje a Anvers, depuis 2007. Canard a la Rouennaise en salle, carte des vins primee. Reservez en ligne.',
+    nl: 'Klassiek Frans restaurant op het Eilandje in Antwerpen, sinds 2007. Canard à la Rouennaise aan tafel, bekroonde wijnkaart. Reserveer online.',
+    en: "Classic French restaurant on Antwerp's Eilandje, since 2007. Canard à la Rouennaise carved at your table, award-winning wine list. Book online.",
+    fr: "Restaurant français classique sur l'Eilandje à Anvers, depuis 2007. Canard à la Rouennaise en salle, carte des vins primée. Réservez en ligne.",
   };
 
   return {

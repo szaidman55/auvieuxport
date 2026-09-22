@@ -1,4 +1,6 @@
-import { site } from '@/lib/site';
+import { site, zenchef } from '@/lib/site';
+import { getPathname } from '@/i18n/navigation';
+import type { Locale } from '@/i18n/routing';
 import type { OpeningHour } from '@/lib/types';
 
 const ISO_DAYS = [
@@ -10,11 +12,14 @@ const ISO_DAYS = [
 // blokken die elkaar tegenspraken. Dit is een enkel, kloppend blok.
 export function RestaurantJsonLd({
   hours,
+  locale,
   image,
 }: {
   hours: OpeningHour[];
+  locale: Locale;
   image?: string;
 }) {
+  const lang = locale === 'nl' ? 'nl-BE' : locale;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
@@ -36,7 +41,11 @@ export function RestaurantJsonLd({
       addressLocality: site.city,
       addressCountry: site.country,
     },
-    hasMenu: `${site.url}/#kaart`,
+    // De kaart heeft sinds kort haar eigen pagina. Dit wees nog naar een
+    // anker op de startpagina dat niet meer bestaat, dus kreeg Google een
+    // menu-URL die nergens op uitkomt - precies de fout die de oude site
+    // ook maakte.
+    hasMenu: `${site.url}${getPathname({ href: '/kaart', locale })}`,
     openingHoursSpecification: hours.map((h) => ({
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ISO_DAYS[h.weekday],
@@ -47,8 +56,9 @@ export function RestaurantJsonLd({
       '@type': 'ReserveAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `https://bookings.zenchef.com/results?rid=380678`,
-        inLanguage: 'nl-BE',
+        urlTemplate: `https://bookings.zenchef.com/results?rid=${zenchef.restaurantId}`,
+        // Stond op nl-BE, ook in het blok van de Engelse en de Franse pagina.
+        inLanguage: lang,
         actionPlatform: [
           'http://schema.org/DesktopWebPlatform',
           'http://schema.org/MobileWebPlatform',

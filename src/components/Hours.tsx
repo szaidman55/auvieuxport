@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { closedWeekdays, groupByDay, hhmm } from '@/lib/hours';
+import { OpenNow } from './OpenNow';
 import type { OpeningHour } from '@/lib/types';
 
 // Openingsuren als tekst op de pagina. Op de oude site stonden ze nergens:
@@ -11,9 +12,12 @@ export async function Hours({ hours }: { hours: OpeningHour[] }) {
 
   return (
     <div>
-      <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
-        {t('title')}
-      </h3>
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-brass">
+          {t('title')}
+        </h3>
+        <OpenNow hours={hours} />
+      </div>
       <dl className="text-sm">
         {days.map(({ weekday, services }) => (
           <div
@@ -23,7 +27,7 @@ export async function Hours({ hours }: { hours: OpeningHour[] }) {
             <dt className="w-28 shrink-0 text-ink-soft">
               {t(`days.${weekday}`)}
             </dt>
-            <dd className="tabular-nums">
+            <dd className="tabular-nums [font-variant-numeric:tabular-nums]">
               {services.length === 0
                 ? t('closed')
                 : services

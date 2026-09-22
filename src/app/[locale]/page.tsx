@@ -7,6 +7,7 @@ import { Awards } from '@/components/Awards';
 import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
 import { getOpeningHours } from '@/lib/queries';
+import { summarise } from '@/lib/hours';
 import { Link } from '@/i18n/navigation';
 import { BookButton } from '@/components/BookButton';
 import { RestaurantJsonLd } from '@/components/JsonLd';
@@ -31,17 +32,21 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [hours, t, tb, tm, tv] = await Promise.all([
+  const [hours, t, tb, tm, tv, tn, th] = await Promise.all([
     getOpeningHours(),
     getTranslations('hero'),
     getTranslations('book'),
     getTranslations('menu'),
     getTranslations('voucher'),
+    getTranslations('nav'),
+    getTranslations('hours'),
   ]);
+
+  const summary = summarise(hours);
 
   return (
     <>
-      <RestaurantJsonLd hours={hours} />
+      <RestaurantJsonLd hours={hours} locale={locale} />
 
       {/* De hele belofte staat in het eerste scherm: wie, waar, wanneer,
           en een knop. De oude site had hier alleen een foto. */}
@@ -58,7 +63,7 @@ export default async function HomePage({
           <p className="mt-5 max-w-xl text-lg text-ink-soft">{t('intro')}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BookButton>{tb('title')}</BookButton>
+            <BookButton>{tn('book')}</BookButton>
             <Link
               href="/kaart"
               className="inline-flex min-h-12 items-center justify-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
@@ -67,16 +72,28 @@ export default async function HomePage({
             </Link>
           </div>
 
-          {/* Adres, uren en nummer in tekst, meteen. Het nummer mag niet
+          {/* Adres, uren en nummer in tekst, meteen. Niets mag hier
               afbreken: "03" op de ene regel en "290 77 11" op de volgende
-              leest als twee getallen. */}
-          <p className="mt-8 text-sm text-ink-soft">
-            {site.street}, {site.postalCode} {site.city}
-            <span className="mx-2 text-rule">|</span>
-            <span className="whitespace-nowrap">ma - vr 12:00 - 14:00</span>
-            {' & '}
-            <span className="whitespace-nowrap">18:00 - 21:30</span>
-            <span className="mx-2 text-rule">|</span>
+              leest als twee getallen, en "ma - vr" zonder de uren erachter
+              zegt niets. De uren stonden hier als vaste Nederlandse tekst,
+              ook op de Franse pagina; nu komen ze uit dezelfde databank als
+              de tabel in de voet. */}
+          <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-soft">
+            <span>{site.street}, {site.postalCode} {site.city}</span>
+            {summary && (
+              <>
+                <span aria-hidden="true" className="text-rule">|</span>
+                <span className="whitespace-nowrap">
+                  {th(`short.${summary.from}`)} - {th(`short.${summary.to}`)}
+                </span>
+                {summary.times.map((slot) => (
+                  <span key={slot} className="whitespace-nowrap">
+                    {slot}
+                  </span>
+                ))}
+              </>
+            )}
+            <span aria-hidden="true" className="text-rule">|</span>
             <a
               href={`tel:${site.phone}`}
               className="whitespace-nowrap underline underline-offset-4"
@@ -128,7 +145,7 @@ export default async function HomePage({
               href="/wijnkaart"
               className="inline-flex min-h-12 items-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
             >
-              {useWineLabel(locale)}
+              {tn('wine')}
             </Link>
           </div>
         </div>
@@ -148,7 +165,7 @@ export default async function HomePage({
           <p className="mx-auto mt-2 max-w-prose text-sm text-[#b3a7a3]">{tb('canard')}</p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <BookButton>{tb('title')}</BookButton>
+            <BookButton>{tn('book')}</BookButton>
             <a
               href={`tel:${site.phone}`}
               className="inline-flex min-h-12 items-center border border-[#3a302d] px-6 text-sm font-semibold text-paper"
@@ -178,6 +195,3 @@ export default async function HomePage({
   );
 }
 
-function useWineLabel(locale: Locale): string {
-  return locale === 'fr' ? 'Carte des vins' : locale === 'en' ? 'Wine list' : 'Wijnkaart';
-}

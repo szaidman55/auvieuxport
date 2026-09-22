@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/routing';
 import { alternates } from '@/lib/alternates';
 import { getWines, getCellarUpdatedAt } from '@/lib/queries';
 import { localised, type Wine } from '@/lib/types';
+import { geoHeading, geoName } from '@/lib/geo';
 import { BookButton } from '@/components/BookButton';
 import { WineSearch } from '@/components/WineSearch';
 
@@ -78,8 +79,11 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
           // kaart leest. Map bewaart de volgorde van invoegen, en die is de
           // volgorde van de kaart zelf.
           const groups = new Map<string, Wine[]>();
+          // Land en streek in de taal van de bezoeker: de databank houdt ze
+          // in het Engels, dus stond er "FRANCE · BURGUNDY" boven de
+          // bourgognes, ook op de Franse en de Nederlandse kaart.
           rows.forEach((w) => {
-            const key = [w.country, w.region, w.appellation].filter(Boolean).join(' · ');
+            const key = geoHeading([w.country, w.region, w.appellation], locale);
             groups.set(key, [...(groups.get(key) ?? []), w]);
           });
 
@@ -99,8 +103,12 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
                       const size = bottleLabel(w, t);
                       // Waar de zoekbalk op matcht. Server-side meegegeven,
                       // zodat de wijnen niet nog eens als JSON meereizen.
+                      // Zowel de Engelse bron als de vertaalde naam, zodat
+                      // "Bourgogne" en "Burgundy" allebei de bourgognes vinden.
                       const haystack = [
                         w.producer, w.name, w.country, w.region, w.appellation,
+                        geoName(w.country, locale),
+                        w.region && geoName(w.region, locale),
                         w.vintage, ...w.grapes,
                       ]
                         .filter(Boolean)

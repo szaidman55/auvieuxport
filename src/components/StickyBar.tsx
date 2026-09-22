@@ -14,13 +14,13 @@ export async function StickyBar() {
     >
       <a
         href={`tel:${site.phone}`}
-        className="flex min-h-14 items-center justify-center gap-2 border-r border-rule text-sm font-semibold"
+        className="flex min-h-14 items-center justify-center gap-2 whitespace-nowrap border-r border-rule px-2 text-sm font-semibold"
       >
         {t('call')}
       </a>
       <a
         href={zenchef.openAnchor}
-        className="flex min-h-14 items-center justify-center bg-brass text-sm font-semibold uppercase tracking-wide text-paper"
+        className="flex min-h-14 items-center justify-center whitespace-nowrap bg-brass px-2 text-sm font-semibold uppercase tracking-wide text-paper"
       >
         {t('book')}
       </a>

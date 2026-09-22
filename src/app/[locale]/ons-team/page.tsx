@@ -19,9 +19,10 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
   const { locale } = await params;
   setRequestLocale(locale);
   // De knop onderaan zei "Maak kennis met ons team", op de teampagina zelf.
-  const [t, tb, people] = await Promise.all([
+  const [t, tn, tw, people] = await Promise.all([
     getTranslations('team'),
-    getTranslations('book'),
+    getTranslations('nav'),
+    getTranslations('wine'),
     getTeam(),
   ]);
 
@@ -98,12 +99,12 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
       </div>
 
       <div className="mt-20 flex flex-wrap items-center gap-4 border-t border-rule pt-10">
-        <BookButton>{tb('title')}</BookButton>
+        <BookButton>{tn('book')}</BookButton>
         <Link
           href="/wijnkaart"
           className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"
         >
-          {t('wineLink')}
+          {tw('link')}
         </Link>
       </div>
     </div>

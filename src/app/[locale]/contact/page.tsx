@@ -20,10 +20,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [hours, t, tb] = await Promise.all([
+  const [hours, t, tb, tn] = await Promise.all([
     getOpeningHours(),
     getTranslations('contact'),
     getTranslations('book'),
+    getTranslations('nav'),
   ]);
 
   return (
@@ -67,10 +68,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           </div>
 
           <div>
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
               {tb('title')}
             </h2>
-            <BookButton>{tb('title')}</BookButton>
+            {/* Stond al in drie talen klaar en werd nergens getoond: dit is
+                de zin die uitlegt dat online en bellen allebei kunnen. */}
+            <p className="mb-4 max-w-prose text-sm text-ink-soft">
+              {tb('intro', { phone: site.phoneDisplay })}
+            </p>
+            <BookButton>{tn('book')}</BookButton>
           </div>
         </div>
 

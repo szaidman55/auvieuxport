@@ -38,10 +38,21 @@ export function ZenchefLoader({ locale }: { locale: string }) {
 
   return (
     <>
+      {/* Geen zwevende knop van Zenchef.
+
+          De SDK legt uit zichzelf een gouden pil rechtsonder, met haar eigen
+          tekst in de taal van het restaurant: op de Franse pagina stond daar
+          "Reserveer een tafel". Ze lag boven op onze eigen balk onderaan, dus
+          een telefoon toonde twee reserveerknoppen over elkaar, in twee talen.
+
+          data-hide-default-button leest de SDK op aanwezigheid, niet op
+          waarde: staat het attribuut er, dan blijft de pil weg. Onze eigen
+          knoppen openen het venster nog altijd via de ankerlink. */}
       <div
         className="zc-widget-config"
         data-restaurant={zenchef.restaurantId}
-        data-open=""
+        data-hide-default-button=""
+        data-open="false"
         data-primary-color={zenchef.primaryColor}
         data-lang={locale}
       />
