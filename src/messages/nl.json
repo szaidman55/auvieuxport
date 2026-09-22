@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "about": "Over ons",
+    "menu": "Kaart",
+    "wine": "Wijnkaart",
+    "team": "Ons team",
+    "contact": "Contact",
+    "voucher": "Cadeaubon",
+    "book": "Reserveer een tafel",
+    "call": "Bel ons",
+    "skip": "Naar de inhoud"
+  },
+  "hero": {
+    "tagline": "Het Franste restaurant van Antwerpen",
+    "intro": "Klassiek Frans, met zaalbereidingen, op het Eilandje. Sinds 2007.",
+    "menuCta": "Bekijk de kaart"
+  },
+  "hours": {
+    "title": "Openingsuren",
+    "lunch": "Lunch",
+    "dinner": "Diner",
+    "closed": "Gesloten",
+    "closedDays": "Zaterdag en zondag gesloten",
+    "openNow": "Nu open",
+    "closedNow": "Nu gesloten",
+    "days": {
+      "1": "Maandag",
+      "2": "Dinsdag",
+      "3": "Woensdag",
+      "4": "Donderdag",
+      "5": "Vrijdag",
+      "6": "Zaterdag",
+      "7": "Zondag"
+    }
+  },
+  "menu": {
+    "title": "De kaart",
+    "intro": "Wij werken met dagverse en seizoensgebonden producten. Onze dagelijkse suggesties vraagt u het best aan de zaal.",
+    "dayPrice": "dagprijs",
+    "perPerson": "p.p.",
+    "soldOut": "Uitverkocht",
+    "preorder": "Vooraf te bestellen",
+    "seasonal": "Seizoen",
+    "updated": "Kaart bijgewerkt op {date}",
+    "indication": "Reken op 85 tot 110 euro per persoon voor drie gangen, zonder wijn."
+  },
+  "wine": {
+    "title": "Wijnkaart",
+    "intro": "Een kelder die even Frans is als de keuken, met Bourgogne als zwaartepunt.",
+    "count": "{count} referenties op de kaart",
+    "byGlass": "per glas",
+    "bottle": "fles",
+    "magnum": "magnum",
+    "halfBottle": "halve fles",
+    "nonVintage": "NV",
+    "pick": "Keuze van de sommelier",
+    "updated": "Kelder bijgewerkt op {date}",
+    "jumpTo": "Ga meteen naar"
+  },
+  "book": {
+    "title": "Reserveren",
+    "intro": "Reserveer online, of bel ons op {phone}.",
+    "note": "Bij het diner vragen wij minimaal twee gangen, omdat de tafel de hele avond voor u voorzien is.",
+    "groups": "Voor tafels van 7 tot 10 personen vragen wij een creditcardgarantie. Vanaf 11 personen reserveert u het best per mail.",
+    "cancel": "Gratis annuleren tot 24 uur vooraf.",
+    "canard": "De Canard a la Rouennaise bestelt u het best bij uw reservatie."
+  },
+  "awards": {
+    "title": "Onderscheidingen"
+  },
+  "team": {
+    "title": "Ons team",
+    "cta": "Maak kennis met ons team"
+  },
+  "voucher": {
+    "title": "Cadeaubon",
+    "intro": "Cadeaubonnen van 50 tot 250 euro, digitaal geleverd, een jaar geldig.",
+    "cta": "Naar de webshop"
+  },
+  "newsletter": {
+    "title": "Wijnavonden en seizoenskaarten",
+    "intro": "Een paar keer per jaar in uw mailbox. Niet vaker.",
+    "email": "Uw e-mailadres",
+    "submit": "Inschrijven",
+    "success": "Ingeschreven. Tot binnenkort.",
+    "error": "Dat is niet gelukt. Probeer het opnieuw of mail ons."
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Voor reservaties gebruikt u de reserveerknop of belt u ons. Voor al de rest schrijft u hier.",
+    "name": "Uw naam",
+    "email": "Uw e-mailadres",
+    "message": "Uw bericht",
+    "submit": "Versturen",
+    "success": "Bedankt. Wij nemen contact met u op.",
+    "error": "Versturen is niet gelukt. Mail ons gerust rechtstreeks.",
+    "invalidEmail": "Vul een geldig e-mailadres in.",
+    "required": "Dit veld is verplicht.",
+    "route": "Bereikbaarheid",
+    "routeBody": "Tram 7 tot Londenbrug. Betalend parkeren in de Napelsstraat en op de Kattendijkdok-Westkaai."
+  },
+  "footer": {
+    "since": "Au Vieux Port, sinds 2007",
+    "privacy": "Privacybeleid",
+    "cookies": "Cookiebeleid"
+  }
+}

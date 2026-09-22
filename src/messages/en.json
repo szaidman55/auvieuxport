@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "about": "About us",
+    "menu": "Menu",
+    "wine": "Wine list",
+    "team": "Our team",
+    "contact": "Contact",
+    "voucher": "Gift voucher",
+    "book": "Book a table",
+    "call": "Call us",
+    "skip": "Skip to content"
+  },
+  "hero": {
+    "tagline": "Antwerp's Frenchiest restaurant",
+    "intro": "Classical French cooking, finished at your table, on Antwerp's Eilandje. Since 2007.",
+    "menuCta": "See the menu"
+  },
+  "hours": {
+    "title": "Opening hours",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "closed": "Closed",
+    "closedDays": "Closed on Saturday and Sunday",
+    "openNow": "Open now",
+    "closedNow": "Closed now",
+    "days": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday",
+      "7": "Sunday"
+    }
+  },
+  "menu": {
+    "title": "The menu",
+    "intro": "We cook with what the season and the market give us that morning. Do ask the floor about the daily suggestions.",
+    "dayPrice": "market price",
+    "perPerson": "p.p.",
+    "soldOut": "Sold out",
+    "preorder": "Order in advance",
+    "seasonal": "In season",
+    "updated": "Menu updated on {date}",
+    "indication": "Expect 85 to 110 euro per person for three courses, excluding wine."
+  },
+  "wine": {
+    "title": "Wine list",
+    "intro": "A cellar as French as the kitchen, with Burgundy at its heart.",
+    "count": "{count} references on the list",
+    "byGlass": "by the glass",
+    "bottle": "bottle",
+    "magnum": "magnum",
+    "halfBottle": "half bottle",
+    "nonVintage": "NV",
+    "pick": "Sommelier's choice",
+    "updated": "Cellar updated on {date}",
+    "jumpTo": "Jump to"
+  },
+  "book": {
+    "title": "Reservations",
+    "intro": "Book online, or call us on {phone}.",
+    "note": "At dinner we ask for a minimum of two courses, as the table is yours for the whole evening.",
+    "groups": "For tables of 7 to 10 we ask for a credit card guarantee. From 11 guests, please book by email.",
+    "cancel": "Free cancellation up to 24 hours in advance.",
+    "canard": "Do order the Canard a la Rouennaise when you book."
+  },
+  "awards": {
+    "title": "Awards"
+  },
+  "team": {
+    "title": "Our team",
+    "cta": "Meet our team"
+  },
+  "voucher": {
+    "title": "Gift voucher",
+    "intro": "Vouchers from 50 to 250 euro, delivered digitally, valid for one year.",
+    "cta": "Go to the shop"
+  },
+  "newsletter": {
+    "title": "Wine dinners and seasonal menus",
+    "intro": "A few times a year in your inbox. No more than that.",
+    "email": "Your email address",
+    "submit": "Subscribe",
+    "success": "Subscribed. See you soon.",
+    "error": "That did not work. Please try again or email us."
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "For reservations, use the booking button or call us. For everything else, write to us here.",
+    "name": "Your name",
+    "email": "Your email address",
+    "message": "Your message",
+    "submit": "Send",
+    "success": "Thank you. We will be in touch.",
+    "error": "Sending failed. Please email us directly.",
+    "invalidEmail": "Please enter a valid email address.",
+    "required": "This field is required.",
+    "route": "Getting here",
+    "routeBody": "Tram 7 to Londenbrug. Paid parking on Napelsstraat and Kattendijkdok-Westkaai."
+  },
+  "footer": {
+    "since": "Au Vieux Port, since 2007",
+    "privacy": "Privacy policy",
+    "cookies": "Cookie policy"
+  }
+}

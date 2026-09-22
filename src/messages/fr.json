@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "about": "À propos",
+    "menu": "La carte",
+    "wine": "Carte des vins",
+    "team": "Notre équipe",
+    "contact": "Contact",
+    "voucher": "Bon cadeau",
+    "book": "Réserver une table",
+    "call": "Appelez-nous",
+    "skip": "Aller au contenu"
+  },
+  "hero": {
+    "tagline": "Le restaurant le plus français d'Anvers",
+    "intro": "Cuisine française classique, terminée devant vous, sur l'Eilandje. Depuis 2007.",
+    "menuCta": "Voir la carte"
+  },
+  "hours": {
+    "title": "Heures d'ouverture",
+    "lunch": "Déjeuner",
+    "dinner": "Dîner",
+    "closed": "Fermé",
+    "closedDays": "Fermé le samedi et le dimanche",
+    "openNow": "Ouvert maintenant",
+    "closedNow": "Fermé maintenant",
+    "days": {
+      "1": "Lundi",
+      "2": "Mardi",
+      "3": "Mercredi",
+      "4": "Jeudi",
+      "5": "Vendredi",
+      "6": "Samedi",
+      "7": "Dimanche"
+    }
+  },
+  "menu": {
+    "title": "La carte",
+    "intro": "Nous cuisinons ce que la saison et le marché nous offrent le matin même. N'hésitez pas à demander les suggestions du jour.",
+    "dayPrice": "prix du jour",
+    "perPerson": "p.p.",
+    "soldOut": "Épuisé",
+    "preorder": "À commander à l'avance",
+    "seasonal": "De saison",
+    "updated": "Carte mise à jour le {date}",
+    "indication": "Comptez 85 à 110 euros par personne pour trois services, hors vin."
+  },
+  "wine": {
+    "title": "Carte des vins",
+    "intro": "Une cave aussi française que la cuisine, la Bourgogne en son cœur.",
+    "count": "{count} références à la carte",
+    "byGlass": "au verre",
+    "bottle": "bouteille",
+    "magnum": "magnum",
+    "halfBottle": "demi-bouteille",
+    "nonVintage": "NV",
+    "pick": "Choix du sommelier",
+    "updated": "Cave mise à jour le {date}",
+    "jumpTo": "Aller directement à"
+  },
+  "book": {
+    "title": "Réservations",
+    "intro": "Réservez en ligne, ou appelez-nous au {phone}.",
+    "note": "Au dîner, nous demandons au minimum deux services, la table vous étant réservée toute la soirée.",
+    "groups": "Pour les tables de 7 à 10 personnes, une garantie par carte de crédit est demandée. À partir de 11 personnes, réservez par courriel.",
+    "cancel": "Annulation gratuite jusqu'à 24 heures à l'avance.",
+    "canard": "Pensez à commander le Canard à la Rouennaise lors de votre réservation."
+  },
+  "awards": {
+    "title": "Distinctions"
+  },
+  "team": {
+    "title": "Notre équipe",
+    "cta": "Faites connaissance avec notre équipe"
+  },
+  "voucher": {
+    "title": "Bon cadeau",
+    "intro": "Bons de 50 à 250 euros, livrés par voie numérique, valables un an.",
+    "cta": "Vers la boutique"
+  },
+  "newsletter": {
+    "title": "Soirées vins et cartes de saison",
+    "intro": "Quelques fois par an dans votre boîte mail. Pas davantage.",
+    "email": "Votre adresse e-mail",
+    "submit": "S'inscrire",
+    "success": "Inscription enregistrée. À bientôt.",
+    "error": "Cela n'a pas fonctionné. Réessayez ou écrivez-nous."
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Pour les réservations, utilisez le bouton ou appelez-nous. Pour tout le reste, écrivez-nous ici.",
+    "name": "Votre nom",
+    "email": "Votre adresse e-mail",
+    "message": "Votre message",
+    "submit": "Envoyer",
+    "success": "Merci. Nous vous recontactons.",
+    "error": "L'envoi a échoué. Écrivez-nous directement.",
+    "invalidEmail": "Saisissez une adresse e-mail valide.",
+    "required": "Ce champ est obligatoire.",
+    "route": "Accès",
+    "routeBody": "Tram 7 jusqu'à Londenbrug. Stationnement payant Napelsstraat et Kattendijkdok-Westkaai."
+  },
+  "footer": {
+    "since": "Au Vieux Port, depuis 2007",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Politique des cookies"
+  }
+}

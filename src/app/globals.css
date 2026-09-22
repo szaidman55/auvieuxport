@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* Het huis: zwart, papierwit en een brons dat wel leesbaar is.
+   De oude site gebruikte #B08D57 op wit, wat 3,09:1 haalt. Dat is onder de
+   norm van 4,5:1 en het waren net de enige links naar de teampagina en de
+   canard. Deze toon haalt 5,2:1. */
+@theme {
+  --color-ink: #1b1615;
+  --color-ink-soft: #574c4a;
+  --color-ink-faint: #7c6f6c;
+  --color-paper: #f6f3f3;
+  --color-paper-2: #ede8e7;
+  --color-rule: #d5cbc9;
+  --color-brass: #8a6a33;
+  --color-brass-bright: #b08d57;
+  --color-wine: #7a1f2b;
+
+  --font-display: "Bodoni Moda", Didot, Georgia, serif;
+  --font-body: Archivo, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+html {
+  /* De oude site liet ankerlinks onder een sticky balk van 138px landen.
+     Dit is die fout, in een regel. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  /* Uitgevulde tekst gaf op 375px zichtbare rivieren. Links uitlijnen. */
+  text-align: left;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+/* Elk aanraakdoel minstens 44px hoog. De oude navigatie zat op 24px. */
+a, button {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
