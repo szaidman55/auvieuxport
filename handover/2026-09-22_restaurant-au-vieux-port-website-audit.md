@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:44:05Z
+- **Generated (UTC):** 2026-09-22 22:54:11Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:43 UTC
-- **Turns:** 30 human / 258 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:54 UTC
+- **Turns:** 31 human / 271 assistant
 
 ## Files written
 
@@ -67,6 +67,7 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\fix-menu-intro.mjs`
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\us-english.mjs`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\api\revalidate\route.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\revalidate.ts`
 
 ## How to resume
 
@@ -2423,3 +2424,79 @@ yes
 ### Claude
 
 Good — that removes a whole class of "why isn't my change showing". Let me build it.
+
+### Claude
+
+Now wiring it into every write path in the editors.
+
+### Claude
+
+Shell keeps mangling the template literals. Using the editor for the rest.
+
+### Claude
+
+MenuEditor covered. Now the wine and hours editors.
+
+### Claude
+
+That produced a duplicate in HoursEditor — my second pattern matched inside the first. Let me look.
+
+### Claude
+
+All write paths covered. Committing.
+
+### Claude
+
+One page lagging. Let me confirm it's the cache and not the data.
+
+### Claude
+
+Verified end to end.
+
+## The US English conversion is done
+
+The database holds zero British forms across every English field, and the American ones are confirmed present: `specialties`, `specialized`, `specialization`, `honor`, `center`, `favorites`, and `aging` across 29 tasting notes. Jens's French bio still reads *"au centre de tout"* — the trap in this job, avoided.
+
+Six of the seven English pages are clean live. `/en/wine-list` still shows `ageing`, and that's the cache, not the data: the database has **0** rows matching `ageing` and **29** matching `aging`, while the page returns `X-Vercel-Cache: HIT` with `X-Nextjs-Prerender: 1`. Each page runs its own hour timer from when it was last rendered, which is why the menu and team pages flipped and this one hasn't. It'll clear itself — or, now, the moment anyone touches the wine admin.
+
+## The revalidation hook is live
+
+`POST /api/revalidate`, called by every editor after a successful write. Tested on the deployment: **401** without a session, **405** on GET. The auth check runs before the scope check, so an anonymous caller can't probe which scopes exist.
+
+Three choices worth knowing about:
+
+- **The paths carry `[locale]`**, so one call refreshes all three languages. Listing the nine URLs by hand would mean a new language or a renamed path gets silently forgotten here.
+- **The call comes after the database, never before.** Refreshing a page on the strength of a write the database then rejects would pin the *old* text in place.
+- **A failed refresh isn't an error.** The change is saved and the page still self-refreshes within the hour, so the screen says exactly that instead of showing red.
+
+The gate is membership of the staff list, not the manager role. The floor marks things sold out, and that's precisely the change that shouldn't wait an hour.
+
+Nine write paths in the menu editor, three in the wine editor, two in the hours editor — save, sold-out, add, remove, reorder, publish, all covered.
+
+### You
+
+Remove "Book a table" at the end of the sommelier bio
+
+### Claude
+
+Let me look at what's actually on the team page now.
+
+### Claude
+
+Found it, and it's my bug from the original scrape. Let me confirm.
+
+### Claude
+
+Confirmed: Jens's English bio has a fifth paragraph that is literally "Book a table". He's the last person on the page, so my scraper swallowed the page's closing button. The Dutch and French filters caught theirs; the English one didn't match "Book". Let me check the seed.
+
+### Claude
+
+The DROP filter had `Reserveer` and `Réserver` but no `Book` — that's the cause. While here, let me check a paragraph-count mismatch I waved away earlier.
+
+### Claude
+
+The French page *does* have it. So my scraper lost a whole paragraph about the chef. Let me extract it properly.
+
+### Claude
+
+Two data problems, then. Let me get the full French paragraph that's missing.

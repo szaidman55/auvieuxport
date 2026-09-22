@@ -61,7 +61,9 @@ Il a appris le métier à Stella Maris, à Merksem, une école à la formation t
 
 À Au Vieux Port, il a travaillé quatre ans aux côtés du chef Marc Rigouts. Lorsque celui-ci a pris sa retraite, Stijn a repris la direction de la cuisine.
 
-Il décrit sa cuisine comme classique, de saison et généreuse : une cuisine du produit, dans le respect des producteurs qui nous fournissent. Il admire les chefs à la solide base classique, comme Peter Goossens, Luc Broutard, Joseph Viola, Christian Denis et Karen Torosyan.', '/img/team/stijn-havermans.webp', 'https://www.mastercooks.be/', 'Stijn bij The Mastercooks of Belgium', 'Stijn at The Mastercooks of Belgium', 'Stijn chez The Mastercooks of Belgium', 10),
+Il décrit sa cuisine comme classique, de saison et généreuse : une cuisine du produit, dans le respect des producteurs qui nous fournissent. Il admire les chefs à la solide base classique, comme Peter Goossens, Luc Broutard, Joseph Viola, Christian Denis et Karen Torosyan.
+
+En 2026, Stijn a rejoint The Mastercooks of Belgium, parrainé par Bert Meewis et Viki Geunes. « Une reconnaissance du travail accompli, et un grand honneur de pouvoir représenter la gastronomie belge. »', '/img/team/stijn-havermans.webp', 'https://www.mastercooks.be/', 'Stijn bij The Mastercooks of Belgium', 'Stijn at The Mastercooks of Belgium', 'Stijn chez The Mastercooks of Belgium', 10),
   ('tom-schoonbaert', 'Tom Schoonbaert', 'Maître d''hôtel', 'Maître d''hôtel', 'Maître d''hôtel', 'Tom kwam in 2009 als stagiair naar Au Vieux Port en is nooit meer weggegaan. Vandaag is hij als maître verantwoordelijk voor het goede verloop van elke lunch en elk diner.
 
 Gastvrijheid is zijn handelsmerk. Wie binnenkomt, wordt door Tom met een brede lach ontvangen, en hij zorgt ervoor dat u de hele avond in de watten gelegd wordt.
@@ -93,9 +95,7 @@ He did his internship at De Kleine Barreel in Schoten, a house known for its cla
 
 His palate has grown more refined over the years. “In my early years I thought a wine full of oak and vanilla was the best thing there was. Today my preference leans towards white.” A fresh Albariño with a hint of salinity, or a great Chablis when the occasion calls for more.
 
-Ask him for his favorites and he names, for white, the Chablis of Raveneau or of Thomas Pico (Domaine Pattes Loup), and for red, the finesse of a Nebbiolo from Roagna or a Chambolle-Musigny from Ghislaine Barthod. You will find them all on our wine list.
-
-Book a table', 'À l''école, Jens a longtemps cherché sa voie, jusqu''à ce qu''il entre à l''école hôtelière Stella Maris de Merksem en quatrième secondaire. Là, il l''a trouvée. Après la sixième, il a suivi une année de spécialisation en connaissance des boissons. Son amour du vin lui vient en partie de la maison : son père faisait partie d''un club œnologique et apprécie beaucoup un bon verre.
+Ask him for his favorites and he names, for white, the Chablis of Raveneau or of Thomas Pico (Domaine Pattes Loup), and for red, the finesse of a Nebbiolo from Roagna or a Chambolle-Musigny from Ghislaine Barthod. You will find them all on our wine list.', 'À l''école, Jens a longtemps cherché sa voie, jusqu''à ce qu''il entre à l''école hôtelière Stella Maris de Merksem en quatrième secondaire. Là, il l''a trouvée. Après la sixième, il a suivi une année de spécialisation en connaissance des boissons. Son amour du vin lui vient en partie de la maison : son père faisait partie d''un club œnologique et apprécie beaucoup un bon verre.
 
 Il a effectué son stage à De Kleine Barreel, à Schoten, une maison réputée pour sa cuisine classique et ses préparations en salle, telles que nous les pratiquons aujourd''hui à Au Vieux Port. Diplômé en 2012, il y est resté jusqu''à la fermeture du restaurant début 2015. Suivirent près de dix ans chez Pazzo, où le vin est au centre de tout et où il a énormément appris. Mais le restaurant classique, avec ses préparations et ses découpes en salle, lui manquait. Depuis 2025, il est sommelier à Au Vieux Port.
 
