@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
+import { alternates } from '@/lib/alternates';
 import { getMenu } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
 import { MenuList } from '@/components/MenuList';
@@ -10,7 +11,7 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'menu' });
-  return { title: t('title'), description: t('intro') };
+  return { title: t('title'), description: t('intro'), alternates: alternates('/kaart', locale) };
 }
 
 export default async function MenuPage({ params }: { params: Promise<{ locale: Locale }> }) {

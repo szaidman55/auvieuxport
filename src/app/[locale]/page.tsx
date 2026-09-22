@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
+import { alternates } from '@/lib/alternates';
 import { site, voucherShopUrl } from '@/lib/site';
 import { Awards } from '@/components/Awards';
 import { Canard } from '@/components/Canard';
@@ -14,6 +15,13 @@ import { RestaurantJsonLd } from '@/components/JsonLd';
 // gebouwd en elk uur opnieuw opgehaald. Een prijswijziging in /admin staat
 // binnen het uur op de site, zonder bouw.
 export const revalidate = 3600;
+
+// Alleen de canonical en de hreflang; titel en omschrijving komen uit de
+// layout. Zonder dit verwees elke pagina naar de startpagina als origineel.
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  return { alternates: alternates('/', locale) };
+}
 
 export default async function HomePage({
   params,

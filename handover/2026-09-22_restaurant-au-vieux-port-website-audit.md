@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:29:22Z
+- **Generated (UTC):** 2026-09-22 18:33:45Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:28 UTC
-- **Turns:** 14 human / 194 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:33 UTC
+- **Turns:** 14 human / 205 assistant
 
 ## Files written
 
@@ -55,6 +55,8 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\lib\identity.ts`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\api\staff\route.ts`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\mensen\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\sitemap.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\alternates.ts`
 
 ## How to resume
 
@@ -1829,3 +1831,47 @@ The admin needs a way to create those logins. Let me see the current admin hub.
 ### Claude
 
 Now the People tab, the way Tannin does it.
+
+### Claude
+
+Build is green. The sitemap needs the new pages - let me generate it from the routing so it can't drift again.
+
+### Claude
+
+Dutch by default and every route resolves. Now the important one: does the booking button actually open Zenchef?
+
+### Claude
+
+The widget now builds. Let me click a booking button and confirm it opens.
+
+### Claude
+
+Zenchef's own booking tab now appears bottom-right, so the widget is alive. Let me confirm the panel actually opens.
+
+### Claude
+
+Booking widget opens with the restaurant's own branding, in Dutch. Let me test the language switcher.
+
+### Claude
+
+The switcher maps `/kaart` to `/en/menu` correctly. Let me confirm it lands.
+
+### Claude
+
+The href is right but the click didn't navigate. Let me test it directly.
+
+### Claude
+
+Switcher works. But I notice the Dutch link renders as `/nl/kaart` rather than `/kaart`. Let me check whether that's a duplicate URL.
+
+### Claude
+
+Found a real SEO bug: every page declares the **homepage** as its canonical. Let me fix that properly.
+
+### Claude
+
+Now adding the canonical to each page's metadata.
+
+### Claude
+
+The slashes broke the perl delimiter. Let me use a different one.

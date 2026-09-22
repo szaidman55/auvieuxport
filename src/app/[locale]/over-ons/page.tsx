@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
+import { alternates } from '@/lib/alternates';
 import { Link } from '@/i18n/navigation';
 import { BookButton } from '@/components/BookButton';
 import { Awards } from '@/components/Awards';
@@ -10,7 +11,7 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'about' });
-  return { title: t('title'), description: t('lead') };
+  return { title: t('title'), description: t('lead'), alternates: alternates('/over-ons', locale) };
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {

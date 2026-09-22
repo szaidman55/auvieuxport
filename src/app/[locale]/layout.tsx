@@ -39,10 +39,6 @@ export async function generateMetadata({
     metadataBase: new URL(site.url),
     title: { default: `${titles[locale]} - ${site.name}`, template: `%s - ${site.name}` },
     description: descriptions[locale],
-    alternates: {
-      canonical: locale === 'nl' ? '/' : `/${locale}`,
-      languages: { 'nl-BE': '/', en: '/en', fr: '/fr', 'x-default': '/' },
-    },
     openGraph: {
       type: 'website',
       siteName: site.name,

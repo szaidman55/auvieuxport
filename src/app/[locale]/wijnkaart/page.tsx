@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
+import { alternates } from '@/lib/alternates';
 import { getWines, getCellarUpdatedAt } from '@/lib/queries';
 import { localised, type Wine } from '@/lib/types';
 import { BookButton } from '@/components/BookButton';
@@ -10,7 +11,7 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'wine' });
-  return { title: t('title'), description: t('intro') };
+  return { title: t('title'), description: t('intro'), alternates: alternates('/wijnkaart', locale) };
 }
 
 function bottleLabel(w: Wine, t: (k: string) => string): string | null {

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
+import { alternates } from '@/lib/alternates';
 import { site } from '@/lib/site';
 import { getOpeningHours } from '@/lib/queries';
 import { Hours } from '@/components/Hours';
@@ -11,7 +12,7 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'contact' });
-  return { title: t('title'), description: t('intro') };
+  return { title: t('title'), description: t('intro'), alternates: alternates('/contact', locale) };
 }
 
 // De oude site had geen contactpagina. Wie /contact intikte kreeg een 404.
