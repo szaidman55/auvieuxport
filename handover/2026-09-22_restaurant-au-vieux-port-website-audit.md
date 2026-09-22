@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:06:42Z
+- **Generated (UTC):** 2026-09-22 18:08:56Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:05 UTC
-- **Turns:** 12 human / 166 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:08 UTC
+- **Turns:** 12 human / 170 assistant
 
 ## Files written
 
@@ -41,6 +41,9 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\WineSearch.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-wine-messages.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\Canard.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-canard-messages.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\middleware.ts`
 
 ## How to resume
 
@@ -1648,3 +1651,19 @@ Search works. Two small things to fix: the jump-nav counts don't follow the filt
 ### Claude
 
 Fixed. Let me patch the seed so a fresh install is right too, then build and deploy.
+
+### Claude
+
+Team page reads properly now. One loose end: I downloaded the four canard photos but nothing uses them yet. Let me place them.
+
+### Claude
+
+The localised slugs 404, yet my sitemap advertises them. Let me find what the real paths are.
+
+### Claude
+
+Three real routing bugs: `/wijnkaart` 500s, the un-prefixed Dutch paths 404, and the localised slugs aren't applied at all - yet the sitemap points at exactly those. Let me look.
+
+### Claude
+
+Found it. The middleware matcher has `'.*\..*'` in a single-quoted string, so `\.` collapses to `.` and the negative lookahead excludes almost every path - the i18n middleware never runs.
