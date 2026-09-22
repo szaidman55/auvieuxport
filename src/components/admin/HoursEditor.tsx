@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabase/client';
+import { revalidate } from '@/lib/revalidate';
 import type { OpeningHour } from '@/lib/types';
 
 const DAYS = [
@@ -45,6 +46,7 @@ export function HoursEditor() {
         .eq('weekday', weekday)
         .eq('service', service);
       setStatus(error ? `Niet gelukt: ${error.message}` : 'Bewaard.');
+      if (!error) void revalidate('hours');
       void load();
       return;
     }
@@ -65,6 +67,7 @@ export function HoursEditor() {
     setStatus('Bewaren.');
     const { error } = await db.from('opening_hours').upsert(row, { onConflict: 'weekday,service' });
     setStatus(error ? `Niet gelukt: ${error.message}` : 'Bewaard.');
+    if (!error) void revalidate('hours');
   }
 
   if (loading) return <p className="text-sm text-ink-faint">De uren worden geladen.</p>;

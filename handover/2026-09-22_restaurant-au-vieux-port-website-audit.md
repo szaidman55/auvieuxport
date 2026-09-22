@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:30:33Z
+- **Generated (UTC):** 2026-09-22 22:44:05Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:30 UTC
-- **Turns:** 28 human / 250 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:43 UTC
+- **Turns:** 30 human / 258 assistant
 
 ## Files written
 
@@ -65,6 +65,8 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\suggesties\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\afdrukken\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\fix-menu-intro.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\us-english.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\api\revalidate\route.ts`
 
 ## How to resume
 
@@ -2305,3 +2307,119 @@ go for us englisg across the website
 ### Claude
 
 US English it is. Let me find every British form across the site, not just the one word.
+
+### Claude
+
+Most of those `.ts` hits are code identifiers — the `colour` column, `localised()`, `neighbour` — not anything a guest reads. I'm not renaming database columns. Let me look at the actual visible text.
+
+### Claude
+
+Seed is US now, and the French "au centre de tout" is untouched. Let me check the wine tasting notes, which are also English on the site.
+
+### Claude
+
+29 `ageing` and one `litre` in the tasting notes. Let me build the SQL and test the transformations against the real strings before handing it over.
+
+### Claude
+
+US English across the site. Here's the full picture and the one SQL block that finishes it.
+
+## What I found
+
+Scanning every English string against the usual British/American pairs, the visible text had **eight** British forms, all of them in your own writing — none in mine:
+
+| | where |
+|---|---|
+| `specialities` | menu section title |
+| `specialised`, `honour` | Stijn's bio |
+| `specialisation`, `centre`, `favourites` | Jens's bio |
+| `ageing` ×29, `litre` | wine tasting notes |
+
+`en.json` was already clean. So the previous session's one-word "fix" really was the only American spelling on an otherwise British site — now it's the direction everything moves toward.
+
+## Done in the repo
+
+The seed is converted, so a fresh install is US English. Each replacement carries enough surrounding words to be certain of the language, and that isn't excess caution: **`centre` appears twice in that file** — once in Jens's English bio, once in his French one (*"où le vin est au centre de tout"*), where it's simply French. A blind find-and-replace would have broken the French. The script asserts afterwards that the French line is still intact.
+
+## What I did not touch
+
+`colour`, `localised`, `neighbour`, `cancelled` in the `.ts` files. Those are a database column, a helper function and local variables — no guest ever reads them. Renaming `wines.colour` would mean the schema, the seed, the 500-row CSV import and every query, to change nothing on the site. If you want the codebase Americanised as a separate exercise, say so and I'll treat it as its own job.
+
+## The one thing left for you
+
+The live database still holds the British forms. Chrome's extension is still not answering, so I can't reach the SQL editor. I tested every one of these replacements against the real rows first — 30 tasting notes change, and nothing British survives:
+
+```sql
+update menu_sections
+set title_en = replace(title_en, 'specialities', 'specialties')
+where id = 'specialiteiten';
+
+update team_members set bio_en =
+  replace(replace(replace(replace(replace(bio_en,
+    'specialised', 'specialized'),
+    'specialisation', 'specialization'),
+    'honour', 'honor'),
+    'centre', 'center'),
+    'favourites', 'favorites');
+
+update wines set tasting_note =
+  replace(replace(replace(replace(tasting_note,
+    'Ageing', 'Aging'), 'ageing', 'aging'),
+    'Litre', 'Liter'), 'litre', 'liter')
+where tasting_note is not null;
+```
+
+The `bio_en` replacements are safe as written because they only touch the English column — `bio_fr` is never named, so the French "centre" can't be caught.
+
+Run it and I'll verify the whole site comes back clean.
+
+### You
+
+ran it
+
+### Claude
+
+Database is clean and the French survived. Let me confirm the American forms actually landed, and check the live site.
+
+### Claude
+
+Database is right; the site is serving pages cached from before your update. Let me confirm that's the cause rather than assume it.
+
+### Claude
+
+Verified, with one caveat that isn't a problem.
+
+## The database is clean
+
+| field | British forms |
+|---|---|
+| `menu_sections` EN | 0 |
+| `menu_items` EN | 0 |
+| `wine_sections` EN | 0 |
+| `team_members` EN | 0 |
+| `wines` tasting notes | 0 |
+
+And the American forms are actually there, not just the British ones gone: `"Au Vieux Port" specialties`, `specialized`, `honor`, `specialization`, `center`, `favorites`, and `aging` across 29 tasting notes.
+
+The French survived: Jens's French bio still reads *"où le vin est au centre de tout"*. That was the trap in this job, and the targeted replacements avoided it.
+
+## The live site hasn't caught up yet
+
+`/en/menu`, `/en/wine-list` and `/en/our-team` still show the old spellings. I checked the headers rather than guessing: `X-Vercel-Cache: HIT`, `X-Nextjs-Prerender: 1`. Those pages were prerendered during the last deploy, which happened **before** you ran the SQL, and they carry `revalidate = 3600` — so they hold that data for up to an hour.
+
+Nothing is broken. Two ways to see it now rather than later:
+
+- **Vercel → Deployments → ⋯ on the latest → Redeploy.** Rebuilds against the current database, takes about a minute.
+- Or leave it; it clears itself within the hour.
+
+## One thing this exposes
+
+Every content change you make in `/admin` has this same lag — a price edit takes up to an hour to appear. That's the documented behaviour and it's a deliberate trade for fast, cached pages, but it doesn't have to be. A revalidation hook would make admin saves show up immediately, without a redeploy. Not something I'd add uninvited, but it's a small piece of work and it removes the "why isn't my change showing" question permanently. Want it?
+
+### You
+
+yes
+
+### Claude
+
+Good — that removes a whole class of "why isn't my change showing". Let me build it.

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabase/client';
+import { revalidate } from '@/lib/revalidate';
 import type { Wine, WineSection } from '@/lib/types';
 
 const SIZES = [
@@ -67,7 +68,8 @@ export function WineEditor() {
     }
 
     setDirty({});
-    setStatus(`${ids.length} wijziging(en) bewaard.`);
+    const note = await revalidate('wines');
+    setStatus(`${ids.length} wijziging(en) bewaard.${note ? ' ' + note : ''}`);
   }
 
   // Een fles die op is, is het moment waarop snelheid telt. Slaat meteen op.
@@ -78,7 +80,9 @@ export function WineEditor() {
     if (error) {
       setStatus(`Niet gelukt: ${error.message}`);
       void load();
+      return;
     }
+    void revalidate('wines');
   }
 
   async function addWine() {
@@ -93,7 +97,10 @@ export function WineEditor() {
     });
 
     if (error) setStatus(`Toevoegen mislukt: ${error.message}`);
-    else void load();
+    else {
+      void load();
+      void revalidate('wines');
+    }
   }
 
   if (loading) return <p className="text-sm text-ink-faint">De kelder wordt geladen.</p>;

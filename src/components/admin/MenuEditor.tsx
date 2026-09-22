@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { MenuItem, MenuSection } from '@/lib/types';
 import { SectionHeader } from './SectionHeader';
+import { revalidate } from '@/lib/revalidate';
 
 type ItemDraft = Partial<MenuItem> & { id: string };
 type SectionDraft = Partial<MenuSection> & { id: string };
@@ -102,7 +103,11 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     const n = pendingCount;
     setDirtyItems({});
     setDirtySections({});
-    setStatus(`${n} wijziging(en) bewaard.`);
+
+    // Pas nu de site laten verversen: een pagina vernieuwen op grond van iets
+    // wat de database geweigerd heeft, zet juist het oude weer vast.
+    const note = await revalidate('menu');
+    setStatus(`${n} wijziging(en) bewaard.${note ? ' ' + note : ''}`);
   }
 
   // Uitverkocht is de enige knop die ook de vloer mag gebruiken, en hij slaat
@@ -114,7 +119,10 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     if (error) {
       setStatus(`Niet gelukt: ${error.message}`);
       void load();
+      return;
     }
+    // Uitverkocht is nieuws van nu; hier telt het uur wachten het zwaarst.
+    void revalidate('menu');
   }
 
   async function addSection() {
@@ -138,6 +146,7 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     else {
       setStatus(`Sectie "${title.trim()}" toegevoegd.`);
       void load();
+      void revalidate('menu');
     }
   }
 
@@ -172,7 +181,9 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     if (failed?.error) {
       setStatus(`Volgorde niet bewaard: ${failed.error.message}`);
       void load();
+      return;
     }
+    void revalidate('menu');
   }
 
   async function togglePublished(section: MenuSection) {
@@ -185,7 +196,9 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     if (error) {
       setStatus(`Niet gelukt: ${error.message}`);
       void load();
+      return;
     }
+    void revalidate('menu');
   }
 
   async function removeSection(section: MenuSection) {
@@ -201,6 +214,7 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     else {
       setStatus(`"${section.title_nl}" verwijderd.`);
       void load();
+      void revalidate('menu');
     }
   }
 
@@ -240,7 +254,9 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     if (failed?.error) {
       setStatus(`Volgorde niet bewaard: ${failed.error.message}`);
       void load();
+      return;
     }
+    void revalidate('menu');
   }
 
   async function addItem(sectionId: string) {
@@ -255,14 +271,20 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
       .insert({ section_id: sectionId, name_nl: name.trim(), position });
 
     if (error) setStatus(`Toevoegen mislukt: ${error.message}`);
-    else void load();
+    else {
+      void load();
+      void revalidate('menu');
+    }
   }
 
   async function removeItem(item: MenuItem) {
     if (!window.confirm(`${item.name_nl} van de kaart halen?`)) return;
     const { error } = await db.from('menu_items').delete().eq('id', item.id);
     if (error) setStatus(`Verwijderen mislukt: ${error.message}`);
-    else void load();
+    else {
+      void load();
+      void revalidate('menu');
+    }
   }
 
   if (loading) return <p className="text-sm text-ink-faint">Even geduld.</p>;
