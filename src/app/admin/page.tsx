@@ -11,6 +11,11 @@ const cards = [
     body: 'Gerechten, prijzen, vertalingen en wat vandaag op is.',
   },
   {
+    href: '/admin/suggesties',
+    title: 'Suggesties',
+    body: 'De seizoens- of weekkaart. Heet Specials op de Engelse site.',
+  },
+  {
     href: '/admin/wines',
     title: 'De kelder',
     body: '500 referenties. Zoeken, prijzen bijwerken, flessen van de kaart halen.',
@@ -24,6 +29,11 @@ const cards = [
     href: '/admin/mensen',
     title: 'Mensen',
     body: 'Wie zich mag aanmelden, met welke naam, en wat hij mag wijzigen.',
+  },
+  {
+    href: '/admin/afdrukken',
+    title: 'Afdrukken',
+    body: 'De wijnkaart, de kaart en de suggesties op papier. Nog niet gebouwd.',
   },
 ];
 

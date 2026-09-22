@@ -3,16 +3,49 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabaseBrowser } from '@/lib/supabase/client';
 import type { MenuItem, MenuSection } from '@/lib/types';
+import { SectionHeader } from './SectionHeader';
 
-type Draft = Partial<MenuItem> & { id: string };
+type ItemDraft = Partial<MenuItem> & { id: string };
+type SectionDraft = Partial<MenuSection> & { id: string };
+
+/**
+ * Van een titel een id maken.
+ *
+ * De sleutel van een sectie is tekst, geen willekeurig nummer, want ze komt
+ * in geen enkele URL terecht maar wel in elke foutmelding en elke rij van
+ * menu_items. "Suggesties van de week" leest daar beter dan een uuid.
+ */
+function slugify(title: string, taken: string[]): string {
+  const base =
+    title
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 40) || 'sectie';
+
+  if (!taken.includes(base)) return base;
+  for (let n = 2; n < 100; n += 1) {
+    if (!taken.includes(`${base}-${n}`)) return `${base}-${n}`;
+  }
+  return `${base}-${Date.now()}`;
+}
 
 // Het scherm waar de zaal de kaart beheert. Een prijs wijzigen is hier twee
 // handelingen: typen en bewaren. Op de oude site was het een bouwer bellen.
-export function MenuEditor() {
+//
+// Hetzelfde scherm draait de suggesties. Het verschil is welke secties het
+// toont: die met de vlag, of die zonder. Een suggestie is immers een gerecht,
+// alleen met een kortere houdbaarheid.
+export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' }) {
   const db = supabaseBrowser();
+  const suggestions = mode === 'suggestions';
+
   const [sections, setSections] = useState<MenuSection[]>([]);
   const [items, setItems] = useState<MenuItem[]>([]);
-  const [dirty, setDirty] = useState<Record<string, Draft>>({});
+  const [dirtyItems, setDirtyItems] = useState<Record<string, ItemDraft>>({});
+  const [dirtySections, setDirtySections] = useState<Record<string, SectionDraft>>({});
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,17 +63,34 @@ export function MenuEditor() {
     void load();
   }, [load]);
 
-  function edit(id: string, patch: Partial<MenuItem>) {
+  const mine = sections.filter((s) => Boolean(s.is_suggestion) === suggestions);
+
+  function editItem(id: string, patch: Partial<MenuItem>) {
     setItems((prev) => prev.map((i) => (i.id === id ? { ...i, ...patch } : i)));
-    setDirty((prev) => ({ ...prev, [id]: { ...(prev[id] ?? { id }), ...patch } }));
+    setDirtyItems((prev) => ({ ...prev, [id]: { ...(prev[id] ?? { id }), ...patch } }));
   }
 
-  async function save() {
-    const pending = Object.values(dirty);
-    if (pending.length === 0) return;
+  function editSection(id: string, patch: Partial<MenuSection>) {
+    setSections((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setDirtySections((prev) => ({ ...prev, [id]: { ...(prev[id] ?? { id }), ...patch } }));
+  }
 
+  const pendingCount = Object.keys(dirtyItems).length + Object.keys(dirtySections).length;
+
+  async function save() {
+    if (pendingCount === 0) return;
     setStatus('Bewaren.');
-    for (const draft of pending) {
+
+    for (const draft of Object.values(dirtySections)) {
+      const { id, ...patch } = draft;
+      const { error } = await db.from('menu_sections').update(patch).eq('id', id);
+      if (error) {
+        setStatus(`Bewaren mislukt: ${error.message}`);
+        return;
+      }
+    }
+
+    for (const draft of Object.values(dirtyItems)) {
       const { id, ...patch } = draft;
       const { error } = await db.from('menu_items').update(patch).eq('id', id);
       if (error) {
@@ -49,8 +99,10 @@ export function MenuEditor() {
       }
     }
 
-    setDirty({});
-    setStatus(`${pending.length} wijziging(en) bewaard.`);
+    const n = pendingCount;
+    setDirtyItems({});
+    setDirtySections({});
+    setStatus(`${n} wijziging(en) bewaard.`);
   }
 
   // Uitverkocht is de enige knop die ook de vloer mag gebruiken, en hij slaat
@@ -65,16 +117,103 @@ export function MenuEditor() {
     }
   }
 
+  async function addSection() {
+    const title = window.prompt(
+      suggestions ? 'Naam van de suggestiekaart (Nederlands)' : 'Naam van de sectie (Nederlands)',
+    );
+    if (!title?.trim()) return;
+
+    const id = slugify(title, sections.map((s) => s.id));
+    const position = Math.max(0, ...sections.map((s) => s.position)) + 10;
+
+    const { error } = await db.from('menu_sections').insert({
+      id,
+      title_nl: title.trim(),
+      position,
+      published: true,
+      is_suggestion: suggestions,
+    });
+
+    if (error) setStatus(`Toevoegen mislukt: ${error.message}`);
+    else {
+      setStatus(`Sectie "${title.trim()}" toegevoegd.`);
+      void load();
+    }
+  }
+
+  // Van plaats wisselen met de buur in dit scherm. Alleen binnen de eigen
+  // lijst, zodat de suggesties de voorgerechten niet ongemerkt verspringen.
+  async function moveSection(section: MenuSection, direction: -1 | 1) {
+    const index = mine.findIndex((s) => s.id === section.id);
+    const neighbour = mine[index + direction];
+    if (!neighbour) return;
+
+    const [a, b] = [section.position, neighbour.position];
+    // Gelijke posities zouden de volgorde aan het toeval overlaten.
+    const [next, other] = a === b ? [b - direction * 5, b] : [b, a];
+
+    setSections((prev) =>
+      [...prev]
+        .map((s) =>
+          s.id === section.id
+            ? { ...s, position: next }
+            : s.id === neighbour.id
+              ? { ...s, position: other }
+              : s,
+        )
+        .sort((x, y) => x.position - y.position),
+    );
+
+    const results = await Promise.all([
+      db.from('menu_sections').update({ position: next }).eq('id', section.id),
+      db.from('menu_sections').update({ position: other }).eq('id', neighbour.id),
+    ]);
+    const failed = results.find((r) => r.error);
+    if (failed?.error) {
+      setStatus(`Volgorde niet bewaard: ${failed.error.message}`);
+      void load();
+    }
+  }
+
+  async function togglePublished(section: MenuSection) {
+    const next = !section.published;
+    setSections((prev) => prev.map((s) => (s.id === section.id ? { ...s, published: next } : s)));
+    const { error } = await db
+      .from('menu_sections')
+      .update({ published: next })
+      .eq('id', section.id);
+    if (error) {
+      setStatus(`Niet gelukt: ${error.message}`);
+      void load();
+    }
+  }
+
+  async function removeSection(section: MenuSection) {
+    const count = items.filter((i) => i.section_id === section.id).length;
+    const warning =
+      count === 0
+        ? `"${section.title_nl}" verwijderen?`
+        : `"${section.title_nl}" verwijderen? De ${count} gerecht(en) erin gaan mee en zijn niet terug te halen.`;
+    if (!window.confirm(warning)) return;
+
+    const { error } = await db.from('menu_sections').delete().eq('id', section.id);
+    if (error) setStatus(`Verwijderen mislukt: ${error.message}`);
+    else {
+      setStatus(`"${section.title_nl}" verwijderd.`);
+      void load();
+    }
+  }
+
   async function addItem(sectionId: string) {
     const name = window.prompt('Naam van het gerecht (Nederlands)');
-    if (!name) return;
+    if (!name?.trim()) return;
 
     const position =
       Math.max(0, ...items.filter((i) => i.section_id === sectionId).map((i) => i.position)) + 10;
 
     const { error } = await db
       .from('menu_items')
-      .insert({ section_id: sectionId, name_nl: name, position });
+      .insert({ section_id: sectionId, name_nl: name.trim(), position });
 
     if (error) setStatus(`Toevoegen mislukt: ${error.message}`);
     else void load();
@@ -87,15 +226,14 @@ export function MenuEditor() {
     else void load();
   }
 
-  if (loading) return <p className="text-sm text-ink-faint">De kaart wordt geladen.</p>;
+  if (loading) return <p className="text-sm text-ink-faint">Even geduld.</p>;
 
-  const pendingCount = Object.keys(dirty).length;
   const field = 'min-h-11 border border-rule bg-paper px-2 text-sm';
 
   return (
     <div className="flex flex-col gap-10">
       <div className="sticky top-0 z-10 flex flex-wrap items-center gap-4 border-b border-rule bg-paper py-3">
-        <h1 className="text-2xl">De kaart</h1>
+        <h1 className="text-2xl">{suggestions ? 'Suggesties' : 'De kaart'}</h1>
         <button
           type="button"
           onClick={save}
@@ -104,6 +242,13 @@ export function MenuEditor() {
         >
           Bewaren{pendingCount > 0 ? ` (${pendingCount})` : ''}
         </button>
+        <button
+          type="button"
+          onClick={addSection}
+          className="min-h-11 border border-rule px-4 text-sm"
+        >
+          Sectie toevoegen
+        </button>
         {status && (
           <p role="status" className="text-sm text-ink-soft">
             {status}
@@ -111,18 +256,27 @@ export function MenuEditor() {
         )}
       </div>
 
-      {sections.map((section) => (
+      {mine.length === 0 && (
+        <p className="max-w-prose text-ink-soft">
+          {suggestions
+            ? 'Nog geen suggestiekaart. Maak er een met "Sectie toevoegen"; ze verschijnt op de site zodra er een gerecht in staat.'
+            : 'Nog geen secties op de kaart.'}
+        </p>
+      )}
+
+      {mine.map((section, index) => (
         <section key={section.id}>
-          <div className="mb-3 flex flex-wrap items-baseline gap-4">
-            <h2 className="text-xl">{section.title_nl}</h2>
-            <button
-              type="button"
-              onClick={() => addItem(section.id)}
-              className="min-h-11 text-sm underline underline-offset-4"
-            >
-              Gerecht toevoegen
-            </button>
-          </div>
+          <SectionHeader
+            section={section}
+            itemCount={items.filter((i) => i.section_id === section.id).length}
+            first={index === 0}
+            last={index === mine.length - 1}
+            onEdit={(patch) => editSection(section.id, patch)}
+            onMove={(direction) => moveSection(section, direction)}
+            onTogglePublished={() => togglePublished(section)}
+            onRemove={() => removeSection(section)}
+            onAddItem={() => addItem(section.id)}
+          />
 
           <div className="overflow-x-auto">
             <table className="w-full min-w-[46rem] border-collapse text-sm">
@@ -147,7 +301,7 @@ export function MenuEditor() {
                         <input
                           aria-label="Naam in het Nederlands"
                           value={item.name_nl}
-                          onChange={(e) => edit(item.id, { name_nl: e.target.value })}
+                          onChange={(e) => editItem(item.id, { name_nl: e.target.value })}
                           className={`${field} w-48`}
                         />
                       </td>
@@ -156,7 +310,7 @@ export function MenuEditor() {
                           aria-label="Naam in het Engels"
                           value={item.name_en ?? ''}
                           placeholder={item.name_nl}
-                          onChange={(e) => edit(item.id, { name_en: e.target.value || null })}
+                          onChange={(e) => editItem(item.id, { name_en: e.target.value || null })}
                           className={`${field} w-40`}
                         />
                       </td>
@@ -165,7 +319,7 @@ export function MenuEditor() {
                           aria-label="Naam in het Frans"
                           value={item.name_fr ?? ''}
                           placeholder={item.name_nl}
-                          onChange={(e) => edit(item.id, { name_fr: e.target.value || null })}
+                          onChange={(e) => editItem(item.id, { name_fr: e.target.value || null })}
                           className={`${field} w-40`}
                         />
                       </td>
@@ -179,7 +333,7 @@ export function MenuEditor() {
                           value={item.price ?? ''}
                           placeholder="dagprijs"
                           onChange={(e) =>
-                            edit(item.id, {
+                            editItem(item.id, {
                               price: e.target.value === '' ? null : Number(e.target.value),
                             })
                           }
@@ -191,7 +345,7 @@ export function MenuEditor() {
                           aria-label="Prijs geldt per persoon"
                           type="checkbox"
                           checked={item.per_person}
-                          onChange={(e) => edit(item.id, { per_person: e.target.checked })}
+                          onChange={(e) => editItem(item.id, { per_person: e.target.checked })}
                           className="size-5"
                         />
                       </td>
@@ -200,7 +354,9 @@ export function MenuEditor() {
                           aria-label="Moet vooraf besteld worden"
                           type="checkbox"
                           checked={item.requires_preorder}
-                          onChange={(e) => edit(item.id, { requires_preorder: e.target.checked })}
+                          onChange={(e) =>
+                            editItem(item.id, { requires_preorder: e.target.checked })
+                          }
                           className="size-5"
                         />
                       </td>

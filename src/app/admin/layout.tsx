@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 const tabs = [
   { href: '/admin', label: 'Overzicht' },
   { href: '/admin/menu', label: 'De kaart' },
+  { href: '/admin/suggesties', label: 'Suggesties' },
   { href: '/admin/wines', label: 'De kelder' },
   { href: '/admin/hours', label: 'Uren' },
   { href: '/admin/mensen', label: 'Mensen' },
+  { href: '/admin/afdrukken', label: 'Afdrukken' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

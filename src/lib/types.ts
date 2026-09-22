@@ -6,6 +6,9 @@ export type MenuSection = {
   note_nl: string | null; note_en: string | null; note_fr: string | null;
   position: number;
   published: boolean;
+  // Beheerd onder Suggesties in plaats van onder De kaart. Verandert niets
+  // aan hoe de sectie op de site verschijnt.
+  is_suggestion: boolean;
 };
 
 export type MenuItem = {
