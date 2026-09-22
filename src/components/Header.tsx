@@ -32,12 +32,13 @@ export function Header({ locale }: { locale: string }) {
     { href: '/wijnkaart' as const, label: t('wine') },
     { href: '/over-ons' as const, label: t('about') },
     { href: '/ons-team' as const, label: t('team') },
+    { href: '/fine-dining' as const, label: t('fineDining') },
     { href: '/contact' as const, label: t('contact') },
   ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-paper/95 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-4">
+      <div className="mx-auto flex h-14 max-w-6xl items-center 2xl:max-w-7xl justify-between gap-6 px-4">
         <Link href="/" className="flex min-h-11 shrink-0 items-center" aria-label="Au Vieux Port">
           {/* Het eigen woordmerk van het huis, een kalligrafisch schrift. Niet
               nagetekend: een benadering in SVG zou een ander logo zijn. */}
@@ -69,7 +70,15 @@ export function Header({ locale }: { locale: string }) {
             nog eens. */}
         <div className="hidden items-center gap-2 xl:flex">
           <LanguageSwitcher />
-          <CallButton label={t('call')} className="whitespace-nowrap text-ink-soft hover:text-ink" />
+          {/* Het nummer pas vanaf 2xl. Met Fine Dining als zesde tab was de
+              Franse kop op 1280 pixels 35 pixels te breed. Het nummer is op
+              een groot scherm het minst gebruikte onderdeel hier - men belt
+              zelden vanaf een laptop - en het staat in de voet en op de
+              contactpagina. Via een eigen div, niet via className: zie
+              BookButton. */}
+          <div className="hidden 2xl:flex">
+            <CallButton label={t('call')} className="whitespace-nowrap text-ink-soft hover:text-ink" />
+          </div>
           <BookButton className="whitespace-nowrap">{t('book')}</BookButton>
         </div>
 
@@ -81,7 +90,9 @@ export function Header({ locale }: { locale: string }) {
           aria-controls="nav-drawer"
           className="-mr-3 flex size-12 items-center justify-center xl:hidden"
         >
-          <span className="sr-only">{t('menu')}</span>
+          {/* Niet t('menu'): dat is "Kaart", de spijskaart. Een schermlezer
+              kondigde deze knop aan als "Kaart, knop". */}
+          <span className="sr-only">{t('toggle')}</span>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
             {open ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M3 7h18M3 12h18M3 17h18" />}
           </svg>

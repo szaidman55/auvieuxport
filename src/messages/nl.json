@@ -10,12 +10,13 @@
     "skip": "Naar de inhoud",
     "primary": "Hoofdnavigatie",
     "language": "Taal",
-    "legal": "Juridisch"
+    "legal": "Juridisch",
+    "toggle": "Navigatie",
+    "fineDining": "Fine Dining"
   },
   "hero": {
     "tagline": "Het Franste restaurant van Antwerpen",
-    "intro": "Klassiek Frans, met zaalbereidingen, op het Eilandje. Sinds 2007.",
-    "menuCta": "Bekijk de kaart"
+    "intro": "Klassiek Frans, met zaalbereidingen, op het Eilandje. Sinds 2007."
   },
   "hours": {
     "title": "Openingsuren",
@@ -73,7 +74,7 @@
   },
   "awards": {
     "title": "Onderscheidingen",
-    "gaultMillau": "Gault&Millau, 15/20",
+    "gaultMillau": "Gault&Millau, 14,5/20",
     "fineDining": "Fine Dining in Antwerp",
     "wineSpectator": "Wine Spectator"
   },
@@ -137,5 +138,24 @@
     "p4": "De wijnkaart is het werk van eigenaar en wine director Serge Verboven. Onze sommelier schenkt verschillende wijnen per glas en begeleidt u bij uw keuze. In de kelder vindt u een mooie selectie Bordeaux en Bourgogne, met Italië en Spanje goed vertegenwoordigd. In 2022 bekroonde Wine Spectator de kaart met één glas, sinds 2023 met twee.",
     "label": "Restaurant Au Vieux Port draagt met trots het label \"Fine Dining in Antwerp\".",
     "teamLink": "Maak kennis met ons team"
+  },
+  "fineDining": {
+    "title": "Klassiek Frans dineren in Antwerpen",
+    "lead": "Au Vieux Port en onze twee zusterhuizen",
+    "visit": "Naar website",
+    "houses": {
+      "marcel": {
+        "name": "Restaurant Marcel",
+        "body": "Tien minuten verderop, ook op het Eilandje: Marcel zit in de oude zeemanskerk van 1912, pal naast het MAS. Klassiek Frans, enkel seizoensproduct, en ook daar wordt er aan tafel versneden en geflambeerd - maar met gerechten die u hier niet vindt. De kelder telt ruim 800 wijnen, een vijftigtal daarvan per glas. Wine Spectator gaf die kaart acht jaar na elkaar de Best of Award of Excellence. Er zijn twee zalen voor gezelschappen, tot 48 personen. Marcel is ook op zaterdagavond open, wanneer wij gesloten zijn."
+      },
+      "auVieuxPort": {
+        "name": "Au Vieux Port",
+        "body": "Sinds 2007 staan wij in de Napelsstraat voor de oer-klassieke Franse keuken, met een Parijse inslag. Onze handtekening is de canard à la rouennaise: eend uit Challans, altijd voor twee personen, aan tafel geperst en afgewerkt. Verder zwartpootkip, zeetong aan dagprijs en paling in 't groen. Gault&Millau geeft ons 14,5 en Wine Spectator bekroonde onze wijnkaart met de Best of Award of Excellence. Van maandag tot vrijdag, lunch en diner."
+      },
+      "maritime": {
+        "name": "Maritime",
+        "body": "Aan de Suikerrui, op tien minuten hiervandaan, staat Maritime sinds 1958. Vis in de klassieke school: gebakken zeetong, kabeljauwfilet Dugléré, paling in 't groen, en garnaalkroketten die daar een begrip zijn. Verder oesters, mosselen en Canadese kreeft. Voor die wijnkaart kreeg het huis drie opeenvolgende jaren de Award of Excellence van Wine Spectator. Een graad losser dan bij ons, en in het weekend open - ook op zondag, de dag dat wij dicht zijn."
+      }
+    }
   }
 }

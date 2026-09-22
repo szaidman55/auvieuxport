@@ -10,12 +10,13 @@
     "skip": "Aller au contenu",
     "primary": "Navigation principale",
     "language": "Langue",
-    "legal": "Mentions légales"
+    "legal": "Mentions légales",
+    "toggle": "Navigation",
+    "fineDining": "Fine Dining"
   },
   "hero": {
     "tagline": "Le restaurant le plus français d'Anvers",
-    "intro": "Cuisine française classique, terminée devant vous, sur l'Eilandje. Depuis 2007.",
-    "menuCta": "Voir la carte"
+    "intro": "Cuisine française classique, terminée devant vous, sur l'Eilandje. Depuis 2007."
   },
   "hours": {
     "title": "Heures d'ouverture",
@@ -73,7 +74,7 @@
   },
   "awards": {
     "title": "Distinctions",
-    "gaultMillau": "Gault&Millau, 15/20",
+    "gaultMillau": "Gault&Millau, 14,5/20",
     "fineDining": "Fine Dining in Antwerp",
     "wineSpectator": "Wine Spectator"
   },
@@ -137,5 +138,24 @@
     "p4": "La carte des vins est l'œuvre de Serge Verboven, propriétaire et wine director. Notre sommelier sert une large sélection au verre et vous guide volontiers dans vos choix. La cave abrite une belle collection de bordeaux et de bourgognes ; l'Italie et l'Espagne y sont également bien représentées. En 2022, notre carte a été distinguée d'un verre par Wine Spectator, et de deux verres depuis 2023.",
     "label": "Restaurant Au Vieux Port porte fièrement le label « Fine Dining in Antwerp ».",
     "teamLink": "Rencontrez notre équipe"
+  },
+  "fineDining": {
+    "title": "La cuisine française classique à Anvers",
+    "lead": "Au Vieux Port et nos deux maisons sœurs",
+    "visit": "Voir le site",
+    "houses": {
+      "marcel": {
+        "name": "Restaurant Marcel",
+        "body": "À dix minutes d'ici, également sur l'Eilandje : Marcel occupe l'ancienne église de marins de 1912, juste à côté du MAS. Cuisine française classique, produit de saison uniquement, et là aussi on découpe et on flambe en salle - mais avec une carte tout autre que la nôtre. La cave compte plus de 800 références, dont une cinquantaine au verre. Wine Spectator lui décerne le Best of Award of Excellence depuis huit ans. Deux salons privés y accueillent jusqu'à 48 convives. Marcel est également ouvert le samedi soir, quand nous sommes fermés."
+      },
+      "auVieuxPort": {
+        "name": "Au Vieux Port",
+        "body": "Depuis 2007, rue de Naples, nous défendons la cuisine française la plus classique, avec un air de Paris. Notre signature : le canard à la rouennaise, canard de Challans, toujours pour deux, pressé et terminé devant vous. À la carte également le poulet à pattes noires, la sole au prix du jour et l'anguille au vert. Gault&Millau nous donne 14,5 et Wine Spectator a distingué notre carte des vins du Best of Award of Excellence. Du lundi au vendredi, midi et soir."
+      },
+      "maritime": {
+        "name": "Maritime",
+        "body": "Sur le Suikerrui, à dix minutes d'ici, Maritime est installé depuis 1958. Le poisson à l'école classique : sole meunière, cabillaud Dugléré, anguille au vert, et les croquettes aux crevettes grises qui ont fait sa réputation. Huîtres, moules et homard canadien également. Pour cette carte des vins, la maison a reçu trois années de suite l'Award of Excellence de Wine Spectator. Un ton plus décontracté qu'ici, et ouvert le week-end - dimanche compris, le jour où nous sommes fermés."
+      }
+    }
   }
 }

@@ -10,12 +10,13 @@
     "skip": "Skip to content",
     "primary": "Main navigation",
     "language": "Language",
-    "legal": "Legal"
+    "legal": "Legal",
+    "toggle": "Navigation",
+    "fineDining": "Fine Dining"
   },
   "hero": {
     "tagline": "Antwerp's Frenchiest restaurant",
-    "intro": "Classical French cooking, finished at your table, on Antwerp's Eilandje. Since 2007.",
-    "menuCta": "See the menu"
+    "intro": "Classical French cooking, finished at your table, on Antwerp's Eilandje. Since 2007."
   },
   "hours": {
     "title": "Opening hours",
@@ -73,7 +74,7 @@
   },
   "awards": {
     "title": "Awards",
-    "gaultMillau": "Gault&Millau, 15/20",
+    "gaultMillau": "Gault&Millau, 14.5/20",
     "fineDining": "Fine Dining in Antwerp",
     "wineSpectator": "Wine Spectator"
   },
@@ -137,5 +138,24 @@
     "p4": "The wine list is the work of owner and wine director Serge Verboven. Our sommelier pours a broad selection by the glass and is happy to guide you through the list. The cellar holds a serious collection of Bordeaux and Burgundy, with Italy and Spain well represented alongside them. Wine Spectator awarded the list one glass in 2022, and two glasses since 2023.",
     "label": "Restaurant Au Vieux Port proudly carries the \"Fine Dining in Antwerp\" label.",
     "teamLink": "Meet our team"
+  },
+  "fineDining": {
+    "title": "Classic French dining in Antwerp",
+    "lead": "Au Vieux Port and our two sister restaurants",
+    "visit": "Visit website",
+    "houses": {
+      "marcel": {
+        "name": "Restaurant Marcel",
+        "body": "Ten minutes away, also on the Eilandje: Marcel occupies the old seamen's church of 1912, right beside the MAS. Classic French, seasonal produce only, and there too whatever can be carved or flambéed is done at your table - but with dishes you will not find here. The cellar holds some 800 wines, around fifty of them by the glass. Wine Spectator has given that list its Best of Award of Excellence eight years running. There are two separate rooms for parties, up to 48 people. Marcel is also open on Saturday evening, when we are closed."
+      },
+      "auVieuxPort": {
+        "name": "Au Vieux Port",
+        "body": "Since 2007 we have stood in the Napelsstraat for the most classical of French cooking, with a Parisian touch. Our signature is the canard à la rouennaise: duck from Challans, always for two, pressed and finished at your table. Also black-leg chicken, Dover sole at market price and eel in green sauce. Gault&Millau awards us 14.5, and Wine Spectator has given our wine list its Best of Award of Excellence. Monday to Friday, lunch and dinner."
+      },
+      "maritime": {
+        "name": "Maritime",
+        "body": "On the Suikerrui, ten minutes from here, Maritime has stood since 1958. Fish in the classical school: pan-fried Dover sole, cod fillet Dugléré, eel in green sauce, and the shrimp croquettes that are an institution there. Oysters, mussels and Canadian lobster as well. For that wine list the house has taken the Award of Excellence from Wine Spectator three years in succession. A notch more relaxed than here, and open at the weekend - Sunday included, the day we are closed."
+      }
+    }
   }
 }

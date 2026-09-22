@@ -17,6 +17,7 @@ const PRIORITY: Record<string, number> = {
   '/wijnkaart': 0.9,
   '/over-ons': 0.7,
   '/ons-team': 0.6,
+  '/fine-dining': 0.5,
   '/contact': 0.7,
 };
 

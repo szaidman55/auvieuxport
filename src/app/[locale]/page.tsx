@@ -43,38 +43,28 @@ export default async function HomePage({
     <>
       <RestaurantJsonLd hours={hours} locale={locale} />
 
-      {/* De belofte, het bord en een knop. Adres, uren en nummer stonden
-          er ook bij; die staan nu alleen nog in de voet en op de
-          contactpagina, waar men ze gaat zoeken. */}
+      {/* De belofte en het bord, en verder niets.
+
+          Hier stonden achtereenvolgens een reserveerknop, een knop naar de
+          kaart, het adres, de uren en het nummer. Elk daarvan staat al op een
+          betere plaats: reserveren in de vaste balk onderaan en vanaf xl in de
+          kop, de kaart in de afdeling direct hieronder, adres en uren in de
+          voet en op de contactpagina. In de kop herhaalden ze alleen wat een
+          scherm verder toch komt.
+
+          Op een telefoon staat de foto onder de tekst, op een breed scherm
+          ernaast. */}
       <section className="border-b border-rule">
-        {/* Drie blokken in een raster, zodat de foto op een telefoon tussen
-            de belofte en de knoppen valt en op een breed scherm ernaast blijft
-            staan. Met de foto onder de knoppen was het eerste wat een gast
-            zag een stuk tekst met twee knoppen eronder; nu ziet hij waarvoor
-            hij komt voordat hem iets gevraagd wordt.
-
-            Op een telefoon duwt dat de reserveerknop naar beneden, en op de
-            kleinste toestellen valt hij daarmee onder de vouw. Dat mag hier:
-            de balk onderaan draagt dezelfde knop en blijft altijd staan.
-
-            De plaatsing op lg is met opzet expliciet - anders zou de foto ook
-            op een breed scherm tussen de tekst komen te staan. */}
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-x-16 lg:gap-y-8">
-          <div className="lg:col-start-1 lg:row-start-1">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-16">
+          <div>
             <h1 className="max-w-3xl text-4xl leading-tight sm:text-6xl">{t('tagline')}</h1>
             <p className="mt-5 max-w-xl text-lg text-ink-soft">{t('intro')}</p>
           </div>
 
-          {/* Een bord, geen leeg meubilair.
-              Hier stond de zaal met gedekte tafels: correct, maar het is wat
-              elk restaurant kan tonen, en het liet niet zien waarvoor men
-              hier komt. Deze foto doet allebei - de eend en de wijn, op het
-              linnen van het huis, in het licht van de zaal. Ze stond ook als
-              enige liggende opname nergens anders op de site; de vorige deed
-              dienst als kop én als grootste tegel in de galerij.
-
-              Staat hier in de broncode, tussen de belofte en de knoppen, want
-              daar hoort ze op een telefoon te vallen. */}
+          {/* Een bord, geen leeg meubilair. De zaal met gedekte tafels die hier
+              stond is wat elk restaurant kan tonen; deze foto laat zien
+              waarvoor men hier komt - de eend en de wijn, op het linnen van
+              het huis. Ze staat verder nergens op de site. */}
           <Image
             src="/img/photos/avp-02.webp"
             alt={
@@ -88,29 +78,8 @@ export default async function HomePage({
             height={1066}
             sizes="(max-width: 1024px) 100vw, 34rem"
             priority
-            className="w-full bg-paper-2 object-cover lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-[4/3] lg:self-center"
+            className="w-full bg-paper-2 object-cover lg:aspect-[4/3]"
           />
-
-          {/* Adres, uren en nummer stonden hier ook. Ze staan nog altijd in de
-              voet van elke pagina, op de contactpagina en in de structured
-              data die Google leest, dus de site verliest ze niet - ze hoeven
-              alleen niet in het eerste scherm te staan, waar ze de knoppen van
-              de foto wegduwden. */}
-          {/* Geen reserveerknop meer in de kop.
-              Ze kwam op een telefoon vlak boven de vaste balk terecht, die
-              dezelfde knop draagt met hetzelfde opschrift: twee identieke
-              knoppen onder elkaar, waarvan er een meescrolt en een niet. Op
-              de startpagina blijft de vaste balk over, en vanaf xl de knop in
-              de kop. Wat hier overblijft wijst naar de kaart - de vraag die
-              een gast stelt voordat hij reserveert. */}
-          <div className="lg:col-start-1 lg:row-start-2">
-            <Link
-              href="/kaart"
-              className="inline-flex min-h-12 items-center justify-center border border-ink px-6 text-sm font-semibold uppercase tracking-wide hover:bg-ink hover:text-paper"
-            >
-              {t('menuCta')}
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -157,7 +126,8 @@ export default async function HomePage({
           een telefoon toch altijd meescrollt. Drie knoppen voor één handeling
           maakt de handeling niet duidelijker. Deze afdeling houdt wat ze als
           enige te zeggen had: de twee gangen, de groepen, de canard en het
-          annuleren. Reserveren doet u boven of onderaan. */}
+          annuleren. Reserveren doet u in de vaste balk onderaan, of vanaf xl
+          in de kop. */}
       <section aria-labelledby="book-title" className="border-y border-rule bg-ink text-paper">
         <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-20">
           <h2 id="book-title" className="text-3xl text-paper sm:text-4xl">

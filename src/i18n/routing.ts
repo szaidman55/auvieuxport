@@ -22,6 +22,9 @@ export const routing = defineRouting({
     '/wijnkaart': { nl: '/wijnkaart', en: '/wine-list', fr: '/carte-des-vins' },
     '/over-ons': { nl: '/over-ons', en: '/about', fr: '/a-propos' },
     '/ons-team': { nl: '/ons-team', en: '/our-team', fr: '/notre-equipe' },
+    // Een naam, geen woord: hetzelfde adres in alle drie de talen, zoals op
+    // de oude site.
+    '/fine-dining': '/fine-dining',
     '/contact': { nl: '/contact', en: '/contact', fr: '/contact' },
   },
 });
