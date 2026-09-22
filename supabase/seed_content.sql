@@ -49,13 +49,13 @@ Zijn keuken omschrijft hij als klassiek, seizoensgebonden en robuust: een produc
 
 In 2026 werd Stijn opgenomen in The Mastercooks of Belgium, met Bert Meewis en Viki Geunes als peters. “Een erkenning voor het harde werk, en een grote eer om de Belgische gastronomie te mogen vertegenwoordigen.”', 'Stijn grew up in a family where good food and time spent together at the table always mattered. He was six when he saw a documentary about Paul Haeberlin and his Auberge de l''Ill. From then on, cooking and gastronomy were his passion.
 
-He learned the trade at Stella Maris in Merksem, a school with a strongly classical training focused on à la carte cooking, and then specialised at Ter Duinen. For his internships he deliberately chose two very different kitchens: ''t Fornuis with Johan Segers and Zilte with Viki Geunes.
+He learned the trade at Stella Maris in Merksem, a school with a strongly classical training focused on à la carte cooking, and then specialized at Ter Duinen. For his internships he deliberately chose two very different kitchens: ''t Fornuis with Johan Segers and Zilte with Viki Geunes.
 
 At Au Vieux Port he spent four years working alongside chef Marc Rigouts. When Marc retired, Stijn took charge of the kitchen.
 
 He describes his cooking as classic, seasonal and robust: a cuisine built on the product, with respect for the producers who supply us. He looks up to chefs with a solid classical foundation, such as Peter Goossens, Luc Broutard, Joseph Viola, Christian Denis and Karen Torosyan.
 
-In 2026 Stijn was admitted to The Mastercooks of Belgium, with Bert Meewis and Viki Geunes as his sponsors. “A recognition of hard work, and a great honour to represent Belgian gastronomy.”', 'Stijn a grandi dans une famille où bien manger et les moments partagés à table ont toujours compté. Il avait six ans lorsqu''il a vu un reportage sur Paul Haeberlin et son Auberge de l''Ill. Depuis, la cuisine et la gastronomie sont sa passion.
+In 2026 Stijn was admitted to The Mastercooks of Belgium, with Bert Meewis and Viki Geunes as his sponsors. “A recognition of hard work, and a great honor to represent Belgian gastronomy.”', 'Stijn a grandi dans une famille où bien manger et les moments partagés à table ont toujours compté. Il avait six ans lorsqu''il a vu un reportage sur Paul Haeberlin et son Auberge de l''Ill. Depuis, la cuisine et la gastronomie sont sa passion.
 
 Il a appris le métier à Stella Maris, à Merksem, une école à la formation très classique axée sur la cuisine à la carte, puis s''est spécialisé à Ter Duinen. Pour ses stages, il a délibérément choisi deux cuisines très différentes : ''t Fornuis chez Johan Segers et Zilte chez Viki Geunes.
 
@@ -87,13 +87,13 @@ Zijn stage liep hij in De Kleine Barreel in Schoten, een huis dat bekendstond om
 
 Zijn smaak is met de jaren verfijnd. “In mijn beginjaren dacht ik dat een wijn vol hout en vanille het beste was wat er bestond. Vandaag gaat mijn voorkeur eerder naar wit.” Een frisse Albariño met een tikje ziltigheid, of een grote Chablis als het wat meer mag zijn.
 
-Vraag je hem naar zijn favorieten, dan noemt hij voor wit de Chablis van Raveneau of van Thomas Pico (Domaine Pattes Loup), en voor rood de verfijning van een Nebbiolo van Roagna of een Chambolle-Musigny van Ghislaine Barthod. U vindt ze allemaal op onze wijnkaart.', 'Jens spent some time at school looking for his path, until he started at the Stella Maris hotel school in Merksem in his fourth year of secondary school. There he found it. After his sixth year he added a specialisation year in beverages. His love of wine came partly from home: his father was a member of a wine club and is a great lover of a good glass.
+Vraag je hem naar zijn favorieten, dan noemt hij voor wit de Chablis van Raveneau of van Thomas Pico (Domaine Pattes Loup), en voor rood de verfijning van een Nebbiolo van Roagna of een Chambolle-Musigny van Ghislaine Barthod. U vindt ze allemaal op onze wijnkaart.', 'Jens spent some time at school looking for his path, until he started at the Stella Maris hotel school in Merksem in his fourth year of secondary school. There he found it. After his sixth year he added a specialization year in beverages. His love of wine came partly from home: his father was a member of a wine club and is a great lover of a good glass.
 
-He did his internship at De Kleine Barreel in Schoten, a house known for its classic cuisine and tableside preparations, just as we do them at Au Vieux Port today. After graduating in 2012 he stayed on, until the restaurant closed in early 2015. Then came almost ten years at Pazzo, where wine takes centre stage and where he learned an enormous amount. Yet he began to miss the classic restaurant, with its tableside preparations and carving. Since 2025 he has been the sommelier at Au Vieux Port.
+He did his internship at De Kleine Barreel in Schoten, a house known for its classic cuisine and tableside preparations, just as we do them at Au Vieux Port today. After graduating in 2012 he stayed on, until the restaurant closed in early 2015. Then came almost ten years at Pazzo, where wine takes center stage and where he learned an enormous amount. Yet he began to miss the classic restaurant, with its tableside preparations and carving. Since 2025 he has been the sommelier at Au Vieux Port.
 
 His palate has grown more refined over the years. “In my early years I thought a wine full of oak and vanilla was the best thing there was. Today my preference leans towards white.” A fresh Albariño with a hint of salinity, or a great Chablis when the occasion calls for more.
 
-Ask him for his favourites and he names, for white, the Chablis of Raveneau or of Thomas Pico (Domaine Pattes Loup), and for red, the finesse of a Nebbiolo from Roagna or a Chambolle-Musigny from Ghislaine Barthod. You will find them all on our wine list.
+Ask him for his favorites and he names, for white, the Chablis of Raveneau or of Thomas Pico (Domaine Pattes Loup), and for red, the finesse of a Nebbiolo from Roagna or a Chambolle-Musigny from Ghislaine Barthod. You will find them all on our wine list.
 
 Book a table', 'À l''école, Jens a longtemps cherché sa voie, jusqu''à ce qu''il entre à l''école hôtelière Stella Maris de Merksem en quatrième secondaire. Là, il l''a trouvée. Après la sixième, il a suivi une année de spécialisation en connaissance des boissons. Son amour du vin lui vient en partie de la maison : son père faisait partie d''un club œnologique et apprécie beaucoup un bon verre.
 

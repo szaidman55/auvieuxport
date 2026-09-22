@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:23:27Z
+- **Generated (UTC):** 2026-09-22 22:30:33Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:23 UTC
-- **Turns:** 27 human / 246 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:30 UTC
+- **Turns:** 28 human / 250 assistant
 
 ## Files written
 
@@ -64,6 +64,7 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\MenuEditor.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\suggesties\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\afdrukken\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\fix-menu-intro.mjs`
 
 ## How to resume
 
@@ -2239,3 +2240,68 @@ Message files are clean. Let me spot-check the team bios, the last body of EN/FR
 ### Claude
 
 Before I "fix" the spelling, let me check which English register the site actually uses, because that changes the answer.
+
+### Claude
+
+That's decisive, and it points the opposite way from what I assumed. Let me find exactly where each spelling lives.
+
+### Claude
+
+Now it's unambiguous. Let me fix the one thing that's clearly mine.
+
+### Claude
+
+Full audit done this time: all 115 message keys across three files, plus every translatable field in the database — sections, dishes, price labels, team roles, bios, link labels, wine categories.
+
+## On "specialities" — I was wrong, and so was the previous session
+
+I checked which English the site actually uses, and it's **British, written by you**:
+
+| spelling | where |
+|---|---|
+| `specialised`, `honour` | Stijn's bio |
+| `specialisation`, `centre`, `favourites` | Jens's bio |
+| `specialities` | the menu section title |
+| `specialty` | **`en.json`, one line — ours** |
+
+Six British forms, all in the house's own translations carried over from your old site. One American form, and it's the one the previous session introduced when you asked about this word. It answered "you were right" without checking, and created the very inconsistency it claimed to fix. I then repeated the mistake by "correcting" the seed.
+
+Both spellings are correct English. The defect is that they disagree. Which register is your brand voice, so it's your call — but going American means rewriting your own bios, not just one word:
+
+```sql
+update menu_sections
+set title_en = replace(title_en, 'specialities', 'specialties')
+where id = 'specialiteiten';
+
+update team_members set bio_en =
+  replace(replace(replace(replace(replace(bio_en,
+    'specialised', 'specialized'),
+    'specialisation', 'specialization'),
+    'honour', 'honor'),
+    'centre', 'center'),
+    'favourites', 'favorites');
+```
+
+Going British is a one-word change in my file and I can do it now. Say which.
+
+## Fixed and live
+
+**The menu intro claimed a daily rhythm** in all three languages: *"onze dagelijkse suggesties vraagt u het best aan de zaal"*, *"the daily suggestions"*, *"les suggestions du jour"*. Wrong twice over after your corrections — the suggestions are seasonal or weekly, and now that they have their own section that sentence sat directly above the printed list telling guests to go ask for it. It now says there's more than what's printed, without claiming a cadence. Deployed and verified on all three.
+
+## Needs a decision
+
+**199 of 500 wines show an English tasting note on the Dutch and French sites** — "Ageing 50 months on the lees", "Vinification on stainless steel". This isn't a translation someone forgot. `tasting_note` is a single column with no per-language variants, unlike every other translatable field. There is nowhere to put a Dutch or French version. Making them translatable needs a migration; want it?
+
+## Clean
+
+115 keys present in all three files, no gaps, no Dutch left sitting in an English field. All 22 dishes, both price labels, five menu sections, five wine categories and three bios read correctly in both languages. Decimal separators follow the locale (`14.5/20` in English, `14,5/20` in Dutch and French). The matches with Dutch are proper nouns only — *Au Vieux Port*, *Wine Spectator*, *Canard à la Rouennaise*, *Contact*, *magnum*, *NV*.
+
+One Dutch slip found in passing, outside what you asked: the wine category reads **"Rosé wijnen"**, which is an English spacing habit. Dutch compounds it: *Roséwijnen*.
+
+### You
+
+go for us englisg across the website
+
+### Claude
+
+US English it is. Let me find every British form across the site, not just the one word.
