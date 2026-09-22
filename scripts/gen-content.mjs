@@ -14,7 +14,7 @@ const SECTIONS = [
   },
   { id: 'garnituren', nl: 'Garnituren', en: 'Sides', fr: 'Garnitures', pos: 30 },
   {
-    id: 'specialiteiten', nl: 'Specialiteiten "Au Vieux Port"', en: '"Au Vieux Port" specialities', fr: 'Spécialités « Au Vieux Port »', pos: 40,
+    id: 'specialiteiten', nl: 'Specialiteiten "Au Vieux Port"', en: '"Au Vieux Port" specialties', fr: 'Spécialités « Au Vieux Port »', pos: 40,
     note_nl: 'Canard à la Rouennaise is het hele jaar verkrijgbaar. Tijdens het wildseizoen enkel op bestelling.',
     note_en: 'Canard à la Rouennaise is available all year round. During the game season by advance order only.',
     note_fr: "Le Canard à la Rouennaise est disponible toute l'année, et uniquement sur commande pendant la saison du gibier.",

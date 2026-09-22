@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:14:22Z
+- **Generated (UTC):** 2026-09-22 22:18:21Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:14 UTC
-- **Turns:** 25 human / 232 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:18 UTC
+- **Turns:** 26 human / 236 assistant
 
 ## Files written
 
@@ -2143,3 +2143,31 @@ make the items within sections movable up and down
 ### Claude
 
 Same pattern as sections. Let me add it.
+
+### Claude
+
+Now I need to close the block I converted to a statement body.
+
+### Claude
+
+Compiles, but let me check the swap arithmetic actually moves things the right way, including the equal-position fallback.
+
+### Claude
+
+Confirmed a real bug, and I'd copied it into both handlers: with equal positions the item moves the *opposite* way. Fixing both.
+
+### Claude
+
+Live. Every dish row now has up/down arrows, scoped to its own section.
+
+Same rule as sections: order is structure, so it saves on the click rather than waiting for the Save button. Titles and prices still ride along with Save.
+
+**One thing checking it turned up.** I tested the swap arithmetic rather than trusting it, and it was wrong — and wrong in two places, because I'd copied the pattern from the section handler I wrote earlier. When two rows carry the same `position`, the code fell back to `b - direction * 5`, which sends a row *up* when you press down and *down* when you press up. It should be `b + direction * 5`. Both fixed.
+
+Equal positions don't occur in your current data (sections are 10/20/30/40/50, dishes 10 through 220), so you'd likely never have hit it. But that branch exists precisely for when they do collide, and it was doing the opposite of what the button promises.
+
+Still the one thing waiting on you, unchanged: the Suggesties tab stays inert until that `alter table` runs in Supabase. Chrome's extension is still not answering, so I can't reach it. Once you've run it, tell me and I'll verify the full path — section lists, adding a dish, reordering, and that it renders above the starters in all three languages.
+
+### You
+
+i handled supabase. Chrome should be working

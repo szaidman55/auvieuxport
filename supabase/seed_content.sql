@@ -9,7 +9,7 @@ insert into menu_sections (id, title_nl, title_en, title_fr, note_nl, note_en, n
   ('voorgerechten', 'Voorgerechten', 'Starters', 'Entrées', null, null, null, 10),
   ('hoofdgerechten', 'Hoofdgerechten', 'Main courses', 'Plats', 'Peperroom · Béarnaise · Choron', 'Pepper cream · Béarnaise · Choron', 'Sauce poivre · Béarnaise · Choron', 20),
   ('garnituren', 'Garnituren', 'Sides', 'Garnitures', null, null, null, 30),
-  ('specialiteiten', 'Specialiteiten "Au Vieux Port"', '"Au Vieux Port" specialities', 'Spécialités « Au Vieux Port »', 'Canard à la Rouennaise is het hele jaar verkrijgbaar. Tijdens het wildseizoen enkel op bestelling.', 'Canard à la Rouennaise is available all year round. During the game season by advance order only.', 'Le Canard à la Rouennaise est disponible toute l''année, et uniquement sur commande pendant la saison du gibier.', 40),
+  ('specialiteiten', 'Specialiteiten "Au Vieux Port"', '"Au Vieux Port" specialties', 'Spécialités « Au Vieux Port »', 'Canard à la Rouennaise is het hele jaar verkrijgbaar. Tijdens het wildseizoen enkel op bestelling.', 'Canard à la Rouennaise is available all year round. During the game season by advance order only.', 'Le Canard à la Rouennaise est disponible toute l''année, et uniquement sur commande pendant la saison du gibier.', 40),
   ('desserten', 'Desserten', 'Desserts', 'Desserts', null, null, null, 50);
 
 insert into menu_items (section_id, name_nl, name_en, name_fr, price, per_person, requires_preorder, price_note_nl, price_note_en, price_note_fr, position) values
