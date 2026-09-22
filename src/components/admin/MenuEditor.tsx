@@ -150,7 +150,7 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
 
     const [a, b] = [section.position, neighbour.position];
     // Gelijke posities zouden de volgorde aan het toeval overlaten.
-    const [next, other] = a === b ? [b - direction * 5, b] : [b, a];
+    const [next, other] = a === b ? [b + direction * 5, b] : [b, a];
 
     setSections((prev) =>
       [...prev]
@@ -200,6 +200,45 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
     if (error) setStatus(`Verwijderen mislukt: ${error.message}`);
     else {
       setStatus(`"${section.title_nl}" verwijderd.`);
+      void load();
+    }
+  }
+
+  // Van plaats wisselen met de buur binnen dezelfde sectie. Zelfde afspraak
+  // als bij de secties: dit is structuur, dus het slaat meteen op en hangt
+  // niet in de bewaarknop.
+  async function moveItem(item: MenuItem, direction: -1 | 1) {
+    const rows = items
+      .filter((i) => i.section_id === item.section_id)
+      .sort((a, b) => a.position - b.position);
+
+    const index = rows.findIndex((i) => i.id === item.id);
+    const neighbour = rows[index + direction];
+    if (!neighbour) return;
+
+    const [a, b] = [item.position, neighbour.position];
+    // Gelijke posities zouden de volgorde aan het toeval overlaten.
+    const [next, other] = a === b ? [b + direction * 5, b] : [b, a];
+
+    setItems((prev) =>
+      [...prev]
+        .map((i) =>
+          i.id === item.id
+            ? { ...i, position: next }
+            : i.id === neighbour.id
+              ? { ...i, position: other }
+              : i,
+        )
+        .sort((x, y) => x.position - y.position),
+    );
+
+    const results = await Promise.all([
+      db.from('menu_items').update({ position: next }).eq('id', item.id),
+      db.from('menu_items').update({ position: other }).eq('id', neighbour.id),
+    ]);
+    const failed = results.find((r) => r.error);
+    if (failed?.error) {
+      setStatus(`Volgorde niet bewaard: ${failed.error.message}`);
       void load();
     }
   }
@@ -264,11 +303,14 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
         </p>
       )}
 
-      {mine.map((section, index) => (
+      {mine.map((section, index) => {
+        const rows = items.filter((i) => i.section_id === section.id);
+
+        return (
         <section key={section.id}>
           <SectionHeader
             section={section}
-            itemCount={items.filter((i) => i.section_id === section.id).length}
+            itemCount={rows.length}
             first={index === 0}
             last={index === mine.length - 1}
             onEdit={(patch) => editSection(section.id, patch)}
@@ -282,6 +324,9 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
             <table className="w-full min-w-[46rem] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-rule text-left text-xs uppercase tracking-wider text-ink-faint">
+                  <th scope="col" className="py-2 pr-3">
+                    <span className="sr-only">Volgorde</span>
+                  </th>
                   <th scope="col" className="py-2 pr-3">Nederlands</th>
                   <th scope="col" className="py-2 pr-3">Engels</th>
                   <th scope="col" className="py-2 pr-3">Frans</th>
@@ -293,10 +338,30 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
                 </tr>
               </thead>
               <tbody>
-                {items
-                  .filter((i) => i.section_id === section.id)
-                  .map((item) => (
+                {rows.map((item, row) => (
                     <tr key={item.id} className="border-b border-rule/60 align-middle">
+                      <td className="py-2 pr-3">
+                        <span className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => moveItem(item, -1)}
+                            disabled={row === 0}
+                            aria-label={`${item.name_nl} naar boven`}
+                            className="flex size-11 items-center justify-center border border-rule text-sm disabled:opacity-30"
+                          >
+                            &uarr;
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => moveItem(item, 1)}
+                            disabled={row === rows.length - 1}
+                            aria-label={`${item.name_nl} naar beneden`}
+                            className="flex size-11 items-center justify-center border border-rule text-sm disabled:opacity-30"
+                          >
+                            &darr;
+                          </button>
+                        </span>
+                      </td>
                       <td className="py-2 pr-3">
                         <input
                           aria-label="Naam in het Nederlands"
@@ -389,7 +454,8 @@ export function MenuEditor({ mode = 'menu' }: { mode?: 'menu' | 'suggestions' })
             </table>
           </div>
         </section>
-      ))}
+        );
+      })}
     </div>
   );
 }

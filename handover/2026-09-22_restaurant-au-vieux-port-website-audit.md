@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:07:42Z
+- **Generated (UTC):** 2026-09-22 22:14:22Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:06 UTC
-- **Turns:** 23 human / 224 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:14 UTC
+- **Turns:** 25 human / 232 assistant
 
 ## Files written
 
@@ -2037,3 +2037,109 @@ Now the editor with section management. Types first.
 ### Claude
 
 Now the two new admin pages.
+
+### Claude
+
+Builds clean. The migration needs to run or the new screens will fail. Let me see if I can reach Supabase myself.
+
+### Claude
+
+The built-in browser is signed in to Supabase. Running the migration.
+
+### Claude
+
+Not signed in there either — it redirected to Supabase's login, which is yours to do. Closing that pane and shipping the code.
+
+### Claude
+
+All live. Here's where it stands.
+
+## Built
+
+**Suggesties** is its own tab. I took your correction: Dutch *Suggesties*, French *Suggestions*, English **Specials** — not a translation of "suggestions" but what an English-speaking guest expects to read on a card. I also stripped the subtitle I'd drafted ("what the market gave us this morning"), because that implies daily and you said seasonal or weekly. That line is yours to write.
+
+No separate table. A suggestion is a dish with a shorter shelf life, so it's a section in `menu_sections` carrying a flag. That way it inherits the trilingual fields, day-pricing, sold-out, translation fallback, row-level security and the existing rendering without a line written for any of it. The difference is *where it's managed*, not *what it is*.
+
+**Sections are now the manager's.** In both the menu and the suggestions screen: add, rename in three languages, reorder, hide, delete. Titles ride along with the Save button; reorder, hide and delete save immediately, because a half-applied structure sitting in an unsaved list is a structure nobody can reason about. Delete tells you how many dishes go with it.
+
+**Afdrukken** is there and empty, as you asked. The tab fixes the location; what goes in it isn't decided.
+
+Also from before you interrupted: the admin header now reads **"Aangemeld als \<naam\> · manager"** or **"· vloer"**, and in red **"geen rechten"** when the account has no row in `staff` at all. That last state is exactly what bit you: signed in, every button visible, database refusing everything, screen saying nothing.
+
+## One thing I could not do for you
+
+The migration has to run before the Suggesties tab works. I tried both browsers: Chrome's extension still isn't answering, and the built-in pane redirected to Supabase's sign-in, which is yours.
+
+Until this runs, the Suggesties tab loads but shows no sections, and "Sectie toevoegen" will fail with a missing-column error. Nothing on the public site is affected — I verified all pages still serve.
+
+In Supabase's SQL Editor:
+
+```sql
+alter table menu_sections
+  add column if not exists is_suggestion boolean not null default false;
+
+insert into menu_sections
+  (id, title_nl, title_en, title_fr, position, published, is_suggestion)
+values ('suggesties', 'Suggesties', 'Specials', 'Suggestions', 5, true, true)
+on conflict (id) do update set
+  title_nl = excluded.title_nl,
+  title_en = excluded.title_en,
+  title_fr = excluded.title_fr,
+  is_suggestion = true,
+  position = excluded.position;
+```
+
+Position 5 puts it above the starters at 10, so it's the first thing a guest reads. An empty section is skipped on the site, so nothing appears until you put a dish in it.
+
+## Still open
+
+- **Your manager rights.** Quickest route needs nothing from Vercel: sign in at `/admin/login` with `szaidman@gmail.com` rather than your first name. The `/admin/mensen` screen still needs `SUPABASE_SERVICE_ROLE_KEY` set in Vercel before it can create logins.
+- **The footer's `/privacy` and `/cookies` still 404** on every page, in all three languages. Third time asking, and it's the one thing here that's genuinely your text rather than my code.
+
+### You
+
+i have manager rights
+footer is for later
+
+### Claude
+
+Good. Let me check whether the migration landed, since that's the one thing still gating the Suggesties tab.
+
+### Claude
+
+Migration hasn't run — the column doesn't exist, so the Suggesties tab is still inert. Let me see if Chrome is back so I can just run it.
+
+### Claude
+
+Chrome's still not answering, so this one needs your hands. It's the only thing blocking the Suggesties tab:
+
+```sql
+alter table menu_sections
+  add column if not exists is_suggestion boolean not null default false;
+
+insert into menu_sections
+  (id, title_nl, title_en, title_fr, position, published, is_suggestion)
+values ('suggesties', 'Suggesties', 'Specials', 'Suggestions', 5, true, true)
+on conflict (id) do update set
+  title_nl = excluded.title_nl,
+  title_en = excluded.title_en,
+  title_fr = excluded.title_fr,
+  is_suggestion = true,
+  position = excluded.position;
+```
+
+Supabase → SQL Editor → paste → Run. Say the word when it's done and I'll verify the whole path: that the tab lists the section, that adding a dish works, and that it renders above the starters on all three language versions of the menu.
+
+Until then the tab loads but lists nothing, and "Sectie toevoegen" fails with a raw `column does not exist` error. The public site is unaffected.
+
+Noted on the footer — parked, I'll stop raising it.
+
+With manager rights sorted and the footer parked, the remaining item of any size is pointing `restaurantauvieuxport.be` at this. `NEXT_PUBLIC_SITE_URL` still says `auvieuxport.vercel.app`, which is what every canonical and every sitemap entry currently declares to Google. Worth doing before the site gets indexed under the wrong name.
+
+### You
+
+make the items within sections movable up and down
+
+### Claude
+
+Same pattern as sections. Let me add it.
