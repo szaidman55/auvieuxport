@@ -26,11 +26,14 @@ export const site = {
 } as const;
 
 // Zenchef doet de reservaties. Het id is dat van Au Vieux Port.
+const RESTAURANT_ID = '380678';
+
 export const zenchef = {
-  restaurantId: '380678',
+  restaurantId: RESTAURANT_ID,
   sdk: 'https://sdk.zenchef.com/v1/sdk.min.js',
-  // De SDK opent het venster op een link naar deze anchor.
-  openAnchor: '#zc-action-open',
+  // Waar de reserveerknop naartoe gaat als het script van Zenchef niet
+  // laadt. Met de oude anker-href deed ze in dat geval niets.
+  bookingUrl: `https://bookings.zenchef.com/results?rid=${RESTAURANT_ID}`,
   // De kleur die het bestaande huis aan Zenchef meegeeft.
   primaryColor: 'ad9964',
   shopId: 'sh_6a12d788-29a0-4bb9-8633-b86315b384ad',

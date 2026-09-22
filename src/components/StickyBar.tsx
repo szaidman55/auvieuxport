@@ -1,9 +1,14 @@
 import { getTranslations } from 'next-intl/server';
-import { site, zenchef } from '@/lib/site';
+import { site } from '@/lib/site';
+import { BookLink } from './BookLink';
 
 // Op een telefoon staan bellen en reserveren altijd binnen duimbereik.
 // Respecteert de veilige zone onderaan, zodat de balk niet onder de
 // systeembalk van de telefoon verdwijnt.
+//
+// Reserveren loopt via BookLink, net als elke knop in de pagina: deze balk
+// wees rechtstreeks naar de hash en deed daardoor niets meer zodra er elders
+// al een keer op reserveren was geklikt.
 export async function StickyBar() {
   const t = await getTranslations('nav');
 
@@ -18,12 +23,9 @@ export async function StickyBar() {
       >
         {t('call')}
       </a>
-      <a
-        href={zenchef.openAnchor}
-        className="flex min-h-14 items-center justify-center whitespace-nowrap bg-brass px-2 text-sm font-semibold uppercase tracking-wide text-paper"
-      >
+      <BookLink className="flex min-h-14 items-center justify-center whitespace-nowrap bg-brass px-2 text-sm font-semibold uppercase tracking-wide text-paper">
         {t('book')}
-      </a>
+      </BookLink>
     </div>
   );
 }

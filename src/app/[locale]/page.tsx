@@ -72,35 +72,32 @@ export default async function HomePage({
             </Link>
           </div>
 
-          {/* Adres, uren en nummer in tekst, meteen. Niets mag hier
-              afbreken: "03" op de ene regel en "290 77 11" op de volgende
-              leest als twee getallen, en "ma - vr" zonder de uren erachter
-              zegt niets. De uren stonden hier als vaste Nederlandse tekst,
-              ook op de Franse pagina; nu komen ze uit dezelfde databank als
-              de tabel in de voet. */}
-          <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-soft">
-            <span>{site.street}, {site.postalCode} {site.city}</span>
+          {/* Adres, uren en nummer in tekst, meteen.
+              Drie gegevens, drie regels op een telefoon en een regel op een
+              scherm dat breed genoeg is. Ze stonden achter elkaar met streepjes
+              ertussen, en dan breekt de regel op 390 pixels middenin: het adres
+              en "ma - vr 12:00 - 14:00" op de ene regel, "18:00 - 21:30" op de
+              volgende. Een openingsuur half afgeknipt is geen openingsuur, net
+              zomin als "03 290" een telefoonnummer is. Elk gegeven blijft dus
+              heel, en de scheiding is een lijntje links, niet een teken in de
+              tekst - dat kan niet op de verkeerde plaats terechtkomen. */}
+          <div className="mt-8 flex flex-col gap-y-1 text-sm text-ink-soft sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
+            <span className="whitespace-nowrap">
+              {site.street}, {site.postalCode} {site.city}
+            </span>
             {summary && (
-              <>
-                <span aria-hidden="true" className="text-rule">|</span>
-                <span className="whitespace-nowrap">
-                  {th(`short.${summary.from}`)} - {th(`short.${summary.to}`)}
-                </span>
-                {summary.times.map((slot) => (
-                  <span key={slot} className="whitespace-nowrap">
-                    {slot}
-                  </span>
-                ))}
-              </>
+              <span className="whitespace-nowrap sm:border-l sm:border-rule sm:pl-3">
+                {th(`short.${summary.from}`)} - {th(`short.${summary.to}`)}{' '}
+                {summary.times.join(' & ')}
+              </span>
             )}
-            <span aria-hidden="true" className="text-rule">|</span>
             <a
               href={`tel:${site.phone}`}
-              className="whitespace-nowrap underline underline-offset-4"
+              className="whitespace-nowrap underline underline-offset-4 sm:border-l sm:border-rule sm:pl-3"
             >
               {site.phoneDisplay}
             </a>
-          </p>
+          </div>
           </div>
 
           <Image
@@ -155,6 +152,12 @@ export default async function HomePage({
 
       <Gallery locale={locale} />
 
+      {/* Wat u moet weten vóór u reserveert - niet nog een keer de knop.
+          De startpagina had er drie: boven, hier, en de balk onderaan die op
+          een telefoon toch altijd meescrollt. Drie knoppen voor één handeling
+          maakt de handeling niet duidelijker. Deze afdeling houdt wat ze als
+          enige te zeggen had: de twee gangen, de groepen, de canard en het
+          annuleren. Reserveren doet u boven of onderaan. */}
       <section aria-labelledby="book-title" className="border-y border-rule bg-ink text-paper">
         <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-20">
           <h2 id="book-title" className="text-3xl text-paper sm:text-4xl">
@@ -163,17 +166,7 @@ export default async function HomePage({
           <p className="mx-auto mt-4 max-w-prose text-[#d9d0cd]">{tb('note')}</p>
           <p className="mx-auto mt-2 max-w-prose text-sm text-[#b3a7a3]">{tb('groups')}</p>
           <p className="mx-auto mt-2 max-w-prose text-sm text-[#b3a7a3]">{tb('canard')}</p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <BookButton>{tn('book')}</BookButton>
-            <a
-              href={`tel:${site.phone}`}
-              className="inline-flex min-h-12 items-center border border-[#3a302d] px-6 text-sm font-semibold text-paper"
-            >
-              {site.phoneDisplay}
-            </a>
-          </div>
-          <p className="mt-5 text-xs text-[#b3a7a3]">{tb('cancel')}</p>
+          <p className="mx-auto mt-2 max-w-prose text-sm text-[#b3a7a3]">{tb('cancel')}</p>
         </div>
       </section>
 

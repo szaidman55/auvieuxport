@@ -56,7 +56,7 @@ export function RestaurantJsonLd({
       '@type': 'ReserveAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `https://bookings.zenchef.com/results?rid=${zenchef.restaurantId}`,
+        urlTemplate: zenchef.bookingUrl,
         // Stond op nl-BE, ook in het blok van de Engelse en de Franse pagina.
         inLanguage: lang,
         actionPlatform: [
