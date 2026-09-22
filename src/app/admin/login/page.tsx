@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabaseBrowser } from '@/lib/supabase/client';
+import { MIN_PASSWORD, resolveIdentity } from '@/lib/identity';
 
+// Aanmelden met een voornaam, niet met een e-mailadres. Vier mensen werken
+// hier en niemand hoort te moeten onthouden onder welk adres hij is
+// aangemaakt. lib/identity maakt er het adres van waarop Supabase gesleuteld
+// is; een echt adres blijft werken voor wie er een heeft.
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -15,13 +20,22 @@ export default function LoginPage() {
     setError(null);
 
     const form = new FormData(event.currentTarget);
+    const identity = resolveIdentity(String(form.get('username') ?? ''));
+
+    if (!identity.ok) {
+      setError(identity.reason);
+      setBusy(false);
+      return;
+    }
+
     const { error: authError } = await supabaseBrowser().auth.signInWithPassword({
-      email: String(form.get('email') ?? ''),
+      email: identity.address,
       password: String(form.get('password') ?? ''),
     });
 
     if (authError) {
-      setError('Aanmelden is niet gelukt. Controleer het adres en het wachtwoord.');
+      // Bewust niet zeggen welk van de twee fout was.
+      setError('Aanmelden is niet gelukt. Controleer de naam en het wachtwoord.');
       setBusy(false);
       return;
     }
@@ -40,16 +54,19 @@ export default function LoginPage() {
 
       <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-sm font-medium">
-            E-mailadres
+          <label htmlFor="username" className="text-sm font-medium">
+            Naam
           </label>
           <input
-            id="email"
-            name="email"
-            type="email"
+            id="username"
+            name="username"
+            type="text"
             required
             autoComplete="username"
-            inputMode="email"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            placeholder="tom"
             className={field}
           />
         </div>
@@ -63,6 +80,7 @@ export default function LoginPage() {
             name="password"
             type="password"
             required
+            minLength={MIN_PASSWORD}
             autoComplete="current-password"
             className={field}
           />

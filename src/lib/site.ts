@@ -31,6 +31,8 @@ export const zenchef = {
   sdk: 'https://sdk.zenchef.com/v1/sdk.min.js',
   // De SDK opent het venster op een link naar deze anchor.
   openAnchor: '#zc-action-open',
+  // De kleur die het bestaande huis aan Zenchef meegeeft.
+  primaryColor: 'ad9964',
   shopId: 'sh_6a12d788-29a0-4bb9-8633-b86315b384ad',
 } as const;
 

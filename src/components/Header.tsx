@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { BookButton } from './BookButton';
 import { CallButton } from './CallButton';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 // De oude kop bleef op elk formaat een uitgeschreven menu over vier regels,
 // 138 van de 812 pixels op een telefoon, permanent meescrollend. Deze plooit
@@ -16,8 +17,9 @@ export function Header({ locale }: { locale: string }) {
   const pathname = usePathname();
 
   const links = [
-    { href: '/' as const, label: t('menu'), hash: '#kaart' },
+    { href: '/kaart' as const, label: t('menu') },
     { href: '/wijnkaart' as const, label: t('wine') },
+    { href: '/over-ons' as const, label: t('about') },
     { href: '/ons-team' as const, label: t('team') },
     { href: '/contact' as const, label: t('contact') },
   ];
@@ -52,7 +54,8 @@ export function Header({ locale }: { locale: string }) {
         </nav>
 
         <div className="flex items-center gap-1">
-          <CallButton label={t('call')} className="hidden text-ink-soft hover:text-ink sm:inline-flex" />
+          <LanguageSwitcher className="hidden md:flex" />
+          <CallButton label={t('call')} className="hidden text-ink-soft hover:text-ink lg:inline-flex" />
           <BookButton className="hidden sm:inline-flex">{t('book')}</BookButton>
 
           <button
@@ -83,14 +86,10 @@ export function Header({ locale }: { locale: string }) {
               {l.label}
             </Link>
           ))}
-          <a
-            href={`/${locale === 'nl' ? '' : locale}`}
-            className="sr-only"
-            aria-hidden="true"
-            tabIndex={-1}
-          >
-            {locale}
-          </a>
+          <div className="flex items-center justify-between gap-4 py-2">
+            <LanguageSwitcher />
+            <CallButton label={t('call')} className="text-ink-soft md:hidden" />
+          </div>
         </nav>
       </div>
     </header>

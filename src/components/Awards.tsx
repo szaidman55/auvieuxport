@@ -18,6 +18,8 @@ const MARKS = [
     w: 478,
     h: 283,
     key: 'fineDining' as const,
+    // Dit label heeft geen eigen site die antwoordt; het huis linkte er op de
+    // oude site ook alleen intern naar. Blijft dus een merk zonder link.
     href: null,
     className: 'h-10 sm:h-12',
   },
@@ -74,13 +76,20 @@ export async function Awards() {
           })}
 
           <li className="flex flex-col items-center gap-2 text-center">
-            <Image
-              src={WINE_SPECTATOR.latest.src}
-              alt=""
-              width={WINE_SPECTATOR.latest.w}
-              height={WINE_SPECTATOR.latest.h}
-              className="h-16 w-auto sm:h-20"
-            />
+            <a
+              href="https://www.winespectator.com/restaurants"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-11 items-center"
+            >
+              <Image
+                src={WINE_SPECTATOR.latest.src}
+                alt=""
+                width={WINE_SPECTATOR.latest.w}
+                height={WINE_SPECTATOR.latest.h}
+                className="h-16 w-auto sm:h-20"
+              />
+            </a>
             <span className="text-xs uppercase tracking-[0.14em] text-ink-soft">
               {t('wineSpectator')} {WINE_SPECTATOR.earlier[WINE_SPECTATOR.earlier.length - 1]}
               {' - '}

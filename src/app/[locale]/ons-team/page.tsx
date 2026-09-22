@@ -17,8 +17,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function TeamPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations('team');
-  const people = await getTeam();
+  // De knop onderaan zei "Maak kennis met ons team", op de teampagina zelf.
+  const [t, tb, people] = await Promise.all([
+    getTranslations('team'),
+    getTranslations('book'),
+    getTeam(),
+  ]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
@@ -93,7 +97,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
       </div>
 
       <div className="mt-20 flex flex-wrap items-center gap-4 border-t border-rule pt-10">
-        <BookButton>{t('cta')}</BookButton>
+        <BookButton>{tb('title')}</BookButton>
         <Link
           href="/wijnkaart"
           className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"

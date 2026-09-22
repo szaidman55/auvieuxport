@@ -42,7 +42,12 @@
     "preorder": "Vooraf te bestellen",
     "seasonal": "Seizoen",
     "updated": "Kaart bijgewerkt op {date}",
-    "indication": "Reken op 85 tot 110 euro per persoon voor drie gangen, zonder wijn."
+    "indication": "Reken op 85 tot 110 euro per persoon voor drie gangen, zonder wijn.",
+    "friday": "Voor het diner op vrijdag vragen wij u vriendelijk om minstens twee gangen te bestellen, omdat de tafel de hele avond voor u is.",
+    "book": "Reserveer een tafel",
+    "wineLink": "Bekijk onze wijnkaart",
+    "teaser": "Klassiekers op niveau, met dagverse en seizoensgebonden producten. Van de Tarte au Boudin Basque tot de Canard à la Rouennaise.",
+    "seeAll": "Bekijk de hele kaart"
   },
   "wine": {
     "title": "Wijnkaart",
@@ -128,5 +133,16 @@
       "saus": "De saus, uit het karkas geperst",
       "bord": "Het bord, opgediend"
     }
+  },
+  "about": {
+    "title": "Over ons",
+    "lead": "Au Vieux Port is wat men noemt een gevestigde waarde op het Antwerpse Eilandje.",
+    "p1": "De zaak bestaat sinds 2007 en staat gekend voor de oerklassieke Franse keuken en haar zaalbereidingen.",
+    "p2": "Chef Stijn Havermans brengt er al jaren klassiekers op niveau. Zo krijgt u met de Canard à la Rouennaise een unieke ervaring voorgeschoteld: het gerecht wordt deels aan tafel bereid door maître Tom Schoonbaert, met een authentieke Presse à Canard. Reserveer uw canard op voorhand.",
+    "p3": "Elk seizoen brengt zijn eigen klassiekers: fazant 'Fine Champagne' in het najaar, hazenrug 'Arlequin' tijdens het wildseizoen. Het hele jaar door vindt u paling in 't groen en een zwartpootkip uit de Landes. En ga niet weg zonder de Tarte au Boudin Basque geproefd te hebben.",
+    "p4": "De wijnkaart is het werk van eigenaar en wine director Serge Verboven. Onze sommelier schenkt verschillende wijnen per glas en begeleidt u bij uw keuze. In de kelder vindt u een mooie selectie Bordeaux en Bourgogne, met Italië en Spanje goed vertegenwoordigd. In 2022 bekroonde Wine Spectator de kaart met één glas, sinds 2023 met twee.",
+    "label": "Restaurant Au Vieux Port draagt met trots het label \"Fine Dining in Antwerp\".",
+    "teamLink": "Maak kennis met ons team",
+    "wineLink": "Bekijk onze wijnkaart"
   }
 }

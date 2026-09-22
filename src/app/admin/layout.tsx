@@ -13,6 +13,7 @@ const tabs = [
   { href: '/admin/menu', label: 'De kaart' },
   { href: '/admin/wines', label: 'De kelder' },
   { href: '/admin/hours', label: 'Uren' },
+  { href: '/admin/mensen', label: 'Mensen' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -5,11 +5,9 @@ import { site, voucherShopUrl } from '@/lib/site';
 import { Awards } from '@/components/Awards';
 import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
-import { getMenu, getOpeningHours } from '@/lib/queries';
+import { getOpeningHours } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
-import { MenuList } from '@/components/MenuList';
 import { BookButton } from '@/components/BookButton';
-import { CallButton } from '@/components/CallButton';
 import { RestaurantJsonLd } from '@/components/JsonLd';
 
 // De kaart en de uren komen uit Supabase, dus de pagina wordt statisch
@@ -25,19 +23,13 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ sections, items }, hours, t, tb, tm, tv] = await Promise.all([
-    getMenu(),
+  const [hours, t, tb, tm, tv] = await Promise.all([
     getOpeningHours(),
     getTranslations('hero'),
     getTranslations('book'),
     getTranslations('menu'),
     getTranslations('voucher'),
   ]);
-
-  const updated = items.reduce<string | null>(
-    (latest, i) => (!latest || i.updated_at > latest ? i.updated_at : latest),
-    null,
-  );
 
   return (
     <>
@@ -59,22 +51,28 @@ export default async function HomePage({
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <BookButton>{tb('title')}</BookButton>
-            <a
-              href="#kaart"
+            <Link
+              href="/kaart"
               className="inline-flex min-h-12 items-center justify-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
             >
               {t('menuCta')}
-            </a>
-            <CallButton label="Bel" className="text-ink-soft hover:text-ink" />
+            </Link>
           </div>
 
-          {/* Adres, uren en nummer in tekst, meteen. */}
+          {/* Adres, uren en nummer in tekst, meteen. Het nummer mag niet
+              afbreken: "03" op de ene regel en "290 77 11" op de volgende
+              leest als twee getallen. */}
           <p className="mt-8 text-sm text-ink-soft">
             {site.street}, {site.postalCode} {site.city}
             <span className="mx-2 text-rule">|</span>
-            ma - vr 12:00 - 14:00 &amp; 18:00 - 21:30
+            <span className="whitespace-nowrap">ma - vr 12:00 - 14:00</span>
+            {' & '}
+            <span className="whitespace-nowrap">18:00 - 21:30</span>
             <span className="mx-2 text-rule">|</span>
-            <a href={`tel:${site.phone}`} className="underline underline-offset-4">
+            <a
+              href={`tel:${site.phone}`}
+              className="whitespace-nowrap underline underline-offset-4"
+            >
               {site.phoneDisplay}
             </a>
           </p>
@@ -101,33 +99,23 @@ export default async function HomePage({
       {/* De onderscheidingen staan vóór de reserveerknop, niet erna. */}
       <Awards />
 
-      <section id="kaart" aria-labelledby="kaart-title" className="scroll-mt-20">
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
-          <h2 id="kaart-title" className="text-center text-3xl sm:text-4xl">
+      {/* De kaart staat op haar eigen pagina. Ze is lang genoeg om er een te
+          verdienen, ze is deelbaar als adres, en ze duwde alles wat erna komt
+          een scherm of vier naar beneden. Hier blijft de aankondiging. */}
+      <section aria-labelledby="kaart-title" className="border-b border-rule">
+        <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-20">
+          <h2 id="kaart-title" className="text-3xl sm:text-4xl">
             {tm('title')}
           </h2>
-          <p className="mx-auto mt-4 max-w-prose text-center text-ink-soft">
-            {tm('intro')}
-          </p>
-          <p className="mx-auto mt-2 max-w-prose text-center text-sm text-ink-faint">
-            {tm('indication')}
-          </p>
+          <p className="mx-auto mt-4 max-w-prose text-ink-soft">{tm('teaser')}</p>
 
-          <div className="mt-12">
-            <MenuList sections={sections} items={items} locale={locale} />
-          </div>
-
-          {updated && (
-            <p className="mt-10 border-t border-rule pt-4 text-center text-xs text-ink-faint">
-              {tm('updated', {
-                date: new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
-                  new Date(updated),
-                ),
-              })}
-            </p>
-          )}
-
-          <div className="mt-10 flex justify-center">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/kaart"
+              className="inline-flex min-h-12 items-center border border-ink px-6 text-sm font-semibold uppercase tracking-wide hover:bg-ink hover:text-paper"
+            >
+              {tm('seeAll')}
+            </Link>
             <Link
               href="/wijnkaart"
               className="inline-flex min-h-12 items-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"

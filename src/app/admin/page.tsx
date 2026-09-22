@@ -12,12 +12,17 @@ const cards = [
   {
     href: '/admin/wines',
     title: 'De kelder',
-    body: 'Ruim 520 referenties. Zoeken, prijzen bijwerken, flessen van de kaart halen.',
+    body: '500 referenties. Zoeken, prijzen bijwerken, flessen van de kaart halen.',
   },
   {
     href: '/admin/hours',
     title: 'Openingsuren',
     body: 'De uren die op de site staan en die Google leest.',
+  },
+  {
+    href: '/admin/mensen',
+    title: 'Mensen',
+    body: 'Wie zich mag aanmelden, met welke naam, en wat hij mag wijzigen.',
   },
 ];
 

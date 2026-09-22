@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { BookButton } from './BookButton';
 
 // Het gerecht waar het huis om bekendstaat, in de vier stappen die de gast
 // aan tafel ziet. De foto's zijn van het huis zelf.
@@ -49,10 +48,7 @@ export async function Canard() {
           ))}
         </ol>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-          <BookButton>{t('cta')}</BookButton>
-          <p className="text-sm text-ink-faint">{t('preorder')}</p>
-        </div>
+        <p className="mt-10 text-center text-sm text-ink-faint">{t('preorder')}</p>
       </div>
     </section>
   );

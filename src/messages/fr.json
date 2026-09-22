@@ -42,7 +42,12 @@
     "preorder": "À commander à l'avance",
     "seasonal": "De saison",
     "updated": "Carte mise à jour le {date}",
-    "indication": "Comptez 85 à 110 euros par personne pour trois services, hors vin."
+    "indication": "Comptez 85 à 110 euros par personne pour trois services, hors vin.",
+    "friday": "Pour le dîner du vendredi, nous vous demandons de commander au minimum deux services, la table étant réservée pour vous toute la soirée.",
+    "book": "Réserver une table",
+    "wineLink": "Voir notre carte des vins",
+    "teaser": "Des classiques travaillés à ce niveau, avec ce que la saison et le marché nous donnent. De la Tarte au Boudin Basque au Canard à la Rouennaise.",
+    "seeAll": "Voir toute la carte"
   },
   "wine": {
     "title": "Carte des vins",
@@ -128,5 +133,16 @@
       "saus": "La sauce, pressée de la carcasse",
       "bord": "L'assiette, servie"
     }
+  },
+  "about": {
+    "title": "À propos",
+    "lead": "Au Vieux Port est ce que l'on appelle une valeur sûre sur l'Eilandje, l'ancien quartier des docks d'Anvers.",
+    "p1": "La maison est ouverte depuis 2007 et s'est fait un nom par sa cuisine française résolument classique et par ses préparations en salle.",
+    "p2": "Le chef Stijn Havermans travaille les classiques à ce niveau depuis des années. Le Canard à la Rouennaise en est l'exemple le plus marquant : le maître d'hôtel Tom Schoonbaert termine le plat devant vous, à l'aide d'une authentique Presse à Canard. Merci de commander votre canard au moment de la réservation.",
+    "p3": "Chaque saison apporte ses classiques : le faisan « Fine Champagne » en automne, le râble de lièvre « Arlequin » pendant la saison du gibier. Toute l'année, vous trouverez l'anguille au vert et le poulet pattes noires des Landes. Et ne repartez pas sans avoir goûté la Tarte au Boudin Basque.",
+    "p4": "La carte des vins est l'œuvre de Serge Verboven, propriétaire et wine director. Notre sommelier sert une large sélection au verre et vous guide volontiers dans vos choix. La cave abrite une belle collection de bordeaux et de bourgognes ; l'Italie et l'Espagne y sont également bien représentées. En 2022, notre carte a été distinguée d'un verre par Wine Spectator, et de deux verres depuis 2023.",
+    "label": "Restaurant Au Vieux Port porte fièrement le label « Fine Dining in Antwerp ».",
+    "teamLink": "Faites connaissance avec notre équipe",
+    "wineLink": "Voir notre carte des vins"
   }
 }

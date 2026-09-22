@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:08:56Z
+- **Generated (UTC):** 2026-09-22 18:29:22Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:08 UTC
-- **Turns:** 12 human / 170 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:28 UTC
+- **Turns:** 14 human / 194 assistant
 
 ## Files written
 
@@ -44,6 +44,17 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\Canard.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-canard-messages.mjs`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\middleware.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\check-matcher.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\i18n\routing.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\LanguageSwitcher.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\ZenchefLoader.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\site.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\kaart\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-page-messages.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\over-ons\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\identity.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\api\staff\route.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\mensen\page.tsx`
 
 ## How to resume
 
@@ -1667,3 +1678,154 @@ Three real routing bugs: `/wijnkaart` 500s, the un-prefixed Dutch paths 404, and
 ### Claude
 
 Found it. The middleware matcher has `'.*\..*'` in a single-quoted string, so `\.` collapses to `.` and the negative lookahead excludes almost every path - the i18n middleware never runs.
+
+### Claude
+
+My test double-escaped and proved nothing. Let me check the real strings from the file.
+
+### Claude
+
+Proven: the old pattern skipped every content path. Deploying the fix.
+
+### Claude
+
+Every route resolves now. Final check: every URL the sitemap advertises.
+
+### Claude
+
+All twelve sitemap URLs resolve. Live at **https://auvieuxport.vercel.app**
+
+## The wine list
+
+500 references extracted from your 50-page PDF, in the database with producer, cuvée, country, region, appellation, grapes, vintage, bottle size and price.
+
+The PDF uses two different grammars, which is where my first parse went wrong: Burgundy and Champagne put the producer on its own line above the wines, Bordeaux puts a `Bordeaux | Pauillac` header and the château *in* the wine line, and Burgundy Regional puts the producer *after* the pipe. My first pass produced Château Latour with the producer "78 % Cabernet Sauvignon - 22 % Merlot". Rewritten, then spot-checked across sections.
+
+| | |
+|---|---|
+| Sparkling / white / red / rosé / sweet | 38 / 186 / 270 / 4 / 2 |
+| France / Spain / Italy / rest | 352 / 58 / 48 / 42 |
+| Magnums and half bottles | 49 |
+| Producers mis-parsed | 0 |
+
+The card's own order is preserved in `position`, so Bourgogne still comes before Bordeaux rather than being alphabetised. Search filters the server-rendered HTML rather than re-sending the wines, so it costs 833 bytes of JavaScript.
+
+**One thing to check:** page 5 lists `2024 Chardonnay (MAGNUM)` from Clos d'Opleeuw at `0,75 l` for €300. Magnum in the name, standard bottle in the size column. I trusted the name and stored 1.5 l, but that's your call to confirm.
+
+## Everything else
+
+- **Menu** - all 22 dishes in three languages, garnishes as their own group, sauces as a note on the mains. The French page resolved the dessert column: six dishes, five prices, because the cheese is charged per piece. Dishes now carry a price label, so the cheese says "per stuk" instead of falsely claiming "dagprijs" like the sole.
+- **Team** - the three full bios in NL/EN/FR with their portraits, as editable data.
+- **Pictures** - 29 of your photos at 2.4 MB total, your wordmark in the header, your favicon, and the Gault&Millau 15/20 and Fine Dining in Antwerp marks. Plus the canard in the four steps a guest actually sees: the press, the carving, the sauce, the plate.
+
+I did **not** retrace the logo. It's a calligraphic script; a hand-approximated SVG would be a visibly different logo, and the PNG is sharp at the size it's used. Say the word if you want it traced anyway.
+
+## A bug that was live the whole time
+
+Checking the routes at the end, `/ons-team` and `/contact` returned 404, `/wijnkaart` returned 500, and `/en/wine-list` and `/fr/carte-des-vins` didn't exist - while the sitemap pointed Google at exactly those addresses.
+
+The middleware matcher was `'...|.*\..*).*)'`. In a normal JavaScript string `\.` is just `.`, so the pattern became `.*..*`, which matches nearly any path. The negative lookahead therefore excluded everything and the i18n middleware never ran on a single request. Only the explicitly prefixed paths worked, and those weren't the ones in the sitemap. One backslash. All twelve sitemap URLs now return 200.
+
+## Still open
+
+- `SUPABASE_SERVICE_ROLE_KEY` in Vercel still holds the `.env.example` placeholder and nothing reads it.
+- Env vars are Production-only; Preview builds will fail until Preview is added.
+- `NEXT_PUBLIC_SITE_URL` points at the vercel.app domain, so canonicals and the sitemap do too.
+
+### You
+
+Problems:
+
+* There is no way to change the site language; it should start with dutch.
+* bottom of team, there's a button meet the team.
+* Book a table should bring to current zenchef booking agent.
+* On the home page, there are 3 or 4 reserve buttons; way too much
+* Menu should be separate from homepage i think. What do you think?
+* phone number is truncated, see attached pic
+* There should be an about us page and maybe clicking the award logos should bring to the listings and/or articles
+* does the admin menu, people, wine list, etc tabs work the same way as tannin? I don't want admin logins with emails, just first names and passwords with six characters
+[image attached]
+
+### You
+
+[Image: source: C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\images\1.png]
+
+### Claude
+
+Good list. Let me check the current state of each before I change anything.
+
+### Claude
+
+Let me verify the language behaviour and look at how Tannin's admin login works.
+
+### Claude
+
+Confirmed - and that's my doing: fixing the middleware switched on next-intl's browser-language detection, which had been dormant. Let me look at the admin.
+
+### Claude
+
+Tannin already does exactly what you're asking. Let me read how it maps a username to Supabase.
+
+### Claude
+
+Let me check whether the booking button actually opens Zenchef.
+
+### Claude
+
+Important: the Zenchef script loads but no widget is ever created - there are no Zenchef globals and no iframe. The booking button currently does nothing. Let me see how their real site wires it.
+
+### Claude
+
+Found the bug: Zenchef needs a `.zc-widget-config` div with the restaurant id; I'd put those attributes on the script tag, so the widget never initialised. Let me check the award links too.
+
+### Claude
+
+I have everything I need. Starting with the language handling.
+
+### Claude
+
+Now the Zenchef fix - the SDK needs the config div, which is what was missing.
+
+### Claude
+
+Now the header: language switcher and the new navigation.
+
+### Claude
+
+Now the menu gets its own page.
+
+### Claude
+
+Now the about page. Let me pull their own copy in all three languages.
+
+### Claude
+
+Now adding all the new copy in three languages.
+
+### Claude
+
+Let me verify the Fine Dining in Antwerp URL rather than guess it.
+
+### Claude
+
+Only Gault&Millau and Wine Spectator resolve; no Fine Dining in Antwerp site exists. Linking the two that do.
+
+### Claude
+
+Now the home page: menu out, teaser in, fewer booking buttons, phone fixed.
+
+### Claude
+
+Now the team page's own "meet the team" button.
+
+### Claude
+
+Now the admin login. I'll mirror Tannin's approach, which already solves exactly this.
+
+### Claude
+
+The admin needs a way to create those logins. Let me see the current admin hub.
+
+### Claude
+
+Now the People tab, the way Tannin does it.
