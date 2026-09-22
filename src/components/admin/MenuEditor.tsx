@@ -58,7 +58,7 @@ export function MenuEditor() {
   async function toggleSoldOut(item: MenuItem) {
     const next = !item.sold_out;
     setItems((prev) => prev.map((i) => (i.id === item.id ? { ...i, sold_out: next } : i)));
-    const { error } = await db.from('menu_items').update({ sold_out: next }).eq('id', item.id);
+    const { error } = await db.rpc('set_menu_item_sold_out', { item_id: item.id, value: next });
     if (error) {
       setStatus(`Niet gelukt: ${error.message}`);
       void load();

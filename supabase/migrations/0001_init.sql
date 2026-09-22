@@ -228,15 +228,42 @@ begin
   end loop;
 end $policies$;
 
--- De vloer mag uitverkocht zetten, en niets anders. Een verborgen knop is geen
--- rechtenmodel; dit wel.
-drop policy if exists "floor marks menu sold out" on menu_items;
-create policy "floor marks menu sold out" on menu_items for update
-  using (is_staff()) with check (is_staff());
+-- De vloer mag uitverkocht zetten, en niets anders.
+--
+-- Een RLS-policy kan dat niet afdwingen: policies werken per rij, niet per
+-- kolom, dus "for update using (is_staff())" laat de vloer net zo goed de
+-- prijs veranderen. Kolomrechten kunnen het ook niet, want vloer en manager
+-- zijn allebei de rol authenticated. Daarom loopt de vloer via deze twee
+-- functies, en mag direct schrijven alleen de manager.
 
+create or replace function set_menu_item_sold_out(item_id uuid, value boolean)
+returns void language plpgsql security definer set search_path = public as $fn$
+begin
+  if not is_staff() then
+    raise exception 'geen toegang' using errcode = '42501';
+  end if;
+  update menu_items set sold_out = value where id = item_id;
+end;
+$fn$;
+
+create or replace function set_wine_available(wine_id uuid, value boolean)
+returns void language plpgsql security definer set search_path = public as $fn$
+begin
+  if not is_staff() then
+    raise exception 'geen toegang' using errcode = '42501';
+  end if;
+  update wines set available = value where id = wine_id;
+end;
+$fn$;
+
+revoke all on function set_menu_item_sold_out(uuid, boolean) from public;
+revoke all on function set_wine_available(uuid, boolean) from public;
+grant execute on function set_menu_item_sold_out(uuid, boolean) to authenticated;
+grant execute on function set_wine_available(uuid, boolean) to authenticated;
+
+-- Opgeruimd als een eerdere versie van deze migratie al gedraaid heeft.
+drop policy if exists "floor marks menu sold out" on menu_items;
 drop policy if exists "floor marks wine unavailable" on wines;
-create policy "floor marks wine unavailable" on wines for update
-  using (is_staff()) with check (is_staff());
 
 drop policy if exists "staff read themselves" on staff;
 create policy "staff read themselves" on staff for select

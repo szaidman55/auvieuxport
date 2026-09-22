@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 13:08:01Z
+- **Generated (UTC):** 2026-09-22 16:59:44Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 13:07 UTC
-- **Turns:** 6 human / 30 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 16:58 UTC
+- **Turns:** 10 human / 54 assistant
 
 ## Files written
 
@@ -950,3 +950,147 @@ Nu installeren en bouwen om te zien of alles klopt.
 ### Claude
 
 Ik pak het op. Eerst deze bouwfout wegwerken, dan ga ik naar Chrome.
+
+### Claude
+
+Build slaagt: NL/EN/FR statisch, admin dynamisch, sitemap en robots erbij. Nu committen en dan naar Chrome.
+
+### Claude
+
+Gecommit. Nu naar uw Chrome.
+
+### Claude
+
+Supabase is aangemeld. Twee organisaties. Eerst de cookiebanner wegklikken (weigeren), dan een vraag die ik niet voor u kan beslissen.
+
+### Claude
+
+Nieuwe organisatie dus.
+
+### Claude
+
+Alles staat goed en het plan is gratis. Ik maak de organisatie aan.
+
+### Claude
+
+Er nam een andere extensie het scherm over, waarschijnlijk een wachtwoordbeheerder op dat wachtwoordveld. Ik kijk even.
+
+### Claude
+
+Projectnaam staat goed. De regio moet nog naar Frankfurt; de beveiligingsinstellingen laat ik op de standaard, want mijn migratie zet RLS zelf op elke tabel.
+
+### Claude
+
+Alles staat klaar behalve één veld. Ik run ondertussen de GitHub-kant.
+
+### Claude
+
+Repo gevonden: `szaidman55/Auvieuxport`. Ik push.
+
+### Claude
+
+Gepusht: 54 bestanden naar `szaidman55/auvieuxport`. Nu Vercel klaarzetten.
+
+### Claude
+
+Ik ben zo ver als ik alleen kan komen. Twee dingen heb ik nodig van u, en één daarvan doe ik principieel niet zelf.
+
+## Wat er staat
+
+**Code — klaar en gepusht**
+`szaidman55/auvieuxport`, 54 bestanden, build slaagt. Next.js 15 + React 19 + next-intl + Tailwind 4 + Supabase, dezelfde stack als Tannin.
+
+Kaart- en wijnbeheer werkt zoals bij Tannin, met de verschillen die dit huis nodig heeft:
+
+| | Tannin | Au Vieux Port |
+|---|---|---|
+| Kaart | `menu_sections` / `menu_items` | idem, plus drietalig NL/EN/FR met terugval, `per_person` en `requires_preorder` voor de canard, en een lege prijs die op de site als *dagprijs* verschijnt |
+| Kelder | `wines` | plus `bottle_size` (fles, magnum, halve fles), `appellation`, en zoeken over producent, streek en land, want het zijn er ruim 520 |
+| Rechten | `is_staff()` / `is_manager()` | idem: de vloer mag alleen uitverkocht zetten, de manager de rest. Afgedwongen in RLS, niet in de knoppen |
+| Uren | - | `opening_hours` als gegevens. Een dag zonder rijen is een gesloten dag, en de site zegt dat ook. Zaterdag en zondag staan er bewust niet in |
+
+De seed bevat hun échte kaart en prijzen uit de doorlichting, en de Perrier-Jouët-champagnes als werkend wijnvoorbeeld.
+
+**Supabase — organisatie aangemaakt, project ingevuld maar niet aangemaakt**
+Nieuwe organisatie *Au Vieux Port* (Free, $0) staat er. Het projectformulier staat klaar: naam `au-vieux-port`, regio Central EU (Frankfurt), beveiliging op standaard omdat mijn migratie RLS zelf op elke tabel zet.
+
+**Vercel — repo-URL ingevuld, nog niet gedeployed**
+Ik wacht bewust met deployen tot de Supabase-sleutels er zijn, anders staat er een site met een lege kaart online.
+
+## Wat ik van u nodig heb
+
+**1. Het database-wachtwoord in Supabase.** Dat veld vul ik niet in - wachtwoorden invoeren doe ik niet, ook niet als u het vraagt. In het tabblad Supabase staat de cursor klaar: klik *Generate a password*, bewaar hem in uw wachtwoordbeheerder, en klik *Create new project*. Duurt ongeveer twee minuten voor hij draait.
+
+**2. Vercel toegang geven tot de nieuwe repo.** De Vercel GitHub App ziet nu alleen Tannin. Via *Adjust GitHub App Permissions* geeft u `auvieuxport` erbij. Dat is een rechtentoekenning op uw GitHub-account, dus die laat ik ook aan u.
+
+Zeg het zodra die twee gebeurd zijn. Dan doe ik in één keer de rest: migratie en seed in de SQL-editor draaien, de `NEXT_PUBLIC_SUPABASE_URL` en anon key als environment variables in Vercel zetten, en deployen.
+
+Eén ding om vooraf te weten: de beheerder voor `/admin` moet ook door u aangemaakt worden (Authentication → Add user), om dezelfde reden. Ik geef u daarna het ene SQL-regeltje dat die gebruiker `manager` maakt.
+
+### You
+
+done
+
+### Claude
+
+Project draait in Frankfurt. Nu de migratie. Ik zet het SQL op het klembord en plak het in de SQL-editor, dat is betrouwbaarder dan intypen.
+
+### Claude
+
+You've hit your session limit · resets 6:10pm (Europe/Brussels)
+
+### You
+
+Commit the working tree changes with a sensible message.
+
+### Claude
+
+You've hit your session limit · resets 6:10pm (Europe/Brussels)
+
+### You
+
+Continue from where you left off.
+
+### Claude
+
+No response requested.
+
+### You
+
+Try again
+
+### Claude
+
+Ik pak de draad op. Eerst kijken wat er nu staat in beide tabbladen.
+
+### Claude
+
+Lokale repo is intact. Geen em-dashes in de broncode; alleen in het audit-document, dat repareer ik. Nu de SQL-editor.
+
+### Claude
+
+Project draait. Nu de migratie erin. Ik probeer de editor programmatisch te vullen in plaats van 263 regels te typen.
+
+### Claude
+
+Voordat ik dit erin zet: er zit een echt gat in mijn eigen rechtenmodel. Laat me dat eerst nakijken.
+
+### Claude
+
+Bevestigd: de vloer kan via die policy élke kolom wijzigen, ook de prijs. Postgres-RLS kan niet per kolom filteren, dus die belofte klopte niet. Ik vervang hem door functies die echt alleen dat ene veld zetten.
+
+### Claude
+
+Nu de twee editors laten aanroepen via die functies.
+
+### Claude
+
+Build slaagt. Nu de SQL erin krijgen zonder 290 regels te typen.
+
+### Claude
+
+Ik serveer de bestanden lokaal en laat de pagina ze zelf ophalen, dan hoef ik niets over te typen.
+
+### Claude
+
+CSP blokkeert dat. Ik doe het via het klembord met een eigen lokale pagina.

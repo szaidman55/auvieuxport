@@ -74,7 +74,7 @@ export function WineEditor() {
   async function toggleAvailable(wine: Wine) {
     const next = !wine.available;
     setWines((prev) => prev.map((w) => (w.id === wine.id ? { ...w, available: next } : w)));
-    const { error } = await db.from('wines').update({ available: next }).eq('id', wine.id);
+    const { error } = await db.rpc('set_wine_available', { wine_id: wine.id, value: next });
     if (error) {
       setStatus(`Niet gelukt: ${error.message}`);
       void load();
