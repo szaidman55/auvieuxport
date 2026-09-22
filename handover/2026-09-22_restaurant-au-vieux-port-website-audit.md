@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:33:45Z
+- **Generated (UTC):** 2026-09-22 21:58:09Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:33 UTC
-- **Turns:** 14 human / 205 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 21:57 UTC
+- **Turns:** 19 human / 217 assistant
 
 ## Files written
 
@@ -57,6 +57,8 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\mensen\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\sitemap.ts`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\lib\alternates.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\WhoAmI.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\page.tsx`
 
 ## How to resume
 
@@ -1875,3 +1877,108 @@ Now adding the canonical to each page's metadata.
 ### Claude
 
 The slashes broke the perl delimiter. Let me use a different one.
+
+### Claude
+
+The homepage needs one too.
+
+### You
+
+Continue from where you left off.
+
+### Claude
+
+No response requested.
+
+### You
+
+@"C:\Users\Sacha\Documents\au-vieux-port\handover\2026-09-22_remote-control.md"
+this is where we're at at the moment
+
+### Claude
+
+You've hit your session limit · resets 11:50pm (Europe/Brussels)
+
+### You
+
+Try again
+
+### Claude
+
+You've hit your session limit · resets 11:50pm (Europe/Brussels)
+
+### You
+
+Try again
+
+### Claude
+
+Picking up from the handover. Let me establish where things actually stand before acting.
+
+### Claude
+
+Repo is clean and in sync at `a811714`. Now let me get you to that Vercel page.
+
+### Claude
+
+Chrome isn't reachable — two attempts, no response from the extension. I can't drive your browser from here. Let me verify the live site while you open that page yourself.
+
+### Claude
+
+Chrome's extension isn't answering, so I can't open that tab for you. Two attempts, no response. If you want me driving your browser, the side panel needs to be open and signed in to the same account; otherwise here's the direct link to paste:
+
+**https://vercel.com/szaidman55s-projects/auvieuxport/settings/environment-variables**
+
+Find `SUPABASE_SERVICE_ROLE_KEY`, the `⋯` at the end of its row, Edit. The value comes from Supabase under Project Settings → API, the `service_role` key, not `anon`. Tick Production and Preview, save, then redeploy from the Deployments tab.
+
+## Where things actually stand
+
+I checked the deployment rather than trusting the handover. It matches: clean tree at `a811714`, in sync with origin, all 21 routes live including the three Fine Dining pages, and every page carries exactly two booking links (header and bottom bar, never both on screen at once).
+
+## Your manager rights: the fastest fix needs neither Vercel nor SQL
+
+The handover buried this under the Vercel instructions, but it's the quickest way in and you can do it right now:
+
+**Sign in at `/admin/login` with `szaidman@gmail.com`** instead of your first name. The login still accepts an email, and that's the account that actually holds the manager role.
+
+Your first-name login is a *different account* (`sacha@staff.restaurantauvieuxport.be`) that never got the role. To give it one, in Supabase's SQL Editor:
+
+```sql
+insert into staff (user_id, name, role, active)
+select id, 'Sacha', 'manager', true
+from auth.users
+where email = 'sacha@staff.restaurantauvieuxport.be'
+on conflict (user_id) do update set role = 'manager', active = true;
+```
+
+If that reports `0 rows`, the first-name account doesn't exist yet and the email login is your only way in until the People screen works.
+
+The Vercel key is only needed for the third thing: making the People screen able to create and promote staff from inside the admin. I confirmed `/api/staff` is deployed and correctly gated (401 without a session), so it's the key that's missing, not the code.
+
+## Two things still waiting on you
+
+**The footer's legal links 404 on every page.** I verified it just now: `/privacy` and `/cookies` are linked from the footer sitewide and both return 404, in all three languages. This has been raised twice without an answer. Your old site has a real Dutch policy, but porting it means correcting it, because it describes Google Analytics, reCAPTCHA, a cookie banner and Ucraft that this site doesn't have, and omits the newsletter that it does. That's your legal text, so I won't rewrite it unasked. Say the word and I'll port and correct it in three languages.
+
+**The Gault&Millau logo still shows 15.** Their own page says 14,5/20. I corrected the caption last session but the badge image is theirs; you'd need the current one from them.
+
+One offer from the last session that never got an answer: the admin shows no indication of who you're signed in as or what you're allowed to do, which is exactly why this went unnoticed for so long. A line reading "Aangemeld als sacha · manager" at the top would have made it obvious. Want it?
+
+### You
+
+yes
+
+### Claude
+
+Building the identity line. Let me look at the current admin structure first.
+
+### Claude
+
+Now the identity line. The important case is the one that bit you: signed in, but with no role at all.
+
+### Claude
+
+Now the notice on the hub.
+
+### Claude
+
+Builds clean. But I've duplicated the role lookup in two components, which is exactly the kind of thing that drifts. Let me factor it out.

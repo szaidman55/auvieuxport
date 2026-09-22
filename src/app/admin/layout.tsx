@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import '../globals.css';
+import { WhoAmI } from '@/components/admin/WhoAmI';
 
 export const metadata: Metadata = {
   title: 'Beheer - Au Vieux Port',
@@ -34,12 +35,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </Link>
               ))}
             </nav>
-            <Link
-              href="/"
-              className="ml-auto flex min-h-11 items-center text-sm underline underline-offset-4"
-            >
-              Naar de site
-            </Link>
+            <span className="ml-auto flex items-center gap-x-5">
+              <WhoAmI />
+              <Link
+                href="/"
+                className="flex min-h-11 items-center text-sm underline underline-offset-4"
+              >
+                Naar de site
+              </Link>
+            </span>
           </div>
         </header>
         <main className="mx-auto max-w-5xl px-4 py-10">{children}</main>

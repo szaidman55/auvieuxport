@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { AuthGate, SignOutButton } from '@/components/admin/AuthGate';
+import { RoleNotice } from '@/components/admin/WhoAmI';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,6 +39,8 @@ export default function AdminHome() {
         Wat u hier wijzigt, staat binnen het uur op de site. Uitverkocht en op
         slaan meteen op.
       </p>
+
+      <RoleNotice />
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => (
