@@ -115,5 +115,18 @@
   "gallery": {
     "title": "Het huis in beeld",
     "intro": "De zaal, de kelder en het werk aan tafel."
+  },
+  "canard": {
+    "eyebrow": "De specialiteit van het huis",
+    "title": "Canard à la Rouennaise",
+    "intro": "Deels aan tafel bereid, met een authentieke Presse à Canard. De maître versnijdt de eend voor uw ogen en perst het karkas voor de saus.",
+    "cta": "Reserveer een tafel",
+    "preorder": "Het hele jaar verkrijgbaar. Tijdens het wildseizoen enkel op bestelling.",
+    "steps": {
+      "pers": "De Presse à Canard, aan tafel",
+      "versnijden": "De eend wordt versneden",
+      "saus": "De saus, uit het karkas geperst",
+      "bord": "Het bord, opgediend"
+    }
   }
 }

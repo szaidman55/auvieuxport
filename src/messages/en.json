@@ -115,5 +115,18 @@
   "gallery": {
     "title": "The house in pictures",
     "intro": "The dining room, the cellar and the work at the table."
+  },
+  "canard": {
+    "eyebrow": "The house speciality",
+    "title": "Canard à la Rouennaise",
+    "intro": "Partly prepared at your table, with an authentic Presse à Canard. The maître carves the duck in front of you and presses the carcass for the sauce.",
+    "cta": "Book a table",
+    "preorder": "Available all year round. During the game season by advance order only.",
+    "steps": {
+      "pers": "The Presse à Canard, at the table",
+      "versnijden": "The duck is carved",
+      "saus": "The sauce, pressed from the carcass",
+      "bord": "The plate, served"
+    }
   }
 }

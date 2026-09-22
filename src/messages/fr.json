@@ -115,5 +115,18 @@
   "gallery": {
     "title": "La maison en images",
     "intro": "La salle, la cave et le travail en salle."
+  },
+  "canard": {
+    "eyebrow": "La spécialité de la maison",
+    "title": "Canard à la Rouennaise",
+    "intro": "Préparé en partie à votre table, avec une authentique Presse à Canard. Le maître découpe le canard sous vos yeux et presse la carcasse pour la sauce.",
+    "cta": "Réserver une table",
+    "preorder": "Disponible toute l'année. Uniquement sur commande pendant la saison du gibier.",
+    "steps": {
+      "pers": "La Presse à Canard, en salle",
+      "versnijden": "Le canard est découpé",
+      "saus": "La sauce, pressée de la carcasse",
+      "bord": "L'assiette, servie"
+    }
   }
 }

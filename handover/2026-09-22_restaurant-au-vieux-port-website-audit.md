@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:04:27Z
+- **Generated (UTC):** 2026-09-22 18:06:42Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:04 UTC
-- **Turns:** 12 human / 165 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:05 UTC
+- **Turns:** 12 human / 166 assistant
 
 ## Files written
 
@@ -1644,3 +1644,7 @@ Wine page looks right. Let me test the search.
 ### Claude
 
 Search works. Two small things to fix: the jump-nav counts don't follow the filter, and "Rosé" lost its accent.
+
+### Claude
+
+Fixed. Let me patch the seed so a fresh install is right too, then build and deploy.

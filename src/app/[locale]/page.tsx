@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
 import { site, voucherShopUrl } from '@/lib/site';
 import { Awards } from '@/components/Awards';
+import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
 import { getMenu, getOpeningHours } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
@@ -136,6 +137,8 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      <Canard />
 
       <Gallery locale={locale} />
 
