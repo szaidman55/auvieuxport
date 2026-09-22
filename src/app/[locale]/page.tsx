@@ -8,7 +8,6 @@ import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
 import { getOpeningHours } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
-import { BookButton } from '@/components/BookButton';
 import { RestaurantJsonLd } from '@/components/JsonLd';
 
 // De kaart en de uren komen uit Supabase, dus de pagina wordt statisch
@@ -97,22 +96,23 @@ export default async function HomePage({
               data die Google leest, dus de site verliest ze niet - ze hoeven
               alleen niet in het eerste scherm te staan, waar ze de knoppen van
               de foto wegduwden. */}
+          {/* Geen reserveerknop meer in de kop.
+              Ze kwam op een telefoon vlak boven de vaste balk terecht, die
+              dezelfde knop draagt met hetzelfde opschrift: twee identieke
+              knoppen onder elkaar, waarvan er een meescrolt en een niet. Op
+              de startpagina blijft de vaste balk over, en vanaf xl de knop in
+              de kop. Wat hier overblijft wijst naar de kaart - de vraag die
+              een gast stelt voordat hij reserveert. */}
           <div className="lg:col-start-1 lg:row-start-2">
-            <div className="flex flex-wrap items-center gap-3">
-              <BookButton>{tn('book')}</BookButton>
-              <Link
-                href="/kaart"
-                className="inline-flex min-h-12 items-center justify-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
-              >
-                {t('menuCta')}
-              </Link>
-            </div>
+            <Link
+              href="/kaart"
+              className="inline-flex min-h-12 items-center justify-center border border-ink px-6 text-sm font-semibold uppercase tracking-wide hover:bg-ink hover:text-paper"
+            >
+              {t('menuCta')}
+            </Link>
           </div>
         </div>
       </section>
-
-      {/* De onderscheidingen staan vóór de reserveerknop, niet erna. */}
-      <Awards />
 
       {/* De kaart staat op haar eigen pagina. Ze is lang genoeg om er een te
           verdienen, ze is deelbaar als adres, en ze duwde alles wat erna komt
@@ -142,6 +142,13 @@ export default async function HomePage({
       </section>
 
       <Canard />
+
+      {/* De onderscheidingen staan onder de specialiteit.
+          Ze stonden vlak onder de kop, waar ze het eerste waren wat een gast
+          te lezen kreeg - drie logo's voordat er iets verteld was over het
+          huis. Een onderscheiding weegt pas als men weet waarvoor ze gegeven
+          is: eerst de kaart en de canard, dan wie dat bekroond heeft. */}
+      <Awards />
 
       <Gallery locale={locale} />
 

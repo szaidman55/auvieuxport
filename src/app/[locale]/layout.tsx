@@ -74,7 +74,9 @@ export default async function LocaleLayout({
           href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Archivo:wght@400;500;600&display=swap"
         />
       </head>
-      <body className="pb-14 sm:pb-0">
+      {/* Ruimte onderaan zolang de vaste balk er staat, en die loopt nu tot
+          xl mee - tot waar de kop haar eigen reserveerknop toont. */}
+      <body className="pb-14 xl:pb-0">
         <NextIntlClientProvider>
           <a
             href="#main"
