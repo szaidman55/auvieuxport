@@ -28,8 +28,12 @@ export async function Canard() {
           <p className="mt-4 text-ink-soft">{t('intro')}</p>
         </div>
 
+        {/* Genummerd blijft het, want de volgorde is de helft van het
+            verhaal, en een schermlezer kondigt "1 van 4" gewoon aan. Maar de
+            cijfers staan er niet bij: een gerecht dat aan tafel bereid wordt
+            leest niet als een handleiding. */}
         <ol className="mt-12 grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4">
-          {STEPS.map((step, i) => (
+          {STEPS.map((step) => (
             <li key={step}>
               <Image
                 src={SRC[step]}
@@ -40,10 +44,7 @@ export async function Canard() {
                 loading="lazy"
                 className="w-full bg-paper object-cover"
               />
-              <p className="mt-3 text-sm text-ink-soft">
-                <span className="tabular-nums text-ink-faint">{i + 1}.</span>{' '}
-                {t(`steps.${step}`)}
-              </p>
+              <p className="mt-3 text-sm text-ink-soft">{t(`steps.${step}`)}</p>
             </li>
           ))}
         </ol>

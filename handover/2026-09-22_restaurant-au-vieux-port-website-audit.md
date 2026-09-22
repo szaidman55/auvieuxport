@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 22:58:18Z
+- **Generated (UTC):** 2026-09-22 23:00:49Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
 - **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 22:58 UTC
-- **Turns:** 33 human / 273 assistant
+- **Turns:** 33 human / 274 assistant
 
 ## Files written
 
@@ -68,6 +68,8 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\scripts\us-english.mjs`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\api\revalidate\route.ts`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\lib\revalidate.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\TeamEditor.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\team\page.tsx`
 
 ## How to resume
 
@@ -2543,3 +2545,9 @@ still there
 ### Claude
 
 Let me check whether the data actually changed, rather than guess.
+
+### Claude
+
+Database is correct — you did run it. The problem is mine: I told you it would show immediately because the revalidation hook covers team pages. **It doesn't fire for direct SQL.** The hook is called by the admin screens after a save; editing the database in Supabase bypasses it entirely. The Dutch page has already rolled over on its own timer (`Age: 0`, no match); the English one hasn't (`Age: 184`, still showing it).
+
+That points at the real gap: the bios are the only content on the site with no admin screen, which is why this needed SQL at all. Let me fix that.
