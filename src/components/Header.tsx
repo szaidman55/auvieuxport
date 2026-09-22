@@ -47,7 +47,7 @@ export function Header({ locale }: { locale: string }) {
             width={650}
             height={184}
             priority
-            className="h-7 w-auto sm:h-8"
+            className="h-9 w-auto sm:h-10"
           />
         </Link>
 
