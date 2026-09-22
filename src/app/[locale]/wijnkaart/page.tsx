@@ -4,7 +4,6 @@ import { alternates } from '@/lib/alternates';
 import { getWines, getCellarUpdatedAt } from '@/lib/queries';
 import { localised, type Wine } from '@/lib/types';
 import { geoHeading, geoName } from '@/lib/geo';
-import { BookButton } from '@/components/BookButton';
 import { WineSearch } from '@/components/WineSearch';
 
 export const revalidate = 3600;
@@ -168,11 +167,9 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
         </p>
       )}
 
-      <div className="mt-10">
-        <BookButton>
-          {locale === 'fr' ? 'Reserver' : locale === 'en' ? 'Book a table' : 'Reserveer een tafel'}
-        </BookButton>
-      </div>
+      {/* Hier stond een reserveerknop, net boven dezelfde knop in de vaste
+          balk. Ze las haar opschrift ook niet uit de vertalingen maar had er
+          drie van zichzelf, waarvan het Franse "Reserver" zonder accent was. */}
     </div>
   );
 }

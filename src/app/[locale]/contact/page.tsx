@@ -5,7 +5,6 @@ import { site } from '@/lib/site';
 import { getOpeningHours } from '@/lib/queries';
 import { Hours } from '@/components/Hours';
 import { ContactForm } from '@/components/ContactForm';
-import { BookButton } from '@/components/BookButton';
 
 export const revalidate = 3600;
 
@@ -20,11 +19,10 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [hours, t, tb, tn] = await Promise.all([
+  const [hours, t, tb] = await Promise.all([
     getOpeningHours(),
     getTranslations('contact'),
     getTranslations('book'),
-    getTranslations('nav'),
   ]);
 
   return (
@@ -73,10 +71,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </h2>
             {/* Stond al in drie talen klaar en werd nergens getoond: dit is
                 de zin die uitlegt dat online en bellen allebei kunnen. */}
-            <p className="mb-4 max-w-prose text-sm text-ink-soft">
+            {/* De uitleg blijft, de knop niet: "online" is de vaste balk
+                onderaan, die hier altijd in beeld staat. */}
+            <p className="max-w-prose text-sm text-ink-soft">
               {tb('intro', { phone: site.phoneDisplay })}
             </p>
-            <BookButton>{tn('book')}</BookButton>
           </div>
         </div>
 

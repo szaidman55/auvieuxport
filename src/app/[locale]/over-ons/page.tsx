@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
 import { alternates } from '@/lib/alternates';
 import { Link } from '@/i18n/navigation';
-import { BookButton } from '@/components/BookButton';
 import { Awards } from '@/components/Awards';
 
 export const revalidate = 3600;
@@ -17,9 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 export default async function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [t, tn, tw] = await Promise.all([
+  const [t, tw] = await Promise.all([
     getTranslations('about'),
-    getTranslations('nav'),
     getTranslations('wine'),
   ]);
 
@@ -60,8 +58,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
         <p className="mt-10 border-t border-rule pt-6 text-ink">{t('label')}</p>
 
+        {/* Reserveren staat in de vaste balk en vanaf xl in de kop. */}
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <BookButton>{tn('book')}</BookButton>
           <Link
             href="/ons-team"
             className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"

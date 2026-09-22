@@ -4,7 +4,6 @@ import { alternates } from '@/lib/alternates';
 import { getMenu } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
 import { MenuList } from '@/components/MenuList';
-import { BookButton } from '@/components/BookButton';
 
 export const revalidate = 3600;
 
@@ -18,10 +17,9 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: L
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ sections, items }, t, tn, tw] = await Promise.all([
+  const [{ sections, items }, t, tw] = await Promise.all([
     getMenu(),
     getTranslations('menu'),
-    getTranslations('nav'),
     getTranslations('wine'),
   ]);
 
@@ -50,8 +48,9 @@ export default async function MenuPage({ params }: { params: Promise<{ locale: L
         </p>
       )}
 
-      <div className="mt-10 flex flex-wrap items-center gap-4">
-        <BookButton>{tn('book')}</BookButton>
+      {/* Geen reserveerknop meer: de vaste balk onderaan en vanaf xl de kop
+          dragen die al, en hier stond ze er vlak boven. */}
+      <div className="mt-10">
         <Link
           href="/wijnkaart"
           className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"

@@ -4,7 +4,6 @@ import type { Locale } from '@/i18n/routing';
 import { alternates } from '@/lib/alternates';
 import { localised } from '@/lib/types';
 import { getTeam } from '@/lib/queries';
-import { BookButton } from '@/components/BookButton';
 import { Link } from '@/i18n/navigation';
 
 export const revalidate = 3600;
@@ -19,9 +18,8 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
   const { locale } = await params;
   setRequestLocale(locale);
   // De knop onderaan zei "Maak kennis met ons team", op de teampagina zelf.
-  const [t, tn, tw, people] = await Promise.all([
+  const [t, tw, people] = await Promise.all([
     getTranslations('team'),
-    getTranslations('nav'),
     getTranslations('wine'),
     getTeam(),
   ]);
@@ -99,7 +97,7 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
       </div>
 
       <div className="mt-20 flex flex-wrap items-center gap-4 border-t border-rule pt-10">
-        <BookButton>{tn('book')}</BookButton>
+        {/* Reserveren staat in de vaste balk en vanaf xl in de kop. */}
         <Link
           href="/wijnkaart"
           className="inline-flex min-h-11 items-center text-sm text-brass underline underline-offset-4 hover:text-ink"

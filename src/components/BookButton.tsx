@@ -7,7 +7,9 @@ type Props = {
 };
 
 /**
- * Elke reserveerknop op de site is deze knop.
+ * De reserveerknop in de kop, vanaf xl. Onder xl reserveert men via de vaste
+ * balk onderaan, en in de pagina's zelf staat er geen meer: die kwamen telkens
+ * vlak boven dezelfde knop in de balk terecht. Beide gaan via BookLink.
  *
  * Ze werkte maar één keer per pagina. De knoppen wezen naar #zc-action-open,
  * en de SDK van Zenchef luistert daarvoor naar hashchange - een gebeurtenis
