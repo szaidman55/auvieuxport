@@ -66,7 +66,9 @@ export default async function TeamPage({ params }: { params: Promise<{ locale: L
 
                 <div className="mt-6 flex flex-col gap-4 text-ink-soft">
                   {bio
-                    .split(/\n{2,}/)
+                    // Regeleindes kunnen als CRLF in de database staan, dus
+                    // een lege regel is niet altijd twee keer \n op rij.
+                    .split(/(?:\r?\n){2,}/)
                     .map((para) => para.trim())
                     .filter(Boolean)
                     .map((para, k) => (

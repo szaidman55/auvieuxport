@@ -76,7 +76,7 @@ insert into wine_sections (id, title_nl, title_en, title_fr, position) values
   ('sparkling', 'Mousserende wijnen', 'Sparkling wines', 'Vins effervescents', 10),
   ('white',     'Witte wijnen',       'White wines',     'Vins blancs',        20),
   ('red',       'Rode wijnen',        'Red wines',       'Vins rouges',        30),
-  ('rose',      'Rose',               'Rose',            'Roses',              40),
+  ('rose',      'Rosé wijnen',      'Rosé wines',  'Rosés',             40),
   ('sweet',     'Zoete wijnen',       'Sweet wines',     'Vins doux',          50)
 on conflict (id) do update set
   title_nl = excluded.title_nl, title_en = excluded.title_en,

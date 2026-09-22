@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 18:00:15Z
+- **Generated (UTC):** 2026-09-22 18:04:27Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 17:59 UTC
-- **Turns:** 12 human / 153 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 18:04 UTC
+- **Turns:** 12 human / 165 assistant
 
 ## Files written
 
@@ -40,6 +40,7 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\Gallery.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\page.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\WineSearch.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-wine-messages.mjs`
 
 ## How to resume
 
@@ -1595,3 +1596,51 @@ Typecheck clean. Now the wine page needs to cope with 500 entries instead of 6.
 ### Claude
 
 The wine page needs the house's own ordering and a way to search 500 entries. Fixing the query first.
+
+### Claude
+
+Build passes, and the wine search adds only 833 B of JS. Let me commit and deploy.
+
+### Claude
+
+Pushed. Vercel should auto-deploy. Let me verify once it lands.
+
+### Claude
+
+Live with all 500. Let me look at it.
+
+### Claude
+
+Logo and hero are in. Let me check the awards and gallery.
+
+### Claude
+
+Let me check the awards band specifically.
+
+### Claude
+
+Awards render with the real marks. Let me check the gallery and team.
+
+### Claude
+
+Gallery works. Now the team page.
+
+### Claude
+
+Team page works, but the bio is rendering as one block instead of paragraphs. Let me check what's stored.
+
+### Claude
+
+Found it: the paste normalised the blank lines to CRLF, so my `\n{2,}` split never matched. Fixing the split.
+
+### Claude
+
+Fix confirmed. Let me check the wine page before redeploying.
+
+### Claude
+
+Wine page looks right. Let me test the search.
+
+### Claude
+
+Search works. Two small things to fix: the jump-nav counts don't follow the filter, and "Rosé" lost its accent.

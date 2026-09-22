@@ -32,6 +32,17 @@ export function WineSearch({ total }: { total: number }) {
       s.hidden = !s.querySelector('[data-wine]:not([hidden])');
     });
 
+    // De sprongnavigatie telt mee: een kleur die niets oplevert, verdwijnt.
+    document.querySelectorAll<HTMLElement>('[data-jump]').forEach((link) => {
+      const section = document.getElementById(link.dataset.jump ?? '');
+      const hits = section
+        ? section.querySelectorAll('[data-wine]:not([hidden])').length
+        : 0;
+      link.hidden = hits === 0;
+      const badge = link.querySelector<HTMLElement>('[data-jump-count]');
+      if (badge) badge.textContent = String(hits);
+    });
+
     setShown(visible);
   }, [term]);
 

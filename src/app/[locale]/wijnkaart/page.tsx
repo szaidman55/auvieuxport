@@ -53,9 +53,16 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
           const count = wines.filter((w) => w.colour === s.id).length;
           if (count === 0) return null;
           return (
-            <a key={s.id} href={`#${s.id}`} className="underline underline-offset-4">
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              data-jump={s.id}
+              className="underline underline-offset-4"
+            >
               {localised(s, 'title', locale)}{' '}
-              <span className="tabular-nums text-ink-faint">{count}</span>
+              <span data-jump-count className="tabular-nums text-ink-faint">
+                {count}
+              </span>
             </a>
           );
         })}
