@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit
 
-- **Generated (UTC):** 2026-09-22 16:59:44Z
+- **Generated (UTC):** 2026-09-22 18:00:15Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 16:58 UTC
-- **Turns:** 10 human / 54 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 17:59 UTC
+- **Turns:** 12 human / 153 assistant
 
 ## Files written
 
@@ -23,6 +23,23 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\WineEditor.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\HoursEditor.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\lib\supabase\server.ts`
+- `C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\scratchpad\pdf\parse2.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\assets.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\supabase\migrations\0002_team_and_price_notes.sql`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\gen-wines.mjs`
+- `C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\scratchpad\site\team.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\gen-content.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\gen-wines-csv.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\types.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\lib\queries.ts`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\MenuList.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\ons-team\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\add-messages.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\Header.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\Awards.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\Gallery.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\[locale]\page.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\WineSearch.tsx`
 
 ## How to resume
 
@@ -1094,3 +1111,487 @@ Ik serveer de bestanden lokaal en laat de pagina ze zelf ophalen, dan hoef ik ni
 ### Claude
 
 CSP blokkeert dat. Ik doe het via het klembord met een eigen lokale pagina.
+
+### Claude
+
+Ik doe het gewoon met select-all en Ctrl+C in het tekstvak.
+
+### Claude
+
+290 regels staan erin. Ik controleer of het volledig is en draai hem dan.
+
+### Claude
+
+De waarschuwing komt van de `drop ... if exists`-regels die de migratie herhaalbaar maken. De database is leeg, er valt niets te verliezen. Ik bevestig.
+
+### Claude
+
+Migratie is erin. Nu de seed met de echte kaart.
+
+### Claude
+
+De seed is niet gekopieerd; het klembord had nog de migratie. Ik pak het tekstvak nu via zijn referentie.
+
+### Claude
+
+Seed is erin. Nu controleren of de gegevens er echt staan en of de rechten doen wat ik beloof.
+
+### Claude
+
+Alles klopt: 5 secties, 23 gerechten, 10 tabellen met RLS aan, nul zonder, 22 policies, en de te ruime vloer-policy bestaat niet meer. Nu de codewijziging vastleggen en de sleutels ophalen.
+
+### Claude
+
+Mijn vorige commit ging niet door: de git-identiteit was weg. Ik zet hem terug zoals bij de eerste commit en probeer opnieuw.
+
+### Claude
+
+Nu de publieke sleutel ophalen. Alleen de anon-sleutel, die hoort in de browser; de geheime laat ik staan.
+
+### Claude
+
+Sleutel is er. Voordat ik hem in Vercel zet, test ik hem rechtstreeks: leest de gast de kaart, en kan die gast er ook in schrijven?
+
+### Claude
+
+Test 3 gaf 204, wat zowel "gelukt" als "nul rijen geraakt" kan betekenen. Dat moet ik zeker weten.
+
+### Claude
+
+Prijzen onaangeroerd, abonneelijst onzichtbaar, contactformulier werkt. Het rechtenmodel doet wat ik beloofde. Ik ruim mijn testbericht op.
+
+### Claude
+
+Opgeruimd. Nu Vercel.
+
+### Claude
+
+Project bestaat al, met vier variabelen die Vercel uit mijn `.env.example` heeft overgenomen - dus met de voorbeeldwaarden erin. Die moet ik vervangen.
+
+### Claude
+
+Vercel weigert terecht: een `NEXT_PUBLIC_`-variabele mag geen "Secret" zijn, want die waarde gaat sowieso naar de browser. Ik zet hem op Config.
+
+### Claude
+
+Config is geblokkeerd omdat de variabele als Secret is opgeslagen en die zijn write-only. Ik verwijder de drie publieke variabelen (ze bevatten alleen voorbeeldwaarden) en maak ze opnieuw als Config.
+
+### Claude
+
+Alle drie weg. Nu opnieuw aanmaken, als Config.
+
+### Claude
+
+Nu de omgevingen: ook Preview en Development, zodat een testbouw dezelfde gegevens ziet.
+
+### Claude
+
+De pagina is ingezoomd geraakt. Ik zet het beeld terug en kijk wat er bewaard is.
+
+### Claude
+
+De drie zijn niet bewaard; het dialoogvenster ging verloren toen de pagina inzoomde. Opnieuw, nu via plakken in één keer.
+
+### Claude
+
+Het klembord had nog de seed. De achtergrondtab kreeg mijn toetsaanslagen niet. Ik zet die tab eerst op de voorgrond.
+
+### Claude
+
+`tabs_select` bestaat hier niet. Ik typ ze gewoon opnieuw in, dat werkte al eerder.
+
+### Claude
+
+Het dialoogvenster hield de rommel van de mislukte plakpoging vast. Ik herlaad en begin schoon.
+
+### Claude
+
+Schoon dialoogvenster. Nu via de veldreferenties in plaats van coördinaten.
+
+### Claude
+
+Alle drie staan erin als Config. Nu kijken welke commit er klaarstaat voordat ik deploy.
+
+### Claude
+
+Beide builds zijn mislukt. Laat me de foutmelding lezen voordat ik opnieuw deploy.
+
+### Claude
+
+Laat me eerst die twee fouten lezen.
+
+### Claude
+
+Extensie viel even weg. Ik reproduceer de build intussen lokaal, dat gaat sneller dan die log uit de pagina peuteren.
+
+### Claude
+
+Lokale build slaagt met de echte waarden, dus de mislukking op Vercel kwam van de lege variabelen. Nu opnieuw deployen.
+
+### Claude
+
+Nu zijn de logs zichtbaar. Even doorscrollen naar de fout, dan weet ik het zeker.
+
+### Claude
+
+Switching to English, and saving that preference now.
+
+### Claude
+
+Saved. The build log confirms the cause exactly: *"Your project's URL and Key are required to create a Supabase client!"* - the empty env vars. Those are fixed now, so I'll redeploy.
+
+### Claude
+
+The redeploy dialog is open, and it confirms the production domain is `auvieuxport.vercel.app` - which matches the `NEXT_PUBLIC_SITE_URL` I set.
+
+### Claude
+
+Building now. Cleaning up my temporary helper files while it runs.
+
+### Claude
+
+That handover file is auto-regenerated by the session tooling each turn, so it keeps churning. I'll leave it uncommitted rather than chase it. Checking the build.
+
+### Claude
+
+Past the point where it failed before. Waiting it out.
+
+### Claude
+
+Live. Now let me verify the deployed site actually serves real data, not an empty menu.
+
+### Claude
+
+Admin pages return a shell but leak no data, and RLS is the real gate. Let me look at the live site.
+
+### Claude
+
+Done. The site is live at **https://auvieuxport.vercel.app**
+
+## What's running
+
+**Supabase** (`au-vieux-port`, Frankfurt, free tier) - schema and seed applied, verified from outside with the publishable key:
+
+| Check | Result |
+|---|---|
+| Guest reads menu / wines | works, all 3 languages |
+| Guest tries to change a price | 0 rows touched, prices unchanged |
+| Guest reads subscriber list | empty, invisible |
+| Guest posts a contact message | works |
+| Tables with RLS enabled | 10 of 10, 22 policies |
+
+**Vercel** - production build green, all three locales serving real data, hours rendered from the database, wine list showing vintages and magnums, sitemap with localised route names.
+
+## One thing I fixed before shipping
+
+My own permission model was wrong. The policy `floor marks menu sold out` granted the floor `update` on the whole row - and RLS filters rows, not columns, so anyone who could mark a dish sold out could also rewrite its price. Column grants can't fix it either, since floor and manager are both the `authenticated` role.
+
+The floor now goes through `set_menu_item_sold_out` and `set_wine_available`: security-definer functions that check `is_staff()` and write exactly one column. Direct writes to `menu_items` and `wines` are manager-only. That's commit [211c4aa](https://github.com/szaidman55/auvieuxport/commit/211c4aa9cd997ea76715cea4a5dd22bfe51321aa).
+
+The first two deploys failed, both with `Your project's URL and Key are required to create a Supabase client!` - Vercel's import had auto-created the env vars from `.env.example` as empty **Secret**-type entries, and a `NEXT_PUBLIC_` var can't be Secret. I deleted and recreated the three as **Config** with the real values.
+
+## Left for you
+
+**The admin user.** I don't create accounts or enter passwords. In Supabase → Authentication → Add user, create one, then run this to make them a manager:
+
+```bash
+echo "insert into staff (user_id, name, role) select id, 'Sacha Zaidman', 'manager' from auth.users where email = 'szaidman@gmail.com';"
+```
+
+Paste that into the Supabase SQL editor, with the right name and email.
+
+**Three things to be aware of:**
+
+- `SUPABASE_SERVICE_ROLE_KEY` still sits in Vercel holding the `.env.example` placeholder. Nothing in the code reads it. I left it rather than delete it unasked, but it's a footgun - worth removing.
+- The env vars are set for **Production only**. Preview builds will fail the same way the first two did until you add Preview. I couldn't set it without the dialog closing on me.
+- `NEXT_PUBLIC_SITE_URL` points at `auvieuxport.vercel.app`, so the sitemap and canonicals do too. That needs changing when you attach the real domain.
+
+**On scope:** the seed holds the 23 dishes and 6 champagnes I could read from the audit of the current site. The other ~520 wine references aren't in there - the schema handles them, but someone has to import the actual list.
+
+Also: your code comments, SQL and commit messages so far are all in Dutch. I've noted to reply to you in English from now on, on every project, but I left the existing Dutch in place - say the word if you want that switched too.
+
+### You
+
+user added
+
+### Claude
+
+Let me see which user you created before I promote anyone.
+
+### Claude
+
+One user, `szaidman@gmail.com`, confirmed and not yet signed in. Promoting it to manager.
+
+### Claude
+
+Manager role is set. Let me actually prove the floor/manager split works, by impersonating that user inside a transaction and rolling back.
+
+### Claude
+
+Exactly the result I wanted. Let me confirm the rollback left nothing behind.
+
+### Claude
+
+Rollback was clean: price 26.00, nothing sold out, role back to `manager`, no stray messages.
+
+Let me show you the login page.
+
+### Claude
+
+Admin account is live. You're set.
+
+## What I just did
+
+Found one user, `szaidman@gmail.com`, email confirmed, never signed in. Gave it a `staff` row as **manager**.
+
+Then I tested the permission split for real rather than assuming it. Inside a transaction I demoted that user to `floor`, impersonated it as the `authenticated` Postgres role with its JWT claims, and had it try both paths:
+
+| Floor user attempts | Result |
+|---|---|
+| `update menu_items set price = 1` on the Kaaskroket | blocked, price still **26.00** |
+| `set_menu_item_sold_out(...)` | succeeded, **sold_out = true** |
+
+Then rolled back. Verified afterwards: price 26.00, nothing sold out, role back to `manager`, no stray rows. That's the fix from earlier doing exactly what I claimed it does - the floor can flip one flag and cannot touch prices.
+
+Login page renders clean with no console errors: **https://auvieuxport.vercel.app/admin/login**
+
+Sign in there with the password you set. You should land on the overview with De kaart, De kelder and Uren available.
+
+## Still open, unchanged from before
+
+- `SUPABASE_SERVICE_ROLE_KEY` in Vercel holds the `.env.example` placeholder and nothing reads it. Worth deleting.
+- Env vars are **Production only**, so Preview deploys will fail until Preview is added.
+- `NEXT_PUBLIC_SITE_URL` points at `auvieuxport.vercel.app`, so sitemap and canonicals do too. Needs updating when the real domain is attached.
+- The seed has 23 dishes and 6 champagnes. The other ~520 wine references still need importing.
+
+One thing I decided rather than asked: I used "Sacha Zaidman" as the staff display name, taken from your git author identity. If the floor should see something else, that's a one-line update.
+
+### You
+
+@"C:\Users\Sacha\Downloads\WineList_AVP_Website.pdf"
+Here is the wine list attached.
+You can find the team with text on the website.
+Also the full food menu.
+Add pictures in a classy way. You can download the pics from their website.
+Use their logo, retrace it if necessary.
+Use the gault and millau logo and the fine dining in Antwerp logo.
+use their favicon.
+Make the website ux better
+
+### Claude
+
+That's a big scope. Let me start by seeing what's actually in the PDF and on their site.
+
+### Claude
+
+No PDF renderer here. I'll extract the text with Node instead.
+
+### Claude
+
+50 pages with a full index that maps cleanly onto the schema. Let me see the row format.
+
+### Claude
+
+Very regular structure. Let me check the variations in the white and red sections before writing a parser.
+
+### Claude
+
+Structure is clear. Let me write a parser that uses the index page to identify the country and region headers.
+
+### Claude
+
+486 wines, every one with a producer and price. Let me spot-check the parse quality.
+
+### Claude
+
+The champagne and rosé sections are right, but Burgundy and Bordeaux are badly wrong - region headers aren't matching and note lines are being read as producers. Let me look at the actual pages.
+
+### Claude
+
+The format differs by section: Bordeaux uses `Bordeaux | Appellation` headers with the château in the wine line, and there's line-wrapping. Let me map the remaining sections.
+
+### Claude
+
+Now I understand the real grammar. Headers come in two shapes and producers can sit on either side of the pipe. Let me rewrite the parser properly.
+
+### Claude
+
+The heredoc tripped on quoting. Let me write the file directly.
+
+### Claude
+
+500 wines now, no mangled producers. Let me verify the sections that were broken before.
+
+### Claude
+
+Three defects left. Let me look at the two real ones.
+
+### Claude
+
+Most of those pipes are legitimate champagne cuvée names. The real bug is the wrapped-line case stealing the producer. Let me fix that.
+
+### Claude
+
+Patches 1 and 2 landed. Let me add the name cleanup with the editor instead of fighting shell escaping.
+
+### Claude
+
+Wine list is clean: 500 wines, correct producers, regions, bottle sizes and prices. Now the website content and assets.
+
+### Claude
+
+A ucraft site. Let me pull all the pages and inventory the images.
+
+### Claude
+
+Rich asset set: ~27 professional photos, the logo, favicon, and both award logos. Let me see the rest and download them.
+
+### Claude
+
+53 assets, 14 MB, including three team portraits and all the award logos. Now the text content.
+
+### Claude
+
+Full team bios captured, with matching portraits. Now the food menu.
+
+### Claude
+
+Full menu captured, but the dessert column has 6 dishes and only 5 prices. Let me resolve that rather than guess.
+
+### Claude
+
+The names and prices are separate columns with no markup pairing. Let me look at the price column raw, keeping blank lines.
+
+### Claude
+
+Genuinely 6 desserts and 5 prices in the source. Let me check the other language versions before deciding.
+
+### Claude
+
+The French page resolves it: "Kaas per stuk" has no listed price (priced per piece); the five prices map to the five desserts after it.
+
+Let me look at the logo and award assets before building.
+
+### Claude
+
+I have everything I need. Let me get the English and French team copy so the page stays trilingual.
+
+### Claude
+
+I now have everything: 500 wines, the full menu, trilingual team bios, and all the brand assets. Let me build. Starting with assets.
+
+### Claude
+
+sharp is in. Let me process the assets into the repo.
+
+### Claude
+
+That's the Windows long-path limit hitting libvips, not a missing file. Let me stage the sources somewhere short.
+
+### Claude
+
+All assets in. Let me confirm the logo landed and set up the favicon.
+
+### Claude
+
+Now let me actually look at the photos so I can place them with intent rather than at random.
+
+### Claude
+
+Now I can see every photo. Let me build. First the schema additions: a price note, and the team as editable data.
+
+### Claude
+
+Now generating the wine seed from the parsed data.
+
+### Claude
+
+500 rows generated. Now I need the English and French menu wording.
+
+### Claude
+
+All three languages confirmed, including "market"/"du jour" for the sole and "per piece" for the cheese. Let me extract the team bios into structured data.
+
+### Claude
+
+All nine bios extracted. Now generating the menu and team seed.
+
+### Claude
+
+Seeds are correct. Now applying them to the database.
+
+### Claude
+
+Clipboard worked; the editor just needed focus first. Running it.
+
+### Claude
+
+Migration applied. Now the menu and team content.
+
+### Claude
+
+Menu and team are in. Now the 500 wines.
+
+### Claude
+
+The batch got flagged. Let me do it in smaller steps.
+
+### Claude
+
+The clipboard still held the previous file. Let me redo the copy with more time for 89 KB.
+
+### Claude
+
+The 89 KB copy silently fails. Let me use Supabase's CSV import instead, which is built for this.
+
+### Claude
+
+CSV is clean. Let me clear the six placeholder wines, then import.
+
+### Claude
+
+Table is empty. Now the CSV import.
+
+### Claude
+
+500 rows parsed correctly. Importing.
+
+### Claude
+
+500 records in. Let me verify from outside and clean up.
+
+### Claude
+
+All data verified: 500 wines with proper grape arrays, 22 dishes, 3 team members. Now the front end.
+
+### Claude
+
+Now the front-end changes. Types and queries first.
+
+### Claude
+
+Now the team page, with the real bios and portraits.
+
+### Claude
+
+Now the header logo and the awards. Let me check the logo has transparency first.
+
+### Claude
+
+All transparent. Now the header logo.
+
+### Claude
+
+Now the awards with their real logos, and a gallery.
+
+### Claude
+
+Now wiring them into the home page, with a hero image.
+
+### Claude
+
+Typecheck clean. Now the wine page needs to cope with 500 entries instead of 6.
+
+### Claude
+
+The wine page needs the house's own ordering and a way to search 500 entries. Fixing the query first.

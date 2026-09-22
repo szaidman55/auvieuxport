@@ -1,6 +1,9 @@
+import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
-import { site, awards, voucherShopUrl } from '@/lib/site';
+import { site, voucherShopUrl } from '@/lib/site';
+import { Awards } from '@/components/Awards';
+import { Gallery } from '@/components/Gallery';
 import { getMenu, getOpeningHours } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
 import { MenuList } from '@/components/MenuList';
@@ -21,14 +24,13 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ sections, items }, hours, t, tb, tm, tv, ta] = await Promise.all([
+  const [{ sections, items }, hours, t, tb, tm, tv] = await Promise.all([
     getMenu(),
     getOpeningHours(),
     getTranslations('hero'),
     getTranslations('book'),
     getTranslations('menu'),
     getTranslations('voucher'),
-    getTranslations('awards'),
   ]);
 
   const updated = items.reduce<string | null>(
@@ -43,7 +45,11 @@ export default async function HomePage({
       {/* De hele belofte staat in het eerste scherm: wie, waar, wanneer,
           en een knop. De oude site had hier alleen een foto. */}
       <section className="border-b border-rule">
-        <div className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
+        {/* De zaal, meteen. De belofte blijft tekst: de foto staat ernaast,
+            niet eronder, zodat de reserveerknop op een telefoon nog altijd
+            binnen het eerste scherm valt. */}
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-16">
+          <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brass">
             {site.city} &middot; {site.founded}
           </p>
@@ -71,24 +77,28 @@ export default async function HomePage({
               {site.phoneDisplay}
             </a>
           </p>
+          </div>
+
+          <Image
+            src="/img/photos/avp-15.webp"
+            alt={
+              locale === 'fr'
+                ? 'La salle du restaurant, dressée pour le service'
+                : locale === 'en'
+                  ? 'The dining room, set for service'
+                  : 'De zaal, gedekt voor de dienst'
+            }
+            width={1600}
+            height={1066}
+            sizes="(max-width: 1024px) 100vw, 34rem"
+            priority
+            className="w-full bg-paper-2 object-cover lg:aspect-[4/3]"
+          />
         </div>
       </section>
 
       {/* De onderscheidingen staan vóór de reserveerknop, niet erna. */}
-      <section aria-labelledby="awards" className="border-b border-rule bg-paper-2">
-        <div className="mx-auto max-w-5xl px-4 py-10">
-          <h2 id="awards" className="sr-only">{ta('title')}</h2>
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-soft">
-            {awards.map((a) => (
-              <li key={`${a.issuer}-${a.label}`}>
-                <span className="font-medium text-ink">{a.issuer}</span>{' '}
-                {a.label}
-                {a.years ? ` ${a.years}` : ''}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <Awards />
 
       <section id="kaart" aria-labelledby="kaart-title" className="scroll-mt-20">
         <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
@@ -126,6 +136,8 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      <Gallery locale={locale} />
 
       <section aria-labelledby="book-title" className="border-y border-rule bg-ink text-paper">
         <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-20">

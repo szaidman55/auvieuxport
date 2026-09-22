@@ -55,7 +55,10 @@
     "nonVintage": "NV",
     "pick": "Keuze van de sommelier",
     "updated": "Kelder bijgewerkt op {date}",
-    "jumpTo": "Ga meteen naar"
+    "jumpTo": "Ga meteen naar",
+    "searchLabel": "Zoek in de kelder",
+    "searchPlaceholder": "Producent, streek, druif of jaar",
+    "found": "{count} van de kaart"
   },
   "book": {
     "title": "Reserveren",
@@ -66,11 +69,16 @@
     "canard": "De Canard a la Rouennaise bestelt u het best bij uw reservatie."
   },
   "awards": {
-    "title": "Onderscheidingen"
+    "title": "Onderscheidingen",
+    "gaultMillau": "Gault&Millau, 15/20",
+    "fineDining": "Fine Dining in Antwerp",
+    "wineSpectator": "Wine Spectator"
   },
   "team": {
     "title": "Ons team",
-    "cta": "Maak kennis met ons team"
+    "cta": "Maak kennis met ons team",
+    "intro": "Achter elk bord, elke versnijding aan tafel en elk glas staan mensen met vakmanschap. Maak kennis met onze chef, onze maître en onze sommelier.",
+    "wineLink": "Bekijk onze wijnkaart"
   },
   "voucher": {
     "title": "Cadeaubon",
@@ -103,5 +111,9 @@
     "since": "Au Vieux Port, sinds 2007",
     "privacy": "Privacybeleid",
     "cookies": "Cookiebeleid"
+  },
+  "gallery": {
+    "title": "Het huis in beeld",
+    "intro": "De zaal, de kelder en het werk aan tafel."
   }
 }

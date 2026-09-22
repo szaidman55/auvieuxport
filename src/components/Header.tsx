@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { BookButton } from './BookButton';
@@ -24,8 +25,17 @@ export function Header({ locale }: { locale: string }) {
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-paper/95 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="font-display text-lg tracking-wide">
-          Au Vieux Port
+        <Link href="/" className="flex min-h-11 items-center" aria-label="Au Vieux Port">
+          {/* Het eigen woordmerk van het huis, een kalligrafisch schrift. Niet
+              nagetekend: een benadering in SVG zou een ander logo zijn. */}
+          <Image
+            src="/img/brand/logo.png"
+            alt="Au Vieux Port"
+            width={650}
+            height={184}
+            priority
+            className="h-7 w-auto sm:h-8"
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Hoofdnavigatie">

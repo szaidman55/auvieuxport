@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/routing';
 import { getWines, getCellarUpdatedAt } from '@/lib/queries';
 import { localised, type Wine } from '@/lib/types';
 import { BookButton } from '@/components/BookButton';
+import { WineSearch } from '@/components/WineSearch';
 
 export const revalidate = 3600;
 
@@ -40,7 +41,7 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
     <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24">
       <h1 className="text-4xl sm:text-5xl">{t('title')}</h1>
       <p className="mt-4 max-w-prose text-lg text-ink-soft">{t('intro')}</p>
-      <p className="mt-2 text-sm text-ink-faint">{t('count', { count: wines.length })}</p>
+      <WineSearch total={wines.length} />
 
       {/* Sprongnavigatie: de kaart is lang, en dit is hoe een sommelier ze leest. */}
       <nav
@@ -65,29 +66,44 @@ export default async function WinePage({ params }: { params: Promise<{ locale: L
           const rows = wines.filter((w) => w.colour === section.id);
           if (rows.length === 0) return null;
 
-          // Binnen een kleur groeperen op land en streek, zoals de kaart leest.
+          // Binnen een kleur groeperen op land, streek en appellatie, zoals de
+          // kaart leest. Map bewaart de volgorde van invoegen, en die is de
+          // volgorde van de kaart zelf.
           const groups = new Map<string, Wine[]>();
           rows.forEach((w) => {
-            const key = [w.country, w.region].filter(Boolean).join(' - ');
+            const key = [w.country, w.region, w.appellation].filter(Boolean).join(' · ');
             groups.set(key, [...(groups.get(key) ?? []), w]);
           });
 
           return (
-            <section key={section.id} id={section.id} className="scroll-mt-20">
+            <section key={section.id} id={section.id} data-section className="scroll-mt-20">
               <h2 className="border-b border-rule pb-2 text-2xl">
                 {localised(section, 'title', locale)}
               </h2>
 
               {[...groups.entries()].map(([group, list]) => (
-                <div key={group} className="mt-8">
+                <div key={group} data-group className="mt-8">
                   <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brass">
                     {group}
                   </h3>
                   <ul className="flex flex-col">
                     {list.map((w) => {
                       const size = bottleLabel(w, t);
+                      // Waar de zoekbalk op matcht. Server-side meegegeven,
+                      // zodat de wijnen niet nog eens als JSON meereizen.
+                      const haystack = [
+                        w.producer, w.name, w.country, w.region, w.appellation,
+                        w.vintage, ...w.grapes,
+                      ]
+                        .filter(Boolean)
+                        .join(' ')
+                        .toLowerCase();
                       return (
-                        <li key={w.id} className="border-t border-rule/60 py-3 first:border-0">
+                        <li
+                          key={w.id}
+                          data-wine={haystack}
+                          className="border-t border-rule/60 py-3 first:border-0"
+                        >
                           <div className="flex flex-wrap items-baseline gap-x-2">
                             <span className="tabular-nums text-ink-faint">
                               {w.vintage ?? t('nonVintage')}

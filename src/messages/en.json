@@ -55,7 +55,10 @@
     "nonVintage": "NV",
     "pick": "Sommelier's choice",
     "updated": "Cellar updated on {date}",
-    "jumpTo": "Jump to"
+    "jumpTo": "Jump to",
+    "searchLabel": "Search the cellar",
+    "searchPlaceholder": "Producer, region, grape or vintage",
+    "found": "{count} on the list"
   },
   "book": {
     "title": "Reservations",
@@ -66,11 +69,16 @@
     "canard": "Do order the Canard a la Rouennaise when you book."
   },
   "awards": {
-    "title": "Awards"
+    "title": "Awards",
+    "gaultMillau": "Gault&Millau, 15/20",
+    "fineDining": "Fine Dining in Antwerp",
+    "wineSpectator": "Wine Spectator"
   },
   "team": {
     "title": "Our team",
-    "cta": "Meet our team"
+    "cta": "Meet our team",
+    "intro": "Behind every plate, every dish carved at the table and every glass are people who master their craft. Meet our chef, our maître d' and our sommelier.",
+    "wineLink": "View our wine list"
   },
   "voucher": {
     "title": "Gift voucher",
@@ -103,5 +111,9 @@
     "since": "Au Vieux Port, since 2007",
     "privacy": "Privacy policy",
     "cookies": "Cookie policy"
+  },
+  "gallery": {
+    "title": "The house in pictures",
+    "intro": "The dining room, the cellar and the work at the table."
   }
 }

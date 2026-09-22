@@ -55,7 +55,10 @@
     "nonVintage": "NV",
     "pick": "Choix du sommelier",
     "updated": "Cave mise à jour le {date}",
-    "jumpTo": "Aller directement à"
+    "jumpTo": "Aller directement à",
+    "searchLabel": "Chercher dans la cave",
+    "searchPlaceholder": "Producteur, région, cépage ou millésime",
+    "found": "{count} sur la carte"
   },
   "book": {
     "title": "Réservations",
@@ -66,11 +69,16 @@
     "canard": "Pensez à commander le Canard à la Rouennaise lors de votre réservation."
   },
   "awards": {
-    "title": "Distinctions"
+    "title": "Distinctions",
+    "gaultMillau": "Gault&Millau, 15/20",
+    "fineDining": "Fine Dining in Antwerp",
+    "wineSpectator": "Wine Spectator"
   },
   "team": {
     "title": "Notre équipe",
-    "cta": "Faites connaissance avec notre équipe"
+    "cta": "Faites connaissance avec notre équipe",
+    "intro": "Derrière chaque assiette, chaque découpe en salle et chaque verre, il y a des femmes et des hommes de métier. Faites connaissance avec notre chef, notre maître d'hôtel et notre sommelier.",
+    "wineLink": "Voir notre carte des vins"
   },
   "voucher": {
     "title": "Bon cadeau",
@@ -103,5 +111,9 @@
     "since": "Au Vieux Port, depuis 2007",
     "privacy": "Politique de confidentialité",
     "cookies": "Politique des cookies"
+  },
+  "gallery": {
+    "title": "La maison en images",
+    "intro": "La salle, la cave et le travail en salle."
   }
 }

@@ -1,5 +1,5 @@
 import { supabasePublic } from '@/lib/supabase/server';
-import type { MenuItem, MenuSection, OpeningHour, Wine, WineSection } from '@/lib/types';
+import type { MenuItem, MenuSection, OpeningHour, TeamMember, Wine, WineSection } from '@/lib/types';
 
 export async function getMenu(): Promise<{ sections: MenuSection[]; items: MenuItem[] }> {
   const db = supabasePublic();
@@ -20,19 +20,26 @@ export async function getWines(): Promise<{ sections: WineSection[]; wines: Wine
 
   const [sections, wines] = await Promise.all([
     db.from('wine_sections').select('*').order('position'),
-    db
-      .from('wines')
-      .select('*')
-      .eq('available', true)
-      .order('country')
-      .order('region')
-      .order('position'),
+    // position is de volgorde van de kaart zelf: per kleur, dan per land en
+    // streek, en daarbinnen zoals de sommelier ze zet. Alfabetisch op land
+    // sorteren zou Bordeaux voor Bourgogne zetten en die bedoeling breken.
+    db.from('wines').select('*').eq('available', true).order('position'),
   ]);
 
   return {
     sections: (sections.data ?? []) as WineSection[],
     wines: (wines.data ?? []) as Wine[],
   };
+}
+
+export async function getTeam(): Promise<TeamMember[]> {
+  const db = supabasePublic();
+  const { data } = await db
+    .from('team_members')
+    .select('*')
+    .eq('published', true)
+    .order('position');
+  return (data ?? []) as TeamMember[];
 }
 
 export async function getOpeningHours(): Promise<OpeningHour[]> {

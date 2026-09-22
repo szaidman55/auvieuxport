@@ -46,6 +46,14 @@ export async function MenuList({
             <ul className="flex flex-col">
               {rows.map((item) => {
                 const itemNote = localised(item, 'note', locale);
+                // Een kaas gaat per stuk, een zeetong tegen dagprijs. Alleen
+                // dat laatste is een lege prijs zonder meer.
+                const priceNote = localised(item, 'price_note', locale);
+                const price =
+                  priceNote ??
+                  (item.price === null
+                    ? t('dayPrice')
+                    : `${formatPrice(item.price)}${item.per_person ? ` ${t('perPerson')}` : ''}`);
                 return (
                   <li
                     key={item.id}
@@ -73,9 +81,7 @@ export async function MenuList({
                     />
 
                     <span className="ml-auto flex-none font-display text-lg tabular-nums sm:ml-0">
-                      {item.price === null
-                        ? t('dayPrice')
-                        : `${formatPrice(item.price)}${item.per_person ? ` ${t('perPerson')}` : ''}`}
+                      {price}
                     </span>
 
                     {itemNote && (
