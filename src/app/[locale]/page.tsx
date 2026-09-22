@@ -100,14 +100,21 @@ export default async function HomePage({
           </div>
           </div>
 
+          {/* Een bord, geen leeg meubilair.
+              Hier stond de zaal met gedekte tafels: correct, maar het is wat
+              elk restaurant kan tonen, en het liet niet zien waarvoor men
+              hier komt. Deze foto doet allebei - de eend en de wijn, op het
+              linnen van het huis, in het licht van de zaal. Ze stond ook als
+              enige liggende opname nergens anders op de site; de vorige deed
+              dienst als kop én als grootste tegel in de galerij. */}
           <Image
-            src="/img/photos/avp-15.webp"
+            src="/img/photos/avp-02.webp"
             alt={
               locale === 'fr'
-                ? 'La salle du restaurant, dressée pour le service'
+                ? "Une assiette de canard et un verre de vin rouge, sur le linge blanc de la maison"
                 : locale === 'en'
-                  ? 'The dining room, set for service'
-                  : 'De zaal, gedekt voor de dienst'
+                  ? 'A plate of duck and a glass of red wine, on the house linen'
+                  : 'Een bord eend en een glas rode wijn, op het witte tafellinnen'
             }
             width={1600}
             height={1066}
