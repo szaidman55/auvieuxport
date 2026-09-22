@@ -56,36 +56,3 @@ export function isOpenAt(hours: OpeningHour[], now: Date): boolean {
     return minutes >= oh * 60 + om && minutes < ch * 60 + cm;
   });
 }
-
-export type HoursSummary = { from: number; to: number; times: string[] };
-
-/**
- * De uren in één regel, voor de startpagina.
- *
- * Daar stond "ma - vr 12:00 - 14:00 & 18:00 - 21:30" als vaste tekst in de
- * pagina: Nederlandse dagafkortingen op de Franse en de Engelse site, en een
- * uur dat niet meeveranderde als het in /admin werd aangepast.
- *
- * Geeft null zodra de week niet in één regel te vatten is - dus als de open
- * dagen geen aaneengesloten reeks vormen, of als niet elke open dag dezelfde
- * diensten heeft. Dan is de tabel in de voet het enige eerlijke antwoord.
- */
-export function summarise(hours: OpeningHour[]): HoursSummary | null {
-  const open = [1, 2, 3, 4, 5, 6, 7].filter((d) => hours.some((h) => h.weekday === d));
-  if (open.length === 0) return null;
-
-  const from = open[0];
-  const to = open[open.length - 1];
-  if (to - from + 1 !== open.length) return null;
-
-  const times = (d: number) =>
-    hours
-      .filter((h) => h.weekday === d)
-      .map((h) => `${hhmm(h.opens)} - ${hhmm(h.closes)}`)
-      .join('|');
-
-  const first = times(from);
-  if (open.some((d) => times(d) !== first)) return null;
-
-  return { from, to, times: first.split('|') };
-}

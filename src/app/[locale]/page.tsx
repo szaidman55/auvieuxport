@@ -2,12 +2,11 @@ import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
 import { alternates } from '@/lib/alternates';
-import { site, voucherShopUrl } from '@/lib/site';
+import { voucherShopUrl } from '@/lib/site';
 import { Awards } from '@/components/Awards';
 import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
 import { getOpeningHours } from '@/lib/queries';
-import { summarise } from '@/lib/hours';
 import { Link } from '@/i18n/navigation';
 import { BookButton } from '@/components/BookButton';
 import { RestaurantJsonLd } from '@/components/JsonLd';
@@ -32,72 +31,39 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [hours, t, tb, tm, tv, tn, th] = await Promise.all([
+  const [hours, t, tb, tm, tv, tn] = await Promise.all([
     getOpeningHours(),
     getTranslations('hero'),
     getTranslations('book'),
     getTranslations('menu'),
     getTranslations('voucher'),
     getTranslations('nav'),
-    getTranslations('hours'),
   ]);
-
-  const summary = summarise(hours);
 
   return (
     <>
       <RestaurantJsonLd hours={hours} locale={locale} />
 
-      {/* De hele belofte staat in het eerste scherm: wie, waar, wanneer,
-          en een knop. De oude site had hier alleen een foto. */}
+      {/* De belofte, het bord en een knop. Adres, uren en nummer stonden
+          er ook bij; die staan nu alleen nog in de voet en op de
+          contactpagina, waar men ze gaat zoeken. */}
       <section className="border-b border-rule">
-        {/* De zaal, meteen. De belofte blijft tekst: de foto staat ernaast,
-            niet eronder, zodat de reserveerknop op een telefoon nog altijd
-            binnen het eerste scherm valt. */}
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-16">
-          <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-brass">
-            {site.city} &middot; {site.founded}
-          </p>
-          <h1 className="max-w-3xl text-4xl leading-tight sm:text-6xl">{t('tagline')}</h1>
-          <p className="mt-5 max-w-xl text-lg text-ink-soft">{t('intro')}</p>
+        {/* Drie blokken in een raster, zodat de foto op een telefoon tussen
+            de belofte en de knoppen valt en op een breed scherm ernaast blijft
+            staan. Met de foto onder de knoppen was het eerste wat een gast
+            zag een stuk tekst met twee knoppen eronder; nu ziet hij waarvoor
+            hij komt voordat hem iets gevraagd wordt.
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <BookButton>{tn('book')}</BookButton>
-            <Link
-              href="/kaart"
-              className="inline-flex min-h-12 items-center justify-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
-            >
-              {t('menuCta')}
-            </Link>
-          </div>
+            Op een telefoon duwt dat de reserveerknop naar beneden, en op de
+            kleinste toestellen valt hij daarmee onder de vouw. Dat mag hier:
+            de balk onderaan draagt dezelfde knop en blijft altijd staan.
 
-          {/* Adres, uren en nummer in tekst, meteen.
-              Drie gegevens, drie regels op een telefoon en een regel op een
-              scherm dat breed genoeg is. Ze stonden achter elkaar met streepjes
-              ertussen, en dan breekt de regel op 390 pixels middenin: het adres
-              en "ma - vr 12:00 - 14:00" op de ene regel, "18:00 - 21:30" op de
-              volgende. Een openingsuur half afgeknipt is geen openingsuur, net
-              zomin als "03 290" een telefoonnummer is. Elk gegeven blijft dus
-              heel, en de scheiding is een lijntje links, niet een teken in de
-              tekst - dat kan niet op de verkeerde plaats terechtkomen. */}
-          <div className="mt-8 flex flex-col gap-y-1 text-sm text-ink-soft sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
-            <span className="whitespace-nowrap">
-              {site.street}, {site.postalCode} {site.city}
-            </span>
-            {summary && (
-              <span className="whitespace-nowrap sm:border-l sm:border-rule sm:pl-3">
-                {th(`short.${summary.from}`)} - {th(`short.${summary.to}`)}{' '}
-                {summary.times.join(' & ')}
-              </span>
-            )}
-            <a
-              href={`tel:${site.phone}`}
-              className="whitespace-nowrap underline underline-offset-4 sm:border-l sm:border-rule sm:pl-3"
-            >
-              {site.phoneDisplay}
-            </a>
-          </div>
+            De plaatsing op lg is met opzet expliciet - anders zou de foto ook
+            op een breed scherm tussen de tekst komen te staan. */}
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-x-16 lg:gap-y-8">
+          <div className="lg:col-start-1 lg:row-start-1">
+            <h1 className="max-w-3xl text-4xl leading-tight sm:text-6xl">{t('tagline')}</h1>
+            <p className="mt-5 max-w-xl text-lg text-ink-soft">{t('intro')}</p>
           </div>
 
           {/* Een bord, geen leeg meubilair.
@@ -106,7 +72,10 @@ export default async function HomePage({
               hier komt. Deze foto doet allebei - de eend en de wijn, op het
               linnen van het huis, in het licht van de zaal. Ze stond ook als
               enige liggende opname nergens anders op de site; de vorige deed
-              dienst als kop én als grootste tegel in de galerij. */}
+              dienst als kop én als grootste tegel in de galerij.
+
+              Staat hier in de broncode, tussen de belofte en de knoppen, want
+              daar hoort ze op een telefoon te vallen. */}
           <Image
             src="/img/photos/avp-02.webp"
             alt={
@@ -120,8 +89,25 @@ export default async function HomePage({
             height={1066}
             sizes="(max-width: 1024px) 100vw, 34rem"
             priority
-            className="w-full bg-paper-2 object-cover lg:aspect-[4/3]"
+            className="w-full bg-paper-2 object-cover lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-[4/3] lg:self-center"
           />
+
+          {/* Adres, uren en nummer stonden hier ook. Ze staan nog altijd in de
+              voet van elke pagina, op de contactpagina en in de structured
+              data die Google leest, dus de site verliest ze niet - ze hoeven
+              alleen niet in het eerste scherm te staan, waar ze de knoppen van
+              de foto wegduwden. */}
+          <div className="lg:col-start-1 lg:row-start-2">
+            <div className="flex flex-wrap items-center gap-3">
+              <BookButton>{tn('book')}</BookButton>
+              <Link
+                href="/kaart"
+                className="inline-flex min-h-12 items-center justify-center border border-rule px-6 text-sm font-semibold uppercase tracking-wide hover:border-ink"
+              >
+                {t('menuCta')}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

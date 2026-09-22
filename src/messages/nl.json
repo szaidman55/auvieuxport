@@ -23,7 +23,6 @@
     "closedDays": "Zaterdag en zondag gesloten",
     "openNow": "Nu open",
     "closedNow": "Nu gesloten",
-    "range": "{from} - {to}",
     "days": {
       "1": "Maandag",
       "2": "Dinsdag",
@@ -32,15 +31,6 @@
       "5": "Vrijdag",
       "6": "Zaterdag",
       "7": "Zondag"
-    },
-    "short": {
-      "1": "ma",
-      "2": "di",
-      "3": "wo",
-      "4": "do",
-      "5": "vr",
-      "6": "za",
-      "7": "zo"
     }
   },
   "menu": {

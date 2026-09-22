@@ -23,7 +23,6 @@
     "closedDays": "Fermé le samedi et le dimanche",
     "openNow": "Ouvert maintenant",
     "closedNow": "Fermé maintenant",
-    "range": "{from} - {to}",
     "days": {
       "1": "Lundi",
       "2": "Mardi",
@@ -32,15 +31,6 @@
       "5": "Vendredi",
       "6": "Samedi",
       "7": "Dimanche"
-    },
-    "short": {
-      "1": "lun",
-      "2": "mar",
-      "3": "mer",
-      "4": "jeu",
-      "5": "ven",
-      "6": "sam",
-      "7": "dim"
     }
   },
   "menu": {
