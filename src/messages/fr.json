@@ -36,7 +36,7 @@
   },
   "menu": {
     "title": "La carte",
-    "intro": "Nous cuisinons ce que la saison et le marché nous offrent le matin même. N'hésitez pas à demander les suggestions du jour.",
+    "intro": "Nous cuisinons ce que la saison et le marché nous offrent. N'hésitez pas à demander en salle ce qu'il y a d'autre.",
     "dayPrice": "prix du jour",
     "perPerson": "par personne",
     "soldOut": "Épuisé",
