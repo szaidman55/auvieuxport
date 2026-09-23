@@ -1,0 +1,114 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Video diagnostics</title>
+<style>
+  body { font: 15px/1.5 -apple-system, system-ui, sans-serif; margin: 0; background: #f3ede2; color: #1b1615; }
+  .wrap { padding: 12px 14px 40px; }
+  h2 { font-size: 15px; margin: 22px 0 6px; }
+  pre { background: #fff; border: 1px solid #d9cdb8; padding: 8px; font-size: 12px;
+        white-space: pre-wrap; word-break: break-word; margin: 0 0 8px; }
+  button { min-height: 44px; padding: 0 16px; font-size: 15px; margin: 0 6px 8px 0;
+           background: #1b1615; color: #f3ede2; border: 0; }
+  /* A: exact de opbouw van de kop op de startpagina. */
+  .hero { position: relative; isolation: isolate; overflow: hidden; background: #1b1615;
+          min-height: 12rem; display: flex; align-items: flex-end; }
+  .hero video { position: absolute; inset: 0; z-index: -20; width: 100%; height: 100%; object-fit: cover; }
+  .hero .veil { position: absolute; inset: 0; z-index: -10;
+                background: linear-gradient(to right, rgba(27,22,21,.95), rgba(27,22,21,.7), rgba(27,22,21,.25)); }
+  .hero p { color: #f3ede2; padding: 14px; margin: 0; }
+  /* B: hetzelfde bestand, zonder lagen, gewoon in de tekst. */
+  .plain video { width: 100%; display: block; background: #000; }
+</style>
+<div class="wrap">
+  <h2>A. Same construction as the homepage hero</h2>
+  <div class="hero">
+    <video id="a" poster="/img/hero-poster.webp" autoplay muted loop playsinline preload="auto">
+      <source src="/video/hero-sm.mp4" type="video/mp4">
+    </video>
+    <div class="veil"></div>
+    <p>text over the video</p>
+  </div>
+
+  <h2>B. Same file, no layering, no overlay</h2>
+  <div class="plain">
+    <video id="b" poster="/img/hero-poster.webp" autoplay muted loop playsinline preload="auto">
+      <source src="/video/hero-sm.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <h2>Readings</h2>
+  <button id="play">Tap to play both</button>
+  <button id="copy">Copy report</button>
+  <pre id="out">measuring...</pre>
+  <h2>Event log</h2>
+  <pre id="log"></pre>
+</div>
+<script>
+(function () {
+  var a = document.getElementById('a'), b = document.getElementById('b');
+  var out = document.getElementById('out'), logEl = document.getElementById('log');
+  var lines = [], t0 = Date.now();
+  var EVENTS = ['loadedmetadata','canplay','play','playing','pause','waiting','stalled',
+                'suspend','ended','seeking','seeked','error','emptied','ratechange'];
+
+  function stamp() { return ((Date.now() - t0) / 1000).toFixed(2) + 's'; }
+  function note(who, what) {
+    lines.push(stamp() + ' ' + who + ' ' + what);
+    if (lines.length > 60) lines.shift();
+    logEl.textContent = lines.join('\n');
+  }
+  [['A', a], ['B', b]].forEach(function (pair) {
+    EVENTS.forEach(function (e) {
+      pair[1].addEventListener(e, function () { note(pair[0], e + ' @' + pair[1].currentTime.toFixed(2)); });
+    });
+  });
+
+  function state(v) {
+    var played = [];
+    for (var i = 0; i < v.played.length; i++) {
+      played.push(v.played.start(i).toFixed(2) + '-' + v.played.end(i).toFixed(2));
+    }
+    return {
+      src: (v.currentSrc || '').split('/').pop() || 'GEEN',
+      paused: v.paused, ended: v.ended, muted: v.muted,
+      time: v.currentTime.toFixed(2), duration: isFinite(v.duration) ? v.duration.toFixed(2) : '?',
+      readyState: v.readyState, networkState: v.networkState,
+      error: v.error ? (v.error.code + ' ' + (v.error.message || '')) : 'none',
+      played: played.join(',') || 'nothing',
+      size: v.videoWidth + 'x' + v.videoHeight
+    };
+  }
+
+  function report() {
+    var txt =
+      'UA          ' + navigator.userAgent + '\n' +
+      'screen      ' + innerWidth + 'x' + innerHeight + ' dpr' + (devicePixelRatio || 1) + '\n' +
+      'reduce-motion ' + matchMedia('(prefers-reduced-motion: reduce)').matches + '\n' +
+      'visibility  ' + document.visibilityState + '\n' +
+      'saveData    ' + (navigator.connection ? navigator.connection.saveData : 'unsupported') + '\n\n';
+    [['A (layered)', a], ['B (plain)  ', b]].forEach(function (p) {
+      var s = state(p[1]);
+      txt += p[0] + '\n';
+      Object.keys(s).forEach(function (k) {
+        txt += '  ' + (k + '           ').slice(0, 12) + s[k] + '\n';
+      });
+    });
+    out.textContent = txt;
+  }
+  setInterval(report, 500); report();
+
+  document.getElementById('play').addEventListener('click', function () {
+    [a, b].forEach(function (v) {
+      v.play().then(function () { note('tap', 'play() resolved'); })
+              .catch(function (e) { note('tap', 'play() REJECTED ' + e.name + ': ' + e.message); });
+    });
+  });
+  document.getElementById('copy').addEventListener('click', function () {
+    var all = out.textContent + '\nEVENTS\n' + lines.join('\n');
+    navigator.clipboard.writeText(all).then(function () { note('tap', 'copied'); },
+                                            function () { note('tap', 'copy failed'); });
+  });
+})();
+</script>
