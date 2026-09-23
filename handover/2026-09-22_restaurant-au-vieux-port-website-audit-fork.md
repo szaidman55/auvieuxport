@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit (fork)
 
-- **Generated (UTC):** 2026-09-23 10:41:33Z
+- **Generated (UTC):** 2026-09-23 10:46:37Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `e2a9c200-fc33-47b3-b7cd-a5d8909e66dd.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:40 UTC
-- **Turns:** 45 human / 329 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:45 UTC
+- **Turns:** 46 human / 335 assistant
 
 ## Files written
 
@@ -2980,3 +2980,59 @@ That's a real finding: **`ink-faint` already fails today** (4.38 on the current 
 ### Claude
 
 Solved, and it fixes a problem you already had. Applying.
+
+### Claude
+
+Both done, and the colour question turned up something.
+
+## Beige: yes, and no rule says otherwise
+
+Cream under a classic French house is older than any rule of "modern" design. `#f6f3f3` had only three points of warmth in it, which is why it read as white. It's now **`#f3ede2`** for the paper and **`#e7ddcb`** for the bands between, with a warm rule colour to match. The alternation between sections is now legible as warm-on-warmer rather than white-on-slightly-less-white.
+
+The one rule that does bind is contrast, so I measured rather than eyeballed — and that exposed a problem **you already had**:
+
+| | old background | old band | now |
+|---|---|---|---|
+| `ink-faint` (captions, dates) | 4.38 | 3.98 | 5.27 / 4.56 |
+| `brass` (links, buttons) | 4.54 | 4.13 | 5.28 / 4.57 |
+
+Both were under the 4.5 minimum before I touched anything. An earlier round fixed the gold links from 3.09 to 5.20 but left these two behind. They're darker now, and all ten text-on-background combinations pass. The checker lives in `scripts/contrast.mjs` so the next person to touch these colours doesn't have to guess.
+
+## Star Wine List: it should be there, but I can't add it honestly yet
+
+Your old site claims **"Star Wine List 2026"** in text, and it belongs in that row — a wine award on a house whose cellar is the story is exactly what a guest should see.
+
+What stopped me:
+
+- **There's no badge in your assets.** The one image that looked like a candidate, `guru-web.png`, turns out to be **Restaurant Guru, "Recommended 2023"** — a different award, and three years old.
+- **I couldn't verify a listing.** Their site is a JavaScript app; I queried their own search API directly for "Au Vieux Port" and it returned no venue, only regions. That doesn't prove you're not listed, but it means I can't link it the way Gault&Millau and Wine Spectator are linked.
+
+So: send me the badge (Star Wine List issues them to listed houses) and the URL of your listing, and it goes in as a fourth logo that links out like the others. If there's no badge to be had, I can set it typographically in the same row instead — say which.
+
+Separately, worth deciding: **do you want Restaurant Guru shown at all?** It's on your current site, it's from 2023, and it sits at a very different level from the other three.
+
+### You
+
+i can't find the 2026 award, so lets leave it at the moment.
+
+the video still doesn't loop on mobile
+
+### Claude
+
+Dropping Star Wine List then. Let me check what your phone is actually being served.
+
+### Claude
+
+Two things to check. First, whether the mobile build even shipped.
+
+### Claude
+
+The served HTML has `autoPlay`, which only exists in the new commit — so my bundle grep missed a chunk. Let me test the live site directly at phone width.
+
+### Claude
+
+It plays 3.6s then pauses, with data fully buffered and no error. Let me find out what's pausing it rather than guess.
+
+### Claude
+
+`hidden` — the browser pane pauses background video, so I can't reproduce your phone here. But the instrumentation points at a likely culprit I can fix.

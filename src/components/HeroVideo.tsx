@@ -76,6 +76,19 @@ export function HeroVideo({ className = '' }: { className?: string }) {
     if (el?.paused) void el.play().catch(() => {});
   };
 
+  // Een browser zet de video stil zodra het tabblad naar de achtergrond gaat.
+  // Dat hoort zo, en het scheelt batterij. Alleen hervat niet elke browser uit
+  // zichzelf wanneer men terugkomt, en dan staat er een stilstaand beeld waar
+  // beweging hoort.
+  useEffect(() => {
+    if (!variant) return;
+    const resume = () => {
+      if (document.visibilityState === 'visible') nudge();
+    };
+    document.addEventListener('visibilitychange', resume);
+    return () => document.removeEventListener('visibilitychange', resume);
+  }, [variant]);
+
   return (
     <video
       ref={ref}
@@ -84,7 +97,12 @@ export function HeroVideo({ className = '' }: { className?: string }) {
       muted
       loop
       playsInline
-      preload="none"
+      /* preload stond hier hard op "none", en dat vecht met autoplay.
+         Safari op iOS neemt die hint letterlijk: niets laden, dus ook niets om
+         af te spelen, dus blijft de poster staan. Zolang er geen bronnen zijn
+         valt er toch niets te laden, dus "none" leverde daar niets op. Zodra
+         we besloten hebben te spelen, mag hij laden. */
+      preload={variant ? 'auto' : 'none'}
       aria-hidden="true"
       tabIndex={-1}
       onCanPlay={nudge}
