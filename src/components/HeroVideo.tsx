@@ -11,83 +11,70 @@ import { useEffect, useRef, useState } from 'react';
 //
 // Een telefoon kreeg eerst alleen de poster te zien, om de 1,8 MB te sparen.
 // Dat was de verkeerde afweging: de kop is juist wat men op een telefoon
-// toont. Nu krijgt een klein scherm een eigen, lichtere versnijding van
+// toont. Een klein scherm krijgt nu een eigen, lichtere versnijding van
 // 0,75 MB. Het beeld staat achter een donkere sluier, dus dat het zachter is
 // ziet niemand.
 //
-// Wie bewegende beelden liever vermijdt, of wie databesparing aan heeft,
-// krijgt nog altijd alleen de poster. Het eerste is geen randgeval:
-// draaiende achtergronden maken sommige mensen misselijk. Het tweede is
-// gewoon beleefd tegenover iemand op een duur of traag abonnement.
+// De keuze tussen die bestanden stond eerst in JavaScript: eerst een <video>
+// zonder bronnen, daarna de juiste erin hangen en load() roepen. Chrome
+// begint dan alsnog te spelen, Safari op de telefoon niet. Die weegt bij het
+// inlezen van de pagina af of een video vanzelf mag starten, en een video
+// zonder bron komt door die weging niet heen; wat er daarna bij geschoven
+// wordt is voor hem een gewone, door script gestarte film, en die vraagt om
+// een vinger. Vandaar dat het beeld op een telefoon stil bleef staan.
+//
+// Nu doet het media-attribuut op <source> dat werk. Dat staat in de HTML die
+// het toestel binnenkrijgt, dus er is een bron voordat er ook maar een regel
+// JavaScript gelopen heeft, en de gewone autoplay volstaat.
+//
+// Dezelfde truc dekt wie bewegende beelden liever vermijdt: geen enkele bron
+// komt dan door de media-toets, en er blijft netjes een stilstaande poster
+// over. Dat is geen randgeval; draaiende achtergronden maken sommige mensen
+// misselijk.
 
-type Variant = 'small' | 'large' | null;
-
-// Boven deze breedte is het brede bestand de moeite waard.
-const WIDE = '(min-width: 768px)';
+const WIDE = '(min-width: 768px) and (prefers-reduced-motion: no-preference)';
+const NARROW = '(max-width: 767px) and (prefers-reduced-motion: no-preference)';
 
 export function HeroVideo({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [variant, setVariant] = useState<Variant>(null);
+  const [saveData, setSaveData] = useState(false);
 
+  // Het enige wat de server niet weten kan. Databesparing is een instelling
+  // van het toestel, geen mediavraag, dus die blijft hier hangen. Begint op
+  // false, gelijk aan wat de server rendert, zodat de hydratie klopt.
   useEffect(() => {
-    const wide = window.matchMedia(WIDE);
-    const stillness = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const decide = () => {
-      // De browser hoeft dit niet te ondersteunen; dan is het gewoon niet aan.
-      const saveData = (
-        navigator as Navigator & { connection?: { saveData?: boolean } }
-      ).connection?.saveData;
-
-      if (stillness.matches || saveData) {
-        setVariant(null);
-        return;
-      }
-      setVariant(wide.matches ? 'large' : 'small');
-    };
-
-    decide();
-    wide.addEventListener('change', decide);
-    stillness.addEventListener('change', decide);
-    return () => {
-      wide.removeEventListener('change', decide);
-      stillness.removeEventListener('change', decide);
-    };
+    const zuinig = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection?.saveData;
+    if (zuinig) setSaveData(true);
   }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !variant) return;
-    // load() is nodig omdat de bronnen er bij de eerste render nog niet waren,
-    // en omdat ze wisselen wanneer het venster over de grens gaat.
-    //
-    // Hier stond ook meteen play(). Dat werkte niet: load() is nog bezig, dus
-    // de belofte van play() breekt af met een AbortError, en die viel in een
-    // lege catch. Het afspelen hangt nu aan het autoplay-attribuut, dat de
-    // browser zelf afhandelt zodra er beeld is.
+    if (!el || !saveData) return;
+    // De bronnen zijn zojuist uit de boom gehaald; load() laat hem dat zien,
+    // en dan valt hij terug op de poster.
+    el.pause();
     el.load();
-  }, [variant]);
+  }, [saveData]);
 
-  // Vangnet voor een browser die na een verwisselde bron niet uit zichzelf
-  // hervat. Weigert hij alsnog, dan blijft de poster staan, en dat is precies
-  // wat een bezoeker dan hoort te zien.
+  // Vangnet. Een browser zet de video stil zodra het tabblad naar de
+  // achtergrond gaat; dat hoort zo en het scheelt batterij. Alleen hervat niet
+  // elke browser uit zichzelf wanneer men terugkomt, en dan staat er een
+  // stilstaand beeld waar beweging hoort. Weigert hij alsnog, dan blijft de
+  // poster staan, en dat is precies wat een bezoeker dan hoort te zien.
   const nudge = () => {
     const el = ref.current;
-    if (el?.paused) void el.play().catch(() => {});
+    if (el?.paused && !saveData) void el.play().catch(() => {});
   };
 
-  // Een browser zet de video stil zodra het tabblad naar de achtergrond gaat.
-  // Dat hoort zo, en het scheelt batterij. Alleen hervat niet elke browser uit
-  // zichzelf wanneer men terugkomt, en dan staat er een stilstaand beeld waar
-  // beweging hoort.
   useEffect(() => {
-    if (!variant) return;
     const resume = () => {
       if (document.visibilityState === 'visible') nudge();
     };
     document.addEventListener('visibilitychange', resume);
     return () => document.removeEventListener('visibilitychange', resume);
-  }, [variant]);
+  });
 
   return (
     <video
@@ -97,22 +84,21 @@ export function HeroVideo({ className = '' }: { className?: string }) {
       muted
       loop
       playsInline
-      /* preload stond hier hard op "none", en dat vecht met autoplay.
-         Safari op iOS neemt die hint letterlijk: niets laden, dus ook niets om
-         af te spelen, dus blijft de poster staan. Zolang er geen bronnen zijn
-         valt er toch niets te laden, dus "none" leverde daar niets op. Zodra
-         we besloten hebben te spelen, mag hij laden. */
-      preload={variant ? 'auto' : 'none'}
+      preload="auto"
       aria-hidden="true"
       tabIndex={-1}
       onCanPlay={nudge}
       className={className}
     >
-      {variant === 'large' && <source src="/video/hero.webm" type="video/webm" />}
-      {variant === 'large' && <source src="/video/hero.mp4" type="video/mp4" />}
-      {/* Voor het kleine scherm geen webm: vp9 kwam daar groter uit dan h264,
-          en h264 speelt overal. */}
-      {variant === 'small' && <source src="/video/hero-sm.mp4" type="video/mp4" />}
+      {!saveData && (
+        <>
+          <source src="/video/hero.webm" type="video/webm" media={WIDE} />
+          <source src="/video/hero.mp4" type="video/mp4" media={WIDE} />
+          {/* Voor het kleine scherm geen webm: vp9 kwam daar groter uit dan
+              h264, en h264 speelt overal. */}
+          <source src="/video/hero-sm.mp4" type="video/mp4" media={NARROW} />
+        </>
+      )}
     </video>
   );
 }
