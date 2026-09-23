@@ -28,11 +28,14 @@
   --color-brass-bright: #a07c44;
   --color-wine: #7a1f2b;
 
-  /* Bodoni Moda, zoals het was. EB Garamond stond hier even omdat het beter
-     bij het woordmerk paste, maar de haarlijnen van de didone zijn wat het
-     huis wil en die blijven dus. Hoe ze leesbaar blijven staat hieronder bij
-     de koppen. */
-  --font-display: "Bodoni Moda", Didot, Georgia, serif;
+  /* De kopletter volgt het woordmerk. Dat woordmerk is een kalligrafische
+     kanselarij-cursief uit de Franse renaissance; EB Garamond stamt van
+     diezelfde pen af. Bodoni Moda stond er als didone naast: verticale as,
+     haarlijnschreven, een eeuw later en een andere logica. Naast elkaar
+     lazen het merk en de koppen als twee huizen.
+     De cursief blijft voor de h1. Op de kaart staan twintig kopjes onder
+     elkaar en die schuin zetten is te veel helling. */
+  --font-display: "EB Garamond", Garamond, Georgia, serif;
   --font-body: Archivo, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
@@ -50,32 +53,23 @@ body {
   text-align: left;
 }
 
-h1, h2, h3, .font-display {
-  font-family: var(--font-display);
-  text-wrap: balance;
-
-  /* De haarlijnen waren op sommige letters niet meer te lezen: de schreven
-     van de E en de T, de dunne kant van de o, het cijfer 1.
-     Zwaarder zetten lost dat niet op. Een didone werkt met het verschil
-     tussen dik en dun, dus meer gewicht verdikt vooral de stammen en maakt
-     het verschil groter in plaats van kleiner. Op 600 zijn de schreven even
-     dun als op 400.
-     Wat het wel oplost is de optische as. Bodoni Moda heeft aparte
-     tekeningen voor kleine en grote graden, en de kleine heeft van zichzelf
-     stevigere haarlijnen omdat ze anders op 11px wegvalt. De browser
-     schuift die as normaal mee met de lettergrootte, zodat juist een kop van
-     60px de dunste tekening krijgt. Hier zetten wij hem vast op 11, in elke
-     graad. */
-  font-variation-settings: "opsz" 11;
-}
-
 h1, h2, h3 {
+  font-family: var(--font-display);
+  /* Garamond is lichter getekend dan Bodoni. Op 400 werden de koppen op
+     crème te bleek; 500 zet ze terug op hun oude gewicht. */
   font-weight: 500;
+  text-wrap: balance;
 }
 
-/* In een prijskolom moeten de cijfers op één hoogte en op één breedte staan,
-   anders loopt de kolom scheef. Koppen krijgen dezelfde cijfers, zodat een
-   jaartal in een kop en een prijs in de kaart niet uit elkaar lopen. */
+/* De cursief van het woordmerk, alleen op de paginakop. */
+h1 {
+  font-style: italic;
+}
+
+/* Garamond zet standaard mediëvale cijfers: de 7 en de 9 zakken onder de
+   regel. In een prijskolom hoort dat niet, daar moeten de cijfers op één
+   hoogte en op één breedte staan. Koppen krijgen dezelfde cijfers, zodat
+   een jaartal in een kop en een prijs in de kaart niet uit elkaar lopen. */
 h1, h2, h3, .font-display {
   font-variant-numeric: lining-nums tabular-nums;
 }
