@@ -1,7 +1,7 @@
 'use client';
 
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { zenchef } from '@/lib/site';
 
 // De reserveerknop deed niets.
@@ -12,9 +12,40 @@ import { zenchef } from '@/lib/site';
 // link naar #zc-action-open sprong naar een anker dat niet bestaat. Dit is
 // dezelfde opzet als op de bestaande site, waar hij wel werkt.
 //
-// De div moet er staan voordat het script laadt, vandaar afterInteractive en
-// niet lazyOnload.
+// De div staat er daarom altijd, ook voordat het script geladen is.
+//
+// ---------------------------------------------------------------------------
+// Waarom het script pas laadt als iemand ernaar reikt
+// ---------------------------------------------------------------------------
+// Hij laadde op elke pagina, bij elke bezoeker, of die nu wilde reserveren of
+// niet. Nagemeten wat dat kost: sdk.min.js 6,0 kB en sdk.css 0,6 kB, en
+// daarachter de iframe van 53,6 kB die er 1,76 s over deed. Die iframe doet
+// vervolgens haar eigen werk - 41 verzoeken naar vijf domeinen, waaronder de
+// captcha-dienst van AWS - en zet een aws-waf-token en vier sleutels in
+// localStorage, waarvan twee voor een dienst die alleen hun eigen
+// functievlaggen bijhoudt.
+//
+// Dat is een derde partij die iets op het toestel van de bezoeker zet voordat
+// die om iets gevraagd heeft, op een site die er juist voor gebouwd is om dat
+// niet te doen. Het laadt nu pas wanneer iemand naar een reserveerknop reikt.
+//
+// Reiken is: de muis erover, de toetsenbordfocus erop, of een vinger die hem
+// raakt. Alle drie gaan ze vooraf aan de klik, dus op een muis en op een
+// toetsenbord staat het venster klaar tegen de tijd dat de klik komt.
+//
+// Wie sneller klikt dan de SDK laadt, verliest niets: BookLink is een echte
+// link naar de reserveerpagina en houdt de klik alleen tegen wanneer de
+// iframe er werkelijk staat. Dan gaat de bezoeker gewoon naar de
+// boekingspagina van Zenchef. Dat vangnet stond er al.
+//
+// Op een telefoon is dat het waarschijnlijke pad: tussen de aanraking en de
+// klik zit geen 1,76 s. Daar wordt de overlay dus een paginawissel. De
+// reservatie werkt, ze ziet er alleen anders uit.
+const REIKEN = ['pointerover', 'focusin', 'touchstart'] as const;
+
 export function ZenchefLoader({ locale }: { locale: string }) {
+  const [gevraagd, setGevraagd] = useState(false);
+
   useEffect(() => {
     // De iframe van Zenchef draagt geen title, dus een schermlezer kondigt
     // een naamloos kader aan waar de hele reservatie in zit.
@@ -36,6 +67,25 @@ export function ZenchefLoader({ locale }: { locale: string }) {
     return () => observer.disconnect();
   }, [locale]);
 
+  useEffect(() => {
+    if (gevraagd) return;
+
+    // pointerenter en focus bubbelen niet; pointerover en focusin wel. Anders
+    // zou een luisteraar op document ze nooit zien.
+    const reik = (event: Event) => {
+      const doel = event.target;
+      if (doel instanceof Element && doel.closest('[data-zc-action]')) {
+        setGevraagd(true);
+      }
+    };
+
+    REIKEN.forEach((soort) =>
+      document.addEventListener(soort, reik, { passive: true }),
+    );
+    return () =>
+      REIKEN.forEach((soort) => document.removeEventListener(soort, reik));
+  }, [gevraagd]);
+
   return (
     <>
       {/* Geen zwevende knop van Zenchef.
@@ -56,7 +106,9 @@ export function ZenchefLoader({ locale }: { locale: string }) {
         data-primary-color={zenchef.primaryColor}
         data-lang={locale}
       />
-      <Script id="zenchef-sdk" src={zenchef.sdk} strategy="afterInteractive" />
+      {gevraagd && (
+        <Script id="zenchef-sdk" src={zenchef.sdk} strategy="afterInteractive" />
+      )}
     </>
   );
 }
