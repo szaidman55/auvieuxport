@@ -76,6 +76,50 @@ export function HeroVideo({ className = '' }: { className?: string }) {
     return () => document.removeEventListener('visibilitychange', resume);
   });
 
+  // Tweede vangnet, voor het einde van de lus.
+  //
+  // Het loop-attribuut hoort dit zelf te doen. WebKit deed het niet, en de
+  // reden lag in het bestand: de bewerkingslijst schoof de weergave twee
+  // beeldjes vooruit, waardoor de laatste tachtig milliseconden geen beeld
+  // meer hadden. Daar liep hij vast in plaats van terug naar nul te gaan.
+  // Dat is bij de hercodering rechtgezet, maar het is niet iets wat wij hier
+  // kunnen narekenen op een toestel dat wij niet in handen hebben, dus blijft
+  // er een grendel op staan.
+  //
+  // ended vuurt niet wanneer loop aan staat, dus als die handler iets te doen
+  // krijgt, dan omdat de lus het liet afweten. De wachter ernaast dekt het
+  // geval waarin hij aan het eind blijft hangen zonder iets te melden: alleen
+  // vlak bij het einde, zodat een haperende download niet ineens naar het
+  // begin springt.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || saveData) return;
+
+    const opnieuw = () => {
+      try {
+        el.currentTime = 0;
+      } catch {
+        return;
+      }
+      void el.play().catch(() => {});
+    };
+
+    let vorige = -1;
+    const wachter = window.setInterval(() => {
+      if (el.paused || document.visibilityState !== 'visible') return;
+      const eind = el.duration;
+      const stilstand = el.currentTime === vorige;
+      vorige = el.currentTime;
+      if (stilstand && Number.isFinite(eind) && eind - el.currentTime < 0.5) opnieuw();
+    }, 2000);
+
+    el.addEventListener('ended', opnieuw);
+    return () => {
+      window.clearInterval(wachter);
+      el.removeEventListener('ended', opnieuw);
+    };
+  }, [saveData]);
+
   return (
     <video
       ref={ref}
