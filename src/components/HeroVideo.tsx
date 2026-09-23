@@ -9,11 +9,19 @@ import { useEffect, useRef, useState } from 'react';
 // een met een houdbaarheid tot in 2027, en vraagt dus om een toestemmingsbalk
 // op elke pagina. Hier gaat er geen enkel verzoek naar een derde partij.
 //
-// Een telefoon kreeg eerst alleen de poster te zien, om de 1,8 MB te sparen.
-// Dat was de verkeerde afweging: de kop is juist wat men op een telefoon
-// toont. Een klein scherm krijgt nu een eigen, lichtere versnijding van
-// 0,79 MB. Het beeld staat achter een donkere sluier, dus dat het zachter is
-// ziet niemand.
+// Een telefoon kreeg eerst alleen de poster te zien, om de megabytes te
+// sparen. Dat was de verkeerde afweging: de kop is juist wat men op een
+// telefoon toont. Een klein scherm krijgt nu een eigen, lichtere versnijding
+// van 1,88 MB tegen 5,56 MB voor het brede beeld. Het beeld staat achter een
+// donkere sluier, dus dat het zachter is ziet niemand.
+//
+// De lus duurt 62,32 s en niet langer. De bron is 78,97 s, waarvan de laatste
+// 3,5 s een reclame van de downloader is. Wat overblijft begint op een wit
+// tafellaken en eindigt op een donkere gevel, dus een letterlijke lus zou elke
+// ronde een sprong van 69 punten helderheid maken. Daarom staan de twee helften
+// omgedraaid: eerst 54,4-75 s, dan 12,68-54,4 s. Zo opent de lus nog altijd op
+// de zaal met de vlam, hetzelfde beeld als de poster, en valt de naad op een
+// snede die in de film zelf al zat.
 //
 // De keuze tussen die bestanden staat in het media-attribuut op <source>, dus
 // in de HTML die het toestel binnenkrijgt. Dat is geen stijlkwestie maar een
@@ -31,12 +39,12 @@ import { useEffect, useRef, useState } from 'react';
 // inzoomen bij het openen van een app en voor parallax, niet voor een rustig
 // zaalbeeld achter een donkere sluier.
 //
-// Net als daar mag dat alleen omdat het nagerekend is. Gemeten over de 353
-// beelden van het fragment:
-//   - geen enkele harde snede (scenedetectie op 0,30 vindt niets), een
-//     doorlopende opname;
-//   - helderheid tussen 56,6 en 136,1 van 255, dus nooit donker-naar-wit;
-//   - twee omslagen van meer dan 20 punten in 14,12 s, oftewel 0,14 per
+// Net als daar mag dat alleen omdat het nagerekend is. Gemeten over de 1558
+// beelden van de lus:
+//   - scenedetectie op 0,30 vindt geen enkele harde snede; op 0,20 telt de
+//     montage er 53, ongeveer een per anderhalve seconde;
+//   - helderheid tussen 35,6 en 143,2 van 255, dus nooit donker-naar-wit;
+//   - zeventien omslagen van meer dan 20 punten in 62,32 s, oftewel 0,27 per
 //     seconde, tegen een WCAG-grens van 3.
 // Er zit geen geluid op en het beeld ligt onder een verloop van 70 tot 95%
 // inkt. Komt er ooit ander materiaal in, dan moet dit opnieuw gemeten worden
