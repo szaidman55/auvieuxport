@@ -28,7 +28,14 @@
   --color-brass-bright: #a07c44;
   --color-wine: #7a1f2b;
 
-  --font-display: "Bodoni Moda", Didot, Georgia, serif;
+  /* De kopletter volgt het woordmerk. Dat woordmerk is een kalligrafische
+     kanselarij-cursief uit de Franse renaissance; EB Garamond stamt van
+     diezelfde pen af. Bodoni Moda stond er als didone naast: verticale as,
+     haarlijnschreven, een eeuw later en een andere logica. Naast elkaar
+     lazen het merk en de koppen als twee huizen.
+     De cursief blijft voor de h1. Op de kaart staan twintig kopjes onder
+     elkaar en die schuin zetten is te veel helling. */
+  --font-display: "EB Garamond", Garamond, Georgia, serif;
   --font-body: Archivo, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
@@ -48,8 +55,23 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 400;
+  /* Garamond is lichter getekend dan Bodoni. Op 400 werden de koppen op
+     crème te bleek; 500 zet ze terug op hun oude gewicht. */
+  font-weight: 500;
   text-wrap: balance;
+}
+
+/* De cursief van het woordmerk, alleen op de paginakop. */
+h1 {
+  font-style: italic;
+}
+
+/* Garamond zet standaard mediëvale cijfers: de 7 en de 9 zakken onder de
+   regel. In een prijskolom hoort dat niet, daar moeten de cijfers op één
+   hoogte en op één breedte staan. Koppen krijgen dezelfde cijfers, zodat
+   een jaartal in een kop en een prijs in de kaart niet uit elkaar lopen. */
+h1, h2, h3, .font-display {
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 /* Elk aanraakdoel minstens 44px hoog. De oude navigatie zat op 24px. */
