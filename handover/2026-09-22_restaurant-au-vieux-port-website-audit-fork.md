@@ -1,11 +1,11 @@
-﻿# Restaurant au Vieux Port website audit
+﻿# Restaurant au Vieux Port website audit (fork)
 
-- **Generated (UTC):** 2026-09-22 23:12:33Z
+- **Generated (UTC):** 2026-09-23 10:29:20Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
-- **Transcript:** `0722d019-6551-46be-b63c-a9421b798392.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-22 23:12 UTC
-- **Turns:** 37 human / 288 assistant
+- **Transcript:** `e2a9c200-fc33-47b3-b7cd-a5d8909e66dd.jsonl`
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:27 UTC
+- **Turns:** 44 human / 311 assistant
 
 ## Files written
 
@@ -71,6 +71,7 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\admin\TeamEditor.tsx`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\team\page.tsx`
 - `C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\scratchpad\pitch\index.html`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\components\HeroVideo.tsx`
 
 ## How to resume
 
@@ -2662,3 +2663,218 @@ deploy the pitch to a netifly page
 ### Claude
 
 Let me see whether the Netlify CLI is available and already authenticated.
+
+### Claude
+
+No CLI and no session. Let me get everything ready so the only missing piece is your login.
+
+### You
+
+[Request interrupted by user for tool use]
+
+### You
+
+open in chrome
+
+### Claude
+
+Chrome's extension still isn't answering — that's every attempt this session, so I'll stop treating it as transient. The built-in browser can't help here either: it has no file-upload tool, which is what Netlify Drop needs.
+
+Everything else is ready. `C:\Users\Sacha\Documents\au-vieux-port-pitch` has the pitch staged with a `netlify.toml`, and netlify-cli 27.8.1 is installed there. Being signed in at netlify.com doesn't carry over — the CLI keeps its own session, and it reports "Not logged in".
+
+One command from you opens the browser and authorises it. It's interactive, so I can't run it for you:
+
+```bash
+cd /c/Users/Sacha/Documents/au-vieux-port-pitch && npx netlify login
+```
+
+Approve it in the browser tab it opens, then tell me and I'll create the site and deploy it. No token passes through me.
+
+If you'd rather skip the CLI entirely: open **app.netlify.com/drop** and drag the `public` folder from that same directory onto the page. That works without a login and gives you a claimable site immediately.
+
+Two things I set up while staging it, worth knowing before it goes public:
+
+- **`X-Robots-Tag: noindex` plus a `robots.txt` that disallows everything.** A proposal naming a specific restaurant, quoting their measured failings, shouldn't turn up in a search for that restaurant before you've sat down with them. Say the word if you want it indexable.
+- **No build step.** The page is self-contained; the only outside request is the two Google fonts.
+
+### You
+
+<task-notification>
+<task-type>artifact-auto-react</task-type>
+<summary>1 artifact auto-reply subscription paused by the interrupt (comments sent to Claude meanwhile are answered then)</summary>
+The user's interrupt paused it and the watch is kept; when the user asks you to publish this artifact again, that publish resumes it, or resume_replies if the user asks, as does the user's next typed message — each only on hosts that pass typed input through as the user's, and comments sent to Claude in the meantime are answered then; publishing without being asked, while handling a notification or a wake-up, leaves it paused. Do not republish or resume just to re-enable auto-replies unless the user asks.
+</task-notification>
+
+### Claude
+
+No response requested.
+
+### You
+
+where did you find the youtube movie again?
+
+### Claude
+
+Let me check the source rather than recite it from the handover.
+
+### Claude
+
+In their own homepage source. It's a background iframe, not something you can see as a video element:
+
+```html
+<iframe class="screen" id="iframe246"
+  src="https://www.youtube.com/embed/H9ksaszIkR8?start=&autoplay=1&autohide=1&modestbranding=0&mute=1&showinfo=0&...">
+```
+
+The same page also carries `https://youtu.be/H9ksaszIkR8` as the plain watch link, and the container is classed `youtube-background youtube246` (with `.vidoeYoutubeContent` — their builder's typo, not mine).
+
+**The video:** https://youtu.be/H9ksaszIkR8 — titled "Au Vieux Port", on the channel **Helena De Ridder** (`@helenaderidder4265`). I just confirmed that through YouTube's public oEmbed endpoint rather than repeating it from the earlier notes. The autoplay/mute/no-controls parameters are the standard background-video set.
+
+**Second trace, which is how it first surfaced:** when I pulled their photos, one file came down named `153-H9ksaszIkR8.webp` — a poster frame stored on their CDN under the video's own ID. That's now `public/img/photos/avp-01.webp` in the repo, 39 kB. It's the one I ruled out for the hero: 1280×720, visibly softer than the photographer's stills, and cropped through someone's head.
+
+One correction worth repeating, since the earlier notes had it wrong at first: the channel isn't a third party's. Wine Spectator's listing for the restaurant names Helena de Ridder as co-owner, so it's an owner's channel — which matters if you ever want the original file to self-host it rather than embedding YouTube and inheriting its cookies.
+
+### You
+
+what was thde ptrobleml with using it
+
+### Claude
+
+Let me check the actual cost rather than assert it from memory.
+
+### Claude
+
+Measured just now, so these aren't from memory:
+
+## The cookies
+
+The embed sets **six cookies before anyone presses anything** — `VISITOR_INFO1_LIVE` with an expiry in **March 2027**, `YSC`, `VISITOR_PRIVACY_METADATA`, `__Secure-YNID`, `__Secure-ROLLOUT_TOKEN`. Because the video autoplays, they land the moment the page opens.
+
+That's the real objection. Under Belgian and EU rules those are non-essential cookies, which means a consent banner on **every page of the site**, before anything is visible. Right now this site sets no cookies at all and therefore needs no banner. One background video in the hero would buy you a banner sitewide — the same kind of interruption the pitch criticises the old site for.
+
+It's also the reason I couldn't watch it in the first place: their current site hides it behind their own banner, and I wasn't going to accept cookie terms on your behalf.
+
+## The weight
+
+**144 KB of HTML for the player shell alone**, before a single frame of video, pulling from six domains including `apis.google.com` and `gstatic`. The pitch makes a point of the old site dragging 346 KB of ballast and taking 3.6 seconds to show anything. Putting a YouTube player in the hero would undo a good part of what the rebuild bought you.
+
+## Two smaller ones
+
+- **Quality.** The stills I pulled are 1600 px from a proper shoot. The video's poster frame is 1280×720, visibly softer, and cropped through someone's head. That was why I picked the plated duck instead.
+- **Control.** It lives on a personal channel. If it's ever taken down or made private, your hero goes blank and you'd find out from a guest.
+
+## If you do want it
+
+Two routes avoid the banner:
+
+- **Self-host the original file** as a muted, looping `<video>`. No third party, no cookies, no banner, and you control the encode. You'd need the source file from Helena.
+- **A poster image that only loads the player on click.** No cookies until someone chooses to watch, so still no banner — but then it isn't a background video any more, it's a play button.
+
+`youtube-nocookie.com` does not solve it here. It defers tracking until playback, and autoplay *is* playback.
+
+### You
+
+@"C:\Users\Sacha\Videos\Au Vieux Port.mkv"
+i have the file.
+How and where can we embed it as a self-looping video without cookies, keep the site classy, but less bland than what we achieved.
+
+### Claude
+
+Let me look at what you've got before proposing anything.
+
+### Claude
+
+No ffmpeg. Let me get a static build without touching your system.
+
+### Claude
+
+`ffprobe-static` landed; `ffmpeg-static` needs a postinstall that can't spawn here. Let me probe first, then try a different ffmpeg package.
+
+### Claude
+
+1920×1080 H.264, 79 seconds, 3.5 Mbps, with an audio track. Let me see what's actually in it before deciding what to use.
+
+### Claude
+
+Long-path problem again. Let me work somewhere short.
+
+### Claude
+
+Stop — there's a problem with the file itself. Let me confirm it at full resolution.
+
+### Claude
+
+Two hard blockers. Let me check one more thing — whether this is even their restaurant.
+
+### Claude
+
+I can't use this file, and you'll want to know why before anything else.
+
+## It's a YouTube rip, not the master
+
+1920×1080, H.264, 79 seconds, 32.8 MB — and **`dw-downloader.com` is burned into every frame**, bottom right, over the picture. Not a container tag I can strip; it's in the pixels. I pulled a full-resolution crop to be sure.
+
+**The last three seconds are a full-screen advert** for "DW Free YouTube Downloader", complete with a QR code to digitalwaveltd.com. Footage runs to about 75s, then that.
+
+Putting this on the homepage would run a stranger's advertising on Au Vieux Port's front door, and stamp a download tool's domain across their dining room on every loop. Cropping the corner would mean cutting roughly the bottom fifth of a frame that's already been through YouTube's compression once.
+
+**What's needed:** the master from Helena, or from whoever cut the film. Any ordinary delivery is fine — ProRes, a high-bitrate MP4, even the original camera export. Once that exists, everything below takes me about twenty minutes.
+
+## How, with no cookies
+
+Self-hosted from `/public`, so every request is same-origin. No third party, no `Set-Cookie`, no consent banner. That's the whole reason to do it this way.
+
+- **Two files from one source:** MP4 (H.264, `yuv420p`, `+faststart`) for universal support, WebM (VP9) alongside it, typically 30% smaller. The browser picks.
+- **Audio track removed entirely.** A background loop is muted by definition, and dropping it saves bytes and removes any chance of a browser refusing to autoplay.
+- **A 12 to 18 second cut**, not the full 75. A loop wants one continuous movement, and at ~1 Mbps in 720p that's roughly 2 MB rather than 30.
+- **`<video autoplay muted loop playsinline preload="none">`** with a WebP poster from the best frame. The poster is what actually appears first; the video fades in when it can play, so a slow connection sees a photograph, never a black box.
+- **Nothing downloaded on phones.** Below the fold-width breakpoint the poster is all that loads. A hero loop on a 390px screen costs data and buys very little.
+- **`prefers-reduced-motion`: poster only, no autoplay.** Some people get motion sickness from looping video; this is one line.
+
+## Where, and why it fixes the blandness
+
+**My recommendation: make the hero full-bleed.** Right now the promise sits in a column with a still photograph beside it — safe, and that's exactly what reads as bland. Instead: the loop edge to edge, the headline over it, a dark gradient from the bottom so the text stays legible, and the wordmark above. That's the grand-brasserie gesture the footage is already shot for, and it costs you nothing in clarity because the words stay first in the source order.
+
+The conservative alternative is to drop the loop into the slot the still photo occupies now. It keeps the current layout exactly and gives you motion without redesigning anything. Less striking.
+
+There's a third place worth considering once the hero works: a short full-bleed band above the Canard section, as a breath between the menu and the four steps.
+
+I'd avoid putting it in the canard block itself. Those four photographs tell the sequence better than a loop would, and you'd be competing with your own best content.
+
+Send the clean master and I'll encode it, cut the loop, and wire up whichever of those you prefer.
+
+### You
+
+i'll get the proper file from them once i get the contract. i want you to use it, even if there is a watermark just to show them
+
+### Claude
+
+Understood — your call, and for a demo it's a reasonable one. Let me make the most of it: I'll cut the advert entirely, and the hero's gradient will fall right where the watermark sits.
+
+### Claude
+
+Fast-cut edit: shots are about two seconds each, so there's no long take to loop. That means a short montage instead. Let me look closely at the last third to choose the arc.
+
+### Claude
+
+Clear arc in there. Better still: the watermark sits in the bottom strip, and a wide hero crops that away anyway. Let me verify I can remove it entirely by framing.
+
+### Claude
+
+The crop removes it completely, and the framing barely changes. Let me build the loop.
+
+### Claude
+
+Both encode, but 2.9 MB is heavier than I want for a hero. Let me tighten it and check the quality holds.
+
+### Claude
+
+Indistinguishable at 1:1, so crf 28 it is — 38% smaller for nothing. Let me finalise and make the poster match the first frame exactly.
+
+### Claude
+
+All three assets ready. Let me see the current hero before rebuilding it.
+
+### Claude
+
+Assets are good. Let me put them in the repo and build a hero that doesn't make phones download 1.8 MB.

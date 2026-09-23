@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/routing';
 import { alternates } from '@/lib/alternates';
@@ -6,6 +5,7 @@ import { voucherShopUrl } from '@/lib/site';
 import { Awards } from '@/components/Awards';
 import { Canard } from '@/components/Canard';
 import { Gallery } from '@/components/Gallery';
+import { HeroVideo } from '@/components/HeroVideo';
 import { getOpeningHours } from '@/lib/queries';
 import { Link } from '@/i18n/navigation';
 import { RestaurantJsonLd } from '@/components/JsonLd';
@@ -43,43 +43,39 @@ export default async function HomePage({
     <>
       <RestaurantJsonLd hours={hours} locale={locale} />
 
-      {/* De belofte en het bord, en verder niets.
+      {/* De zaal in beweging, met de belofte eroverheen.
 
           Hier stonden achtereenvolgens een reserveerknop, een knop naar de
           kaart, het adres, de uren en het nummer. Elk daarvan staat al op een
           betere plaats: reserveren in de vaste balk onderaan en vanaf xl in de
           kop, de kaart in de afdeling direct hieronder, adres en uren in de
-          voet en op de contactpagina. In de kop herhaalden ze alleen wat een
-          scherm verder toch komt.
+          voet en op de contactpagina.
 
-          Op een telefoon staat de foto onder de tekst, op een breed scherm
-          ernaast. */}
-      <section className="border-b border-rule">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:py-20 lg:grid-cols-[1fr_minmax(0,34rem)] lg:items-center lg:gap-16">
+          Wat overblijft is een zin en het huis zelf. Een foto van gedekte
+          tafels is wat elk restaurant kan tonen; een zaal die vol zit niet.
+
+          De tekst ligt op het beeld, dus er moet een sluier tussen, anders is
+          wit op een lichte scene niet te lezen. De verloop loopt van links,
+          waar de woorden staan, en van onderaan, waar de scene het lichtst is. */}
+      <section className="relative isolate overflow-hidden border-b border-rule bg-ink">
+        <HeroVideo className="absolute inset-0 -z-20 size-full object-cover" />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/25"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-ink/80 to-transparent"
+        />
+
+        <div className="mx-auto flex min-h-[26rem] max-w-6xl items-end px-4 py-16 sm:min-h-[34rem] sm:py-24">
           <div>
-            <h1 className="max-w-3xl text-4xl leading-tight sm:text-6xl">{t('tagline')}</h1>
-            <p className="mt-5 max-w-xl text-lg text-ink-soft">{t('intro')}</p>
+            <h1 className="max-w-3xl text-4xl leading-tight text-paper sm:text-6xl">
+              {t('tagline')}
+            </h1>
+            <p className="mt-5 max-w-xl text-lg text-[#E4DBD8]">{t('intro')}</p>
           </div>
-
-          {/* Een bord, geen leeg meubilair. De zaal met gedekte tafels die hier
-              stond is wat elk restaurant kan tonen; deze foto laat zien
-              waarvoor men hier komt - de eend en de wijn, op het linnen van
-              het huis. Ze staat verder nergens op de site. */}
-          <Image
-            src="/img/photos/avp-02.webp"
-            alt={
-              locale === 'fr'
-                ? "Une assiette de canard et un verre de vin rouge, sur le linge blanc de la maison"
-                : locale === 'en'
-                  ? 'A plate of duck and a glass of red wine, on the house linen'
-                  : 'Een bord eend en een glas rode wijn, op het witte tafellinnen'
-            }
-            width={1600}
-            height={1066}
-            sizes="(max-width: 1024px) 100vw, 34rem"
-            priority
-            className="w-full bg-paper-2 object-cover lg:aspect-[4/3]"
-          />
         </div>
       </section>
 
