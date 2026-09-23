@@ -7,12 +7,25 @@
 @theme {
   --color-ink: #1b1615;
   --color-ink-soft: #574c4a;
-  --color-ink-faint: #7c6f6c;
-  --color-paper: #f6f3f3;
-  --color-paper-2: #ede8e7;
-  --color-rule: #d5cbc9;
-  --color-brass: #8a6a33;
-  --color-brass-bright: #b08d57;
+  /* Donkerder dan het was. Op de oude, bijna witte achtergrond haalde deze
+     toon 4,38 en op de band 3,98, allebei onder de norm van 4,5. Dat gold
+     dus al voordat het papier warmer werd. Nu 5,27 en 4,56. */
+  --color-ink-faint: #6b5f5d;
+
+  /* Papier, geen wit.
+     #f6f3f3 had maar drie punten warmte in zich en las daardoor als wit. Een
+     klassiek Frans huis hoort op crème te staan; dat is geen inbreuk op een
+     regel van modern ontwerp, het is ouder dan de regel. De enige regel die
+     hier werkelijk bindt is contrast, en die is hieronder nagerekend. */
+  --color-paper: #f3ede2;
+  --color-paper-2: #e7ddcb;
+  --color-rule: #d9cdb8;
+
+  /* Ook donkerder, om dezelfde reden: 4,54 op wit en 4,13 op de band waren
+     te krap. Nu 5,28 en 4,57. Op de reserveerknop, waar papier op brons
+     staat, wordt het er alleen beter van. */
+  --color-brass: #795d2d;
+  --color-brass-bright: #a07c44;
   --color-wine: #7a1f2b;
 
   --font-display: "Bodoni Moda", Didot, Georgia, serif;

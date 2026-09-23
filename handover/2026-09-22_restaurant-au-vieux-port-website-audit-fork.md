@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit (fork)
 
-- **Generated (UTC):** 2026-09-23 10:36:39Z
+- **Generated (UTC):** 2026-09-23 10:41:33Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `e2a9c200-fc33-47b3-b7cd-a5d8909e66dd.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:36 UTC
-- **Turns:** 45 human / 320 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:40 UTC
+- **Turns:** 45 human / 329 assistant
 
 ## Files written
 
@@ -72,6 +72,8 @@
 - `C:\Users\Sacha\Documents\au-vieux-port\src\app\admin\team\page.tsx`
 - `C:\Users\Sacha\AppData\Local\Temp\claude\C--Users-Sacha-AppData-Roaming-Claude-scratch-workspaces-1135a874-b328-4127-97de-cb9d9ccb9e86-cc2e1d99-67db-4169-8cd1-6fee422274af-scratch-2026-09-22-b00d43\0722d019-6551-46be-b63c-a9421b798392\scratchpad\pitch\index.html`
 - `C:\Users\Sacha\Documents\au-vieux-port\src\components\HeroVideo.tsx`
+- `C:\Users\Sacha\Documents\au-vieux-port\scripts\contrast.mjs`
+- `C:\Users\Sacha\Documents\au-vieux-port\src\app\globals.css`
 
 ## How to resume
 
@@ -2942,3 +2944,39 @@ Source attaches and the file decodes, but it's paused. Let me find out why rathe
 ### Claude
 
 Found it, and my own error-swallowing hid it. The element has **no `autoplay` attribute** — I dropped it when I moved to JS-driven playback, and my `load()` immediately followed by `play()` aborts the play promise, which my empty `.catch()` then silently ate.
+
+### Claude
+
+Time has advanced to 3.4s, so it did play. Let me check whether it's actually still running.
+
+### Claude
+
+Tab is `hidden`, which is why the browser paused it — that's correct behaviour, not a bug. The autoplay fix works. Let me ship it, then take your two questions.
+
+### Claude
+
+Their site names "Star Wine List 2026" in text. Let me see what that `guru` image actually is.
+
+### Claude
+
+That's **Restaurant Guru 2023**, not Star Wine List — a different award entirely. So there's no Star Wine List badge in their assets. Let me check the award is real before I put it on the site.
+
+### Claude
+
+Their site is a JS app that curl can't search. Let me use the browser.
+
+### Claude
+
+Let me close that and look at both design questions together.
+
+### Claude
+
+The honest answer to "is it against the rules": no rule says off-white. The only rule that bites is contrast. Let me measure before proposing anything.
+
+### Claude
+
+That's a real finding: **`ink-faint` already fails today** (4.38 on the current background), and brass fails on the darker band (4.13). Going warmer makes it worse. Let me solve for colours that pass.
+
+### Claude
+
+Solved, and it fixes a problem you already had. Applying.
