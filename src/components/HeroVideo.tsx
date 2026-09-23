@@ -4,63 +4,97 @@ import { useEffect, useRef, useState } from 'react';
 
 // De zaal in beweging, achter de belofte.
 //
-// Drie dingen die dit anders maken dan de video van YouTube die hier vroeger
-// stond:
+// Zelf gehost, en dat is de hele bedoeling. De oude site hing hier een
+// YouTube-venster; dat zet zes cookies voordat iemand iets aanklikt, waarvan
+// een met een houdbaarheid tot in 2027, en vraagt dus om een toestemmingsbalk
+// op elke pagina. Hier gaat er geen enkel verzoek naar een derde partij.
 //
-// Hij staat op onze eigen server. Geen enkel verzoek gaat naar een derde, dus
-// er worden geen cookies gezet en er is geen toestemmingsbalk nodig. Dat was
-// de hele reden om hem zelf te hosten.
+// Een telefoon kreeg eerst alleen de poster te zien, om de 1,8 MB te sparen.
+// Dat was de verkeerde afweging: de kop is juist wat men op een telefoon
+// toont. Nu krijgt een klein scherm een eigen, lichtere versnijding van
+// 0,75 MB. Het beeld staat achter een donkere sluier, dus dat het zachter is
+// ziet niemand.
 //
-// Een telefoon haalt hem niet op. De bronnen worden pas gezet wanneer het
-// scherm breed genoeg is om er iets aan te hebben; daaronder blijft het bij de
-// posterafbeelding van 52 kB. Een loop van 1,8 MB op een gsm kost data en
-// levert op dat formaat bijna niets op.
-//
-// Wie bewegende beelden liever vermijdt, krijgt ze niet. prefers-reduced-motion
-// is geen randgeval: draaiende achtergronden maken sommige mensen misselijk.
+// Wie bewegende beelden liever vermijdt, of wie databesparing aan heeft,
+// krijgt nog altijd alleen de poster. Het eerste is geen randgeval:
+// draaiende achtergronden maken sommige mensen misselijk. Het tweede is
+// gewoon beleefd tegenover iemand op een duur of traag abonnement.
+
+type Variant = 'small' | 'large' | null;
+
+// Boven deze breedte is het brede bestand de moeite waard.
+const WIDE = '(min-width: 768px)';
+
 export function HeroVideo({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [armed, setArmed] = useState(false);
+  const [variant, setVariant] = useState<Variant>(null);
 
   useEffect(() => {
-    const wideEnough = window.matchMedia('(min-width: 640px)');
+    const wide = window.matchMedia(WIDE);
     const stillness = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    const decide = () => setArmed(wideEnough.matches && !stillness.matches);
+    const decide = () => {
+      // De browser hoeft dit niet te ondersteunen; dan is het gewoon niet aan.
+      const saveData = (
+        navigator as Navigator & { connection?: { saveData?: boolean } }
+      ).connection?.saveData;
+
+      if (stillness.matches || saveData) {
+        setVariant(null);
+        return;
+      }
+      setVariant(wide.matches ? 'large' : 'small');
+    };
 
     decide();
-    wideEnough.addEventListener('change', decide);
+    wide.addEventListener('change', decide);
     stillness.addEventListener('change', decide);
     return () => {
-      wideEnough.removeEventListener('change', decide);
+      wide.removeEventListener('change', decide);
       stillness.removeEventListener('change', decide);
     };
   }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !armed) return;
-    // load() is nodig omdat de bronnen er bij de eerste render nog niet waren.
+    if (!el || !variant) return;
+    // load() is nodig omdat de bronnen er bij de eerste render nog niet waren,
+    // en omdat ze wisselen wanneer het venster over de grens gaat.
+    //
+    // Hier stond ook meteen play(). Dat werkte niet: load() is nog bezig, dus
+    // de belofte van play() breekt af met een AbortError, en die viel in een
+    // lege catch. Het afspelen hangt nu aan het autoplay-attribuut, dat de
+    // browser zelf afhandelt zodra er beeld is.
     el.load();
-    // Een browser mag autoplay weigeren. Dat is geen fout om te melden: de
-    // poster staat er al en dat is precies wat een bezoeker dan ziet.
-    void el.play().catch(() => {});
-  }, [armed]);
+  }, [variant]);
+
+  // Vangnet voor een browser die na een verwisselde bron niet uit zichzelf
+  // hervat. Weigert hij alsnog, dan blijft de poster staan, en dat is precies
+  // wat een bezoeker dan hoort te zien.
+  const nudge = () => {
+    const el = ref.current;
+    if (el?.paused) void el.play().catch(() => {});
+  };
 
   return (
     <video
       ref={ref}
       poster="/img/hero-poster.webp"
+      autoPlay
       muted
       loop
       playsInline
       preload="none"
       aria-hidden="true"
       tabIndex={-1}
+      onCanPlay={nudge}
       className={className}
     >
-      {armed && <source src="/video/hero.webm" type="video/webm" />}
-      {armed && <source src="/video/hero.mp4" type="video/mp4" />}
+      {variant === 'large' && <source src="/video/hero.webm" type="video/webm" />}
+      {variant === 'large' && <source src="/video/hero.mp4" type="video/mp4" />}
+      {/* Voor het kleine scherm geen webm: vp9 kwam daar groter uit dan h264,
+          en h264 speelt overal. */}
+      {variant === 'small' && <source src="/video/hero-sm.mp4" type="video/mp4" />}
     </video>
   );
 }

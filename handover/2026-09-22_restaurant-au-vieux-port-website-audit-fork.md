@@ -1,11 +1,11 @@
 ﻿# Restaurant au Vieux Port website audit (fork)
 
-- **Generated (UTC):** 2026-09-23 10:29:20Z
+- **Generated (UTC):** 2026-09-23 10:36:39Z
 - **Project root:** `C:\Users\Sacha\Documents\au-vieux-port`
 - **Git branch:** `HEAD`
 - **Transcript:** `e2a9c200-fc33-47b3-b7cd-a5d8909e66dd.jsonl`
-- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:27 UTC
-- **Turns:** 44 human / 311 assistant
+- **Date:** 2026-09-22 11:32 UTC â†’ 2026-09-23 10:36 UTC
+- **Turns:** 45 human / 320 assistant
 
 ## Files written
 
@@ -2878,3 +2878,67 @@ All three assets ready. Let me see the current hero before rebuilding it.
 ### Claude
 
 Assets are good. Let me put them in the repo and build a hero that doesn't make phones download 1.8 MB.
+
+### Claude
+
+Hero works and the watermark is gone. Let me verify the video is actually playing and that phones don't fetch it.
+
+### Claude
+
+Exactly as intended: on a phone, zero sources attached, `networkState` empty, poster only — 52 KB instead of 1.8 MB. Let me reset and ship.
+
+### Claude
+
+One cookie is being set. Let me check what it is before I claim anything.
+
+### Claude
+
+Live. The hero now runs the room behind the headline.
+
+## The watermark problem solved itself
+
+A wide hero has to crop a 16:9 source anyway, and the watermark sits in the bottom strip. Cropping to **1920×960 from the top** removes it completely — I compared the cropped frame against the full one to be certain. It isn't dimmed or covered; it's outside the frame. The three seconds of downloader advert are gone too, since the loop ends at 68.5s.
+
+So the demo is clean. You'll still want the master, because this footage has been through YouTube's compression once, but nothing on screen gives that away.
+
+## What's in the loop
+
+**54.4s to 68.5s**, both real shot boundaries from a scene-change pass, so no half-shot falls inside the loop. The film is cut at roughly two seconds a shot, so there's no long take to use — this is a short montage: the room with the flame, service at a table, the tarte on the plate, the dining room through glassware, the maître carving, the wide room. Warm interior at both ends, so the loop point reads as just another cut.
+
+1600×800, no audio track, H.264 at crf 28 and VP9 alongside: **1.79 MB and 1.55 MB**. I compared crf 24 against 28 at 1:1 and couldn't tell them apart, which bought 38%.
+
+## The cookie question, precisely
+
+Checked on the deployment rather than asserted: the video files set **no cookies at all**, and nothing in the hero touches a third party.
+
+The page does set exactly one: `NEXT_LOCALE=nl; SameSite=lax`. That's next-intl remembering your language choice — strictly functional, exempt from consent, and it was already there before today. Compare with the six YouTube was setting, one of them lasting until March 2027.
+
+## Phones don't pay for it
+
+Measured at 375px: no `<source>` attached, `networkState` empty, nothing fetched. A phone gets the 52 KB poster and that's it. The sources only attach above 640px, and `prefers-reduced-motion` gets the same treatment as a phone.
+
+One thing worth your eye: the gradient runs dark from the left, where the words are, and lifts toward the right. It reads well in the languages I checked, but French headlines are longer, so glance at `/fr` on your own screen and tell me if it wants more shade.
+
+### You
+
+i see the image of the video on my phone, but no video
+
+### Claude
+
+That's my doing — I deliberately kept the video off phones to save 1.8 MB. Wrong call for a hero you'll be showing people on a phone. Let me give phones their own lighter cut instead.
+
+### Claude
+
+The mobile WebM came out *larger* than its MP4, so it earns nothing. Dropping it.
+
+### Claude
+
+The build clobbered the dev server's `.next`. Let me restart it and test mobile properly.
+
+### Claude
+
+Source attaches and the file decodes, but it's paused. Let me find out why rather than guess.
+
+### Claude
+
+Found it, and my own error-swallowing hid it. The element has **no `autoplay` attribute** — I dropped it when I moved to JS-driven playback, and my `load()` immediately followed by `play()` aborts the play promise, which my empty `.catch()` then silently ate.
